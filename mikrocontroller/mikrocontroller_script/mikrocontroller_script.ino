@@ -521,7 +521,7 @@ String httpGETRequest(String serverName) {
     //Domain name with URL path or IP address with path
     http.begin(client, serverName.c_str());
 
-    // Send HTTP POST request, httpResponseCode gives additional infos about the connection state
+    // Send HTTP GET request, httpResponseCode gives additional infos about the connection state
     int httpResponseCode = http.GET();
 
     if (httpResponseCode > 0) {
