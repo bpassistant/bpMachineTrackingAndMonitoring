@@ -87,9 +87,7 @@
             "70b6a07615db8980"
         ],
         "x": 154,
-        "y": 39,
-        "w": 1812,
-        "h": 282
+        "y": 39
     },
     {
         "id": "89199902fcdf75a8",
@@ -117,9 +115,7 @@
             "ee8cb9783b54dcf7"
         ],
         "x": 154,
-        "y": 419,
-        "w": 1652,
-        "h": 182
+        "y": 419
     },
     {
         "id": "69570ac14998a30b",
@@ -145,9 +141,7 @@
             "e6b116c3c3a0bbe6"
         ],
         "x": 114,
-        "y": 1279,
-        "w": 732,
-        "h": 242
+        "y": 1279
     },
     {
         "id": "bdd517b93ca42ddf",
@@ -171,9 +165,7 @@
             "65871ea9527c1ea3"
         ],
         "x": 114,
-        "y": 59,
-        "w": 1632,
-        "h": 202
+        "y": 59
     },
     {
         "id": "b885f38124686d57",
@@ -193,9 +185,7 @@
             "40548839ac496a07"
         ],
         "x": 54,
-        "y": 139,
-        "w": 872,
-        "h": 82
+        "y": 139
     },
     {
         "id": "fc2cb2ff3b2df9ef",
@@ -251,9 +241,7 @@
             "c9332917b00e8832"
         ],
         "x": 114,
-        "y": 359,
-        "w": 3012,
-        "h": 542
+        "y": 359
     },
     {
         "id": "27cfd54d06969523",
@@ -286,9 +274,7 @@
             "7047bcea21dc8e0d"
         ],
         "x": 114,
-        "y": 939,
-        "w": 2432,
-        "h": 222
+        "y": 939
     },
     {
         "id": "fe1131055cdbcae8",
@@ -1481,7 +1467,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "CREATE TABLE data( userid INTEGER NOT NULL, machineName TEXT NOT NULL, start INTEGER NOT NULL, end INTEGER NOT NULL,setUpTime INTEGER NOT NULL, duration INTEGER NOT NULL, power INTEGER NOT NULL, PRIMARY KEY (userid, machineName, start ) FOREIGN KEY(userid) REFERENCES user(userid), FOREIGN KEY(machineName) REFERENCES machine(machineName))",
+        "topic": "CREATE TABLE data( userid INTEGER NOT NULL, machineName TEXT NOT NULL, start INTEGER NOT NULL, setUpTime INTEGER, duration INTEGER NOT NULL, power INTEGER NOT NULL, message TEXT NOT NULL, PRIMARY KEY (userid, machineName, start ) FOREIGN KEY(userid) REFERENCES user(userid), FOREIGN KEY(machineName) REFERENCES machine(machineName))",
         "payload": "",
         "payloadType": "date",
         "x": 290,
@@ -1655,7 +1641,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 600000, 800000, 0, 5000,1200)",
+        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 600000, 0, 5000,1200, \"Test Message\")",
         "payload": "",
         "payloadType": "date",
         "x": 320,
@@ -2756,7 +2742,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1657975740000, 1657993740000, 0, 1657993740000-1657993740000, 1200)",
+        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1657975740000, 0, 1657993740000-1657993740000, 1200, \"Test Message\")",
         "payload": "",
         "payloadType": "date",
         "x": 310,
@@ -2785,7 +2771,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1647075600000, 1647090000000, 0, 5000,1200)",
+        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1647075600000, 0, 5000,1200, \"Test Message\")",
         "payload": "",
         "payloadType": "date",
         "x": 310,
@@ -2814,7 +2800,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1650636000000, 1650650400000, 0, 5000,1200)",
+        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1650636000000, 0, 5000,1200, \"Test Message\")",
         "payload": "",
         "payloadType": "date",
         "x": 310,
@@ -3643,6 +3629,35 @@
         "x": 350,
         "y": 1680,
         "wires": []
+    },
+    {
+        "id": "445c16f470ef0f92",
+        "type": "inject",
+        "z": "5d3034dc83dfbde2",
+        "name": "CREATE logs",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "SQLITE_MAX_LENGTH",
+        "payload": "",
+        "payloadType": "date",
+        "x": 650,
+        "y": 140,
+        "wires": [
+            [
+                "0e854629aa4dc9fc"
+            ]
+        ]
     },
     {
         "id": "e85747894aceec43",
