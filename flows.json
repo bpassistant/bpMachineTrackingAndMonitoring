@@ -87,9 +87,7 @@
             "70b6a07615db8980"
         ],
         "x": 154,
-        "y": 39,
-        "w": 1812,
-        "h": 282
+        "y": 39
     },
     {
         "id": "89199902fcdf75a8",
@@ -117,9 +115,7 @@
             "ee8cb9783b54dcf7"
         ],
         "x": 154,
-        "y": 419,
-        "w": 1652,
-        "h": 182
+        "y": 419
     },
     {
         "id": "69570ac14998a30b",
@@ -145,7 +141,7 @@
             "e6b116c3c3a0bbe6"
         ],
         "x": 114,
-        "y": 1279,
+        "y": 1239,
         "w": 732,
         "h": 242
     },
@@ -3722,7 +3718,7 @@
         "valueInputType": "str",
         "outputs": 1,
         "x": 470,
-        "y": 1420,
+        "y": 1380,
         "wires": [
             [
                 "94d5443828424b63"
@@ -3752,7 +3748,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 210,
-        "y": 1420,
+        "y": 1380,
         "wires": [
             [
                 "2ef8075276287a84"
@@ -4006,7 +4002,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 730,
-        "y": 1420,
+        "y": 1380,
         "wires": []
     },
     {
@@ -4184,7 +4180,7 @@
         "valueInputType": "msg",
         "outputs": 1,
         "x": 470,
-        "y": 1360,
+        "y": 1320,
         "wires": [
             [
                 "3af81448c05df57a"
@@ -4205,7 +4201,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 730,
-        "y": 1360,
+        "y": 1320,
         "wires": []
     },
     {
@@ -4231,7 +4227,7 @@
         "payload": "",
         "payloadType": "str",
         "x": 210,
-        "y": 1360,
+        "y": 1320,
         "wires": [
             [
                 "e3a1c266dd789867"
@@ -4544,7 +4540,7 @@
         "name": "Test Trigger für die Zwischenspeicherliste",
         "info": "",
         "x": 300,
-        "y": 1320,
+        "y": 1280,
         "wires": []
     },
     {
@@ -4637,7 +4633,7 @@
         "valueInputType": "msg",
         "outputs": 1,
         "x": 470,
-        "y": 1480,
+        "y": 1440,
         "wires": [
             [
                 "e6b116c3c3a0bbe6"
@@ -4663,7 +4659,7 @@
         "payload": "{\"machineName\":\"Tischkreissäge\",\"userID\":100,\"startMessuringTime\":null,\"messuringDuration\":null,\"lastMessuringTime\":1666651167650,\"setupStartTime\":null,\"setupDuration\":null,\"energy\":null,\"ip\":null}",
         "payloadType": "json",
         "x": 220,
-        "y": 1480,
+        "y": 1440,
         "wires": [
             [
                 "b78e456aca118fb3"
@@ -4684,7 +4680,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 730,
-        "y": 1480,
+        "y": 1440,
         "wires": []
     },
     {
@@ -5207,5 +5203,36 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "6396a60985c26813",
+        "type": "serial in",
+        "z": "56fe256bdc6888ea",
+        "name": "Serieller Input TEST für Schwellwerte",
+        "serial": "189d98b6e10797a1",
+        "x": 270,
+        "y": 1600,
+        "wires": [
+            [
+                "5e9cf3b4afe04546"
+            ]
+        ]
+    },
+    {
+        "id": "5e9cf3b4afe04546",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 1600,
+        "wires": []
     }
 ]
