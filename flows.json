@@ -146,35 +146,9 @@
             "e6b116c3c3a0bbe6"
         ],
         "x": 114,
-        "y": 1559,
+        "y": 1239,
         "w": 732,
         "h": 242
-    },
-    {
-        "id": "bdd517b93ca42ddf",
-        "type": "group",
-        "z": "56fe256bdc6888ea",
-        "name": "",
-        "style": {
-            "stroke": "#ff0000",
-            "fill": "#ffbfbf",
-            "fill-opacity": "0.48",
-            "label": true
-        },
-        "nodes": [
-            "2b1b2c4302317ef9",
-            "fe20e42f5546c86e",
-            "24a99a43b6fd867b",
-            "9a61e006b06aea53",
-            "a591606526e6c6e1",
-            "455ad6e4f3c1a6c2",
-            "6bc8cd7a7aa88c70",
-            "65871ea9527c1ea3"
-        ],
-        "x": 114,
-        "y": 59,
-        "w": 1632,
-        "h": 202
     },
     {
         "id": "b885f38124686d57",
@@ -249,11 +223,18 @@
             "6cd10282e0de543b",
             "d3d96a5c0c10b29f",
             "4a25446c0c4da559",
-            "c9332917b00e8832"
+            "c9332917b00e8832",
+            "d6b1b6432ce06383",
+            "0e224c4203c11eda",
+            "0af2209aab664a04",
+            "e24885c2931457c7",
+            "220f474c142926eb",
+            "193cc0b8430efe0c",
+            "8b28b8b5c10e6862"
         ],
         "x": 114,
         "y": 359,
-        "w": 3012,
+        "w": 3412,
         "h": 542
     },
     {
@@ -286,7 +267,7 @@
             "c40620de0f616fc8",
             "ea6b689fcd6d6364"
         ],
-        "x": 234,
+        "x": 114,
         "y": 959,
         "w": 2312,
         "h": 222
@@ -318,6 +299,32 @@
         "h": 182
     },
     {
+        "id": "bdd517b93ca42ddf",
+        "type": "group",
+        "z": "56fe256bdc6888ea",
+        "name": "",
+        "style": {
+            "stroke": "#ff0000",
+            "fill": "#ffbfbf",
+            "fill-opacity": "0.48",
+            "label": true
+        },
+        "nodes": [
+            "2b1b2c4302317ef9",
+            "fe20e42f5546c86e",
+            "24a99a43b6fd867b",
+            "9a61e006b06aea53",
+            "a591606526e6c6e1",
+            "455ad6e4f3c1a6c2",
+            "6bc8cd7a7aa88c70",
+            "65871ea9527c1ea3"
+        ],
+        "x": 114,
+        "y": 59,
+        "w": 1632,
+        "h": 202
+    },
+    {
         "id": "fe1131055cdbcae8",
         "type": "sqliteQueuedDb",
         "db": "db",
@@ -326,7 +333,7 @@
     {
         "id": "189d98b6e10797a1",
         "type": "serial-port",
-        "serialport": "/dev/ttyAMA0/",
+        "serialport": "/dev/ttyAMA0",
         "serialbaud": "38400",
         "databits": "8",
         "parity": "none",
@@ -347,7 +354,7 @@
         "type": "function",
         "z": "2a14cb53da10968a",
         "name": "format directory path",
-        "func": "\nmsg.database = msg.projectdir + \"/db\";\nreturn msg;",
+        "func": "\nmsg.database = msg.projectdir + \"/database.db\";\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1012,38 +1019,12 @@
         ]
     },
     {
-        "id": "0b10820ae0bca9b6",
-        "type": "collection",
-        "z": "838e54b719ad8caa",
-        "g": "89199902fcdf75a8",
-        "name": "Eintrag auslesen",
-        "collection": "CurrentMessuringObject",
-        "collectionInputType": "global",
-        "collectionType": "Object",
-        "createCollection": false,
-        "action": "get value",
-        "onConflict": "exception",
-        "warnOnConflict": true,
-        "keyOrIndex": "payload.machineName",
-        "keyInputType": "msg",
-        "value": "payload",
-        "valueInputType": "msg",
-        "outputs": 1,
-        "x": 510,
-        "y": 500,
-        "wires": [
-            [
-                "2f2a0091fb6bf425"
-            ]
-        ]
-    },
-    {
         "id": "967ead936df91cca",
         "type": "function",
         "z": "838e54b719ad8caa",
         "g": "89199902fcdf75a8",
         "name": "Eintrag für DB vorbereiten",
-        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\nvar startMessuringTime = msg.payload.startMessuringTime;\n\nvar messuringDuration = msg.payload.messuringDuration;\n\nvar power = msg.payload.energy;\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + maschineName + '\\u0022' + \",\" + startMessuringTime + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \")\";\n\nreturn msg;",
+        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\nvar startMessuringTime = msg.payload.startMessuringTime;\n\nvar messuringDuration = msg.payload.messuringDuration;\n\nvar power = msg.payload.energy;\n\nvar message = \"\";\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + machineName + '\\u0022' + \",\" + startMessuringTime + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \",\" + '\\u0022' + message + '\\u0022' + \")\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1113,32 +1094,6 @@
         ]
     },
     {
-        "id": "1c47cae84a9535b8",
-        "type": "collection",
-        "z": "838e54b719ad8caa",
-        "g": "89199902fcdf75a8",
-        "name": "Eintrag zurücksetzten",
-        "collection": "CurrentMessuringObject",
-        "collectionInputType": "global",
-        "collectionType": "Object",
-        "createCollection": false,
-        "action": "set",
-        "onConflict": "exception",
-        "warnOnConflict": true,
-        "keyOrIndex": "payload.machineName",
-        "keyInputType": "msg",
-        "value": "payload",
-        "valueInputType": "msg",
-        "outputs": 1,
-        "x": 1460,
-        "y": 500,
-        "wires": [
-            [
-                "de62a886d974dd24"
-            ]
-        ]
-    },
-    {
         "id": "de62a886d974dd24",
         "type": "debug",
         "z": "838e54b719ad8caa",
@@ -1201,58 +1156,6 @@
         ]
     },
     {
-        "id": "b1ef769e563322d0",
-        "type": "collection",
-        "z": "838e54b719ad8caa",
-        "g": "8e35ff28fa9d3a76",
-        "name": "Eintrag erweitern",
-        "collection": "CurrentMessuringObject",
-        "collectionInputType": "global",
-        "collectionType": "Object",
-        "createCollection": false,
-        "action": "set",
-        "onConflict": "exception",
-        "warnOnConflict": true,
-        "keyOrIndex": "payload.machineName",
-        "keyInputType": "msg",
-        "value": "payload",
-        "valueInputType": "msg",
-        "outputs": 1,
-        "x": 1670,
-        "y": 280,
-        "wires": [
-            [
-                "70b6a07615db8980"
-            ]
-        ]
-    },
-    {
-        "id": "26eea8dbc2cf4d20",
-        "type": "collection",
-        "z": "838e54b719ad8caa",
-        "g": "8e35ff28fa9d3a76",
-        "name": "Eintrag auslesen",
-        "collection": "CurrentMessuringObject",
-        "collectionInputType": "global",
-        "collectionType": "Object",
-        "createCollection": false,
-        "action": "get value",
-        "onConflict": "exception",
-        "warnOnConflict": true,
-        "keyOrIndex": "requestParameter.machineName",
-        "keyInputType": "msg",
-        "value": "payload",
-        "valueInputType": "msg",
-        "outputs": 1,
-        "x": 1310,
-        "y": 280,
-        "wires": [
-            [
-                "e17c278db83e40ef"
-            ]
-        ]
-    },
-    {
         "id": "70b6a07615db8980",
         "type": "debug",
         "z": "838e54b719ad8caa",
@@ -1306,32 +1209,6 @@
         "wires": [
             [
                 "366568672f2f8d07"
-            ]
-        ]
-    },
-    {
-        "id": "366568672f2f8d07",
-        "type": "collection",
-        "z": "838e54b719ad8caa",
-        "g": "633c6dec65d21494",
-        "name": "Eintrag auslesen",
-        "collection": "CurrentMessuringObject",
-        "collectionInputType": "global",
-        "collectionType": "Object",
-        "createCollection": false,
-        "action": "get value",
-        "onConflict": "exception",
-        "warnOnConflict": true,
-        "keyOrIndex": "payload.machineName",
-        "keyInputType": "msg",
-        "value": "payload",
-        "valueInputType": "msg",
-        "outputs": 1,
-        "x": 570,
-        "y": 740,
-        "wires": [
-            [
-                "1f42e3fcd2640ba1"
             ]
         ]
     },
@@ -1479,6 +1356,136 @@
         "x": 490,
         "y": 460,
         "wires": []
+    },
+    {
+        "id": "0b10820ae0bca9b6",
+        "type": "collection",
+        "z": "838e54b719ad8caa",
+        "g": "89199902fcdf75a8",
+        "name": "Eintrag auslesen",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": false,
+        "action": "get value",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "payload.machineName",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "msg",
+        "outputs": 1,
+        "x": 510,
+        "y": 500,
+        "wires": [
+            [
+                "2f2a0091fb6bf425"
+            ]
+        ]
+    },
+    {
+        "id": "1c47cae84a9535b8",
+        "type": "collection",
+        "z": "838e54b719ad8caa",
+        "g": "89199902fcdf75a8",
+        "name": "Eintrag zurücksetzten",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": false,
+        "action": "set",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "payload.machineName",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "msg",
+        "outputs": 1,
+        "x": 1460,
+        "y": 500,
+        "wires": [
+            [
+                "de62a886d974dd24"
+            ]
+        ]
+    },
+    {
+        "id": "b1ef769e563322d0",
+        "type": "collection",
+        "z": "838e54b719ad8caa",
+        "g": "8e35ff28fa9d3a76",
+        "name": "Eintrag erweitern",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": false,
+        "action": "set",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "payload.machineName",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "msg",
+        "outputs": 1,
+        "x": 1670,
+        "y": 280,
+        "wires": [
+            [
+                "70b6a07615db8980"
+            ]
+        ]
+    },
+    {
+        "id": "26eea8dbc2cf4d20",
+        "type": "collection",
+        "z": "838e54b719ad8caa",
+        "g": "8e35ff28fa9d3a76",
+        "name": "Eintrag auslesen",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": false,
+        "action": "get value",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "requestParameter.machineName",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "msg",
+        "outputs": 1,
+        "x": 1310,
+        "y": 280,
+        "wires": [
+            [
+                "e17c278db83e40ef"
+            ]
+        ]
+    },
+    {
+        "id": "366568672f2f8d07",
+        "type": "collection",
+        "z": "838e54b719ad8caa",
+        "g": "633c6dec65d21494",
+        "name": "Eintrag auslesen",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": false,
+        "action": "get value",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "payload.machineName",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "msg",
+        "outputs": 1,
+        "x": 570,
+        "y": 740,
+        "wires": [
+            [
+                "1f42e3fcd2640ba1"
+            ]
+        ]
     },
     {
         "id": "7dbfda298598df33",
@@ -3877,7 +3884,7 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Aufsplitten des Inputs",
-        "func": "\nvar output = msg.payload.split(\" \");\n\nvar nodeID = parseInt(output[0]);\nvar power1 = parseFloat(output[1]);\nvar power2 = parseFloat(output[2]);\nvar power3 = parseFloat(output[3]);\nvar power4 = parseFloat(output[4]);\nvar power5 = parseFloat(output[5]);\nvar power6 = parseFloat(output[6]);\nvar power7 = parseFloat(output[7]);\n\nvar kreissaege = {payload: power1, machineName: \"Kreissäge\"};\nvar tischkreissaege = {payload: power2, machineName: \"Tischkreissäge\"};\nvar hobel = {payload: power3, machineName: \"Hobel\"};\nvar bandschleifer = {payload: power4, machineName: \"Bandschleifer\"};\nvar drehmaschine = {payload: power5, machineName: \"Drehmaschine\"};\nvar kappsaege = {payload: power6, machineName: \"Kappsäge\"};\nvar schweissgeraet = {payload: power7, machineName: \"Schweißgerät\"};\n\nreturn [msg, \n        kreissaege, \n        tischkreissaege, \n        hobel, \n        bandschleifer, \n        drehmaschine, \n        kappsaege, \n        schweissgeraet];",
+        "func": "\nvar output = msg.payload.split(\" \");\n\nvar nodeID = parseInt(output[0]);\nvar power1 = parseFloat(output[1]);\nvar power2 = parseFloat(output[2]);\nvar power3 = parseFloat(output[3]);\nvar power4 = parseFloat(output[4]);\nvar power5 = parseFloat(output[5]);\nvar power6 = parseFloat(output[6]);\nvar power7 = parseFloat(output[7]);\n\nvar kreissaege = {payload: power1};\nvar tischkreissaege = {payload: power2};\nvar hobel = {payload: power3};\nvar bandschleifer = {payload: power4};\nvar drehmaschine = {payload: power5};\nvar kappsaege = {payload: power6};\nvar schweissgeraet = {payload: power7};\n\nreturn [msg, \n        kreissaege, \n        tischkreissaege, \n        hobel, \n        bandschleifer, \n        drehmaschine, \n        kappsaege, \n        schweissgeraet];",
         "outputs": 8,
         "noerr": 0,
         "initialize": "",
@@ -3912,11 +3919,9 @@
         "name": "Serieller Input - Strommodul",
         "serial": "189d98b6e10797a1",
         "x": 260,
-        "y": 560,
+        "y": 580,
         "wires": [
-            [
-                "e85747894aceec43"
-            ]
+            []
         ]
     },
     {
@@ -3929,32 +3934,6 @@
         "x": 510,
         "y": 480,
         "wires": []
-    },
-    {
-        "id": "2ef8075276287a84",
-        "type": "collection",
-        "z": "56fe256bdc6888ea",
-        "g": "69570ac14998a30b",
-        "name": "CurrentMessuringBuffer",
-        "collection": "CurrentMessuringObject",
-        "collectionInputType": "global",
-        "collectionType": "Object",
-        "createCollection": false,
-        "action": "get entries",
-        "onConflict": "exception",
-        "warnOnConflict": true,
-        "keyOrIndex": "topic",
-        "keyInputType": "msg",
-        "value": "payload",
-        "valueInputType": "str",
-        "outputs": 1,
-        "x": 470,
-        "y": 1700,
-        "wires": [
-            [
-                "94d5443828424b63"
-            ]
-        ]
     },
     {
         "id": "9ad752c7eb2f77c6",
@@ -3979,7 +3958,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 210,
-        "y": 1700,
+        "y": 1380,
         "wires": [
             [
                 "2ef8075276287a84"
@@ -4002,7 +3981,7 @@
         "y": 600,
         "wires": [
             [
-                "5eb7685e8e5bbc85"
+                "220f474c142926eb"
             ]
         ]
     },
@@ -4022,7 +4001,7 @@
         "y": 440,
         "wires": [
             [
-                "5eb7685e8e5bbc85"
+                "d6b1b6432ce06383"
             ]
         ]
     },
@@ -4042,7 +4021,7 @@
         "y": 480,
         "wires": [
             [
-                "5eb7685e8e5bbc85"
+                "0e224c4203c11eda"
             ]
         ]
     },
@@ -4062,7 +4041,7 @@
         "y": 520,
         "wires": [
             [
-                "5eb7685e8e5bbc85"
+                "0af2209aab664a04"
             ]
         ]
     },
@@ -4082,7 +4061,7 @@
         "y": 560,
         "wires": [
             [
-                "5eb7685e8e5bbc85"
+                "e24885c2931457c7"
             ]
         ]
     },
@@ -4102,7 +4081,7 @@
         "y": 640,
         "wires": [
             [
-                "5eb7685e8e5bbc85"
+                "193cc0b8430efe0c"
             ]
         ]
     },
@@ -4122,7 +4101,7 @@
         "y": 680,
         "wires": [
             [
-                "5eb7685e8e5bbc85"
+                "8b28b8b5c10e6862"
             ]
         ]
     },
@@ -4158,7 +4137,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1230,
+        "x": 1630,
         "y": 640,
         "wires": []
     },
@@ -4174,7 +4153,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1700,
+        "x": 2100,
         "y": 520,
         "wires": [
             [
@@ -4206,7 +4185,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1370,
+        "x": 1770,
         "y": 560,
         "wires": [
             [
@@ -4233,7 +4212,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 730,
-        "y": 1700,
+        "y": 1380,
         "wires": []
     },
     {
@@ -4256,7 +4235,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "11 42.27 45.19 33.11",
+        "payload": "11 100.27 555.19 33.11",
         "payloadType": "str",
         "x": 240,
         "y": 440,
@@ -4287,7 +4266,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1100,
+        "x": 1500,
         "y": 560,
         "wires": [
             [
@@ -4328,32 +4307,6 @@
         ]
     },
     {
-        "id": "10928063098554dd",
-        "type": "collection",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "Eintrag erweitern",
-        "collection": "CurrentMessuringObject",
-        "collectionInputType": "global",
-        "collectionType": "Object",
-        "createCollection": false,
-        "action": "set",
-        "onConflict": "exception",
-        "warnOnConflict": true,
-        "keyOrIndex": "payload.machineName",
-        "keyInputType": "msg",
-        "value": "payload",
-        "valueInputType": "msg",
-        "outputs": 1,
-        "x": 2050,
-        "y": 520,
-        "wires": [
-            [
-                "72df1a9f84434816"
-            ]
-        ]
-    },
-    {
         "id": "1a1cf964fd8edaf0",
         "type": "debug",
         "z": "56fe256bdc6888ea",
@@ -4367,7 +4320,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1990,
+        "x": 2390,
         "y": 440,
         "wires": []
     },
@@ -4383,38 +4336,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2090,
+        "x": 2490,
         "y": 640,
         "wires": [
             [
                 "f131cc992d7af3be",
                 "c01ff320764ef67f"
-            ]
-        ]
-    },
-    {
-        "id": "e3a1c266dd789867",
-        "type": "collection",
-        "z": "56fe256bdc6888ea",
-        "g": "69570ac14998a30b",
-        "name": "CurrentMessuringBuffer",
-        "collection": "CurrentMessuringObject",
-        "collectionInputType": "global",
-        "collectionType": "Object",
-        "createCollection": true,
-        "action": "clear",
-        "onConflict": "exception",
-        "warnOnConflict": true,
-        "keyOrIndex": "topic",
-        "keyInputType": "msg",
-        "value": "payload",
-        "valueInputType": "msg",
-        "outputs": 1,
-        "x": 470,
-        "y": 1640,
-        "wires": [
-            [
-                "3af81448c05df57a"
             ]
         ]
     },
@@ -4432,7 +4359,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 730,
-        "y": 1640,
+        "y": 1320,
         "wires": []
     },
     {
@@ -4458,10 +4385,716 @@
         "payload": "",
         "payloadType": "str",
         "x": 210,
-        "y": 1640,
+        "y": 1320,
         "wires": [
             [
                 "e3a1c266dd789867"
+            ]
+        ]
+    },
+    {
+        "id": "367781f0503baadb",
+        "type": "comment",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "Allgemeines Konto Daten direkt weg schreiben",
+        "info": "",
+        "x": 2490,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "7d90581007d7da7f",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "g": "27cfd54d06969523",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "9b74d88b44c7ad75",
+        "type": "comment",
+        "z": "56fe256bdc6888ea",
+        "g": "69570ac14998a30b",
+        "name": "Test Trigger für die Zwischenspeicherliste",
+        "info": "",
+        "x": 300,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "bc0ec04e16a6089e",
+        "type": "change",
+        "z": "56fe256bdc6888ea",
+        "g": "27cfd54d06969523",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "array",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 1080,
+        "wires": [
+            [
+                "f53a46c755b4cebd"
+            ]
+        ]
+    },
+    {
+        "id": "32519552d91806ad",
+        "type": "function",
+        "z": "56fe256bdc6888ea",
+        "g": "27cfd54d06969523",
+        "name": "Prüfe ob Timer abgelaufen ist",
+        "func": "\n//If last messuring was more than 15 minutes ago\nif(new Date().getTime() - msg.payload[1].lastMessuringTime >= msg.timer){\n    msg.payload = msg.payload[1];\n    return msg;\n}\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 1080,
+        "wires": [
+            [
+                "7d90581007d7da7f",
+                "5ad95efe7cc760f3"
+            ]
+        ]
+    },
+    {
+        "id": "3973b7e4608c75ab",
+        "type": "inject",
+        "z": "56fe256bdc6888ea",
+        "g": "69570ac14998a30b",
+        "name": "Edit Timer",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"machineName\":\"Tischkreissäge\",\"userID\":100,\"startMessuringTime\":null,\"messuringDuration\":null,\"lastMessuringTime\":1666651167650,\"setupStartTime\":null,\"setupDuration\":null,\"energy\":null,\"ip\":null}",
+        "payloadType": "json",
+        "x": 220,
+        "y": 1440,
+        "wires": [
+            [
+                "b78e456aca118fb3"
+            ]
+        ]
+    },
+    {
+        "id": "e6b116c3c3a0bbe6",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "g": "69570ac14998a30b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "4a061ccc7f34d9dd",
+        "type": "switch",
+        "z": "56fe256bdc6888ea",
+        "g": "27cfd54d06969523",
+        "name": "Prüfe ob schon eine Messung vorliegt",
+        "property": "payload[1].lastMessuringTime",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            },
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 750,
+        "y": 1080,
+        "wires": [
+            [
+                "f53a46c755b4cebd"
+            ],
+            [
+                "32519552d91806ad"
+            ]
+        ]
+    },
+    {
+        "id": "198550b3bf6c8b23",
+        "type": "switch",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "User an Maschine angemeldet?",
+        "property": "payload.userID",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "100",
+                "vt": "num"
+            },
+            {
+                "t": "neq",
+                "v": "100",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2070,
+        "y": 700,
+        "wires": [
+            [
+                "a67b5a153e359c44"
+            ],
+            [
+                "20921d3736e8d107"
+            ]
+        ]
+    },
+    {
+        "id": "72df1a9f84434816",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2650,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "67f0f50d1f3e59c5",
+        "type": "function",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "Bestehende Messung in Eintrag um Messwerte erweitern",
+        "func": "\nvar messuringEndTime = new Date().getTime();\n\n//sum existing messuring values with new values\nmsg.payload.messuringDuration = msg.payload.messuringDuration + msg.messuring.time;\nmsg.payload.lastMessuringTime = messuringEndTime;\nmsg.payload.energy = msg.payload.energy + msg.messuring.energy\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2670,
+        "y": 860,
+        "wires": [
+            [
+                "6dd2888976cb3d05"
+            ]
+        ]
+    },
+    {
+        "id": "6381be337809da09",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1990,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "f131cc992d7af3be",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2790,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "d3d96a5c0c10b29f",
+        "type": "function",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "Properties im Eintrag zurück setzten",
+        "func": "\nvar returnObject = {\n    machineName: msg.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    ip: null\n}\n\nmsg.payload = returnObject;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3190,
+        "y": 580,
+        "wires": [
+            [
+                "6cd10282e0de543b"
+            ]
+        ]
+    },
+    {
+        "id": "20921d3736e8d107",
+        "type": "switch",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "Erste Messung?",
+        "property": "payload.energy",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            },
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2320,
+        "y": 800,
+        "wires": [
+            [
+                "2796066df1a2e319"
+            ],
+            [
+                "67f0f50d1f3e59c5"
+            ]
+        ]
+    },
+    {
+        "id": "2796066df1a2e319",
+        "type": "function",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "Eintrag um Messwerte erweitern",
+        "func": "\nvar messuringEndTime = new Date().getTime();\n\nmsg.payload.messuringDuration = msg.messuring.time;\nmsg.payload.lastMessuringTime = messuringEndTime;\nmsg.payload.energy = msg.messuring.energy\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2590,
+        "y": 800,
+        "wires": [
+            [
+                "6dd2888976cb3d05"
+            ]
+        ]
+    },
+    {
+        "id": "40f2815f320a7491",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3210,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "82162ffd23778a1f",
+        "type": "queuedsqlite",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "mydb": "fe1131055cdbcae8",
+        "sqlquery": "msg.topic",
+        "dbName": "msg.database",
+        "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
+        "sql": "",
+        "name": "db",
+        "x": 2950,
+        "y": 700,
+        "wires": [
+            [
+                "c9332917b00e8832"
+            ]
+        ]
+    },
+    {
+        "id": "712dd35a6f7645a7",
+        "type": "subflow:2a14cb53da10968a",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "find db path in local directory",
+        "x": 2740,
+        "y": 700,
+        "wires": [
+            [
+                "82162ffd23778a1f"
+            ]
+        ]
+    },
+    {
+        "id": "c01ff320764ef67f",
+        "type": "function",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "Eintrag in DB schreiben",
+        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\n//edge case abfangen, wenn zu früh ausgeloggt wurde und\n//noch eine Messung rein kommt, aber startMessuringTime schon zurück gesetzt wurde!\nvar startMessuringTime;\n\nif(msg.payload.startMessuringTime == null) {\n    startMessuringTime = new Date().getTime() - msg.payload.messuringDuration;\n}else{\n    startMessuringTime = msg.payload.startMessuringTime;\n}\n\nvar messuringDuration = msg.payload.messuringDuration;\n\nvar power = msg.payload.energy;\n\nvar message = \"\";\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + machineName + '\\u0022' + \",\" + startMessuringTime + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \",\" + '\\u0022' + message + '\\u0022' + \")\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2850,
+        "y": 640,
+        "wires": [
+            [
+                "712dd35a6f7645a7",
+                "d3d96a5c0c10b29f"
+            ]
+        ]
+    },
+    {
+        "id": "c9332917b00e8832",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3410,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "4a25446c0c4da559",
+        "type": "comment",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "TODO Ende muss noch aus DB raus!",
+        "info": "",
+        "x": 3130,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "09f7804909e0af20",
+        "type": "subflow:2a14cb53da10968a",
+        "z": "56fe256bdc6888ea",
+        "g": "27cfd54d06969523",
+        "name": "find db path in local directory",
+        "x": 1680,
+        "y": 1080,
+        "wires": [
+            [
+                "fc6d41b917715a63"
+            ]
+        ]
+    },
+    {
+        "id": "5ad95efe7cc760f3",
+        "type": "function",
+        "z": "56fe256bdc6888ea",
+        "g": "27cfd54d06969523",
+        "name": "Eintrag in DB schreiben",
+        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\nvar startMessuringTime = msg.payload.startMessuringTime;\n\nvar messuringDuration = msg.payload.messuringDuration;\n\nvar power = msg.payload.energy;\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + maschineName + '\\u0022' + \",\" + startMessuringTime + \",\" + (startMessuringTime + messuringDuration) + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \")\";\n\nmsg.clientAdress = \"http://\" + msg.payload.ip + \"/autoLogout\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1410,
+        "y": 1080,
+        "wires": [
+            [
+                "09f7804909e0af20",
+                "9a5677174650b892"
+            ]
+        ]
+    },
+    {
+        "id": "fc6d41b917715a63",
+        "type": "queuedsqlite",
+        "z": "56fe256bdc6888ea",
+        "g": "27cfd54d06969523",
+        "mydb": "fe1131055cdbcae8",
+        "sqlquery": "msg.topic",
+        "dbName": "msg.database",
+        "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
+        "sql": "",
+        "name": "db",
+        "x": 1930,
+        "y": 1080,
+        "wires": [
+            [
+                "55099211e08bdcb5"
+            ]
+        ]
+    },
+    {
+        "id": "9a5677174650b892",
+        "type": "function",
+        "z": "56fe256bdc6888ea",
+        "g": "27cfd54d06969523",
+        "name": "Properties im Eintrag zurück setzten",
+        "func": "\nvar returnObject = {\n    machineName: msg.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    ip: null\n}\n\nmsg.payload = returnObject;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1710,
+        "y": 1020,
+        "wires": [
+            [
+                "81e58d3615229780"
+            ]
+        ]
+    },
+    {
+        "id": "55099211e08bdcb5",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "g": "27cfd54d06969523",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2310,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "6396a60985c26813",
+        "type": "serial in",
+        "z": "56fe256bdc6888ea",
+        "name": "Serieller Input TEST für Schwellwerte",
+        "serial": "189d98b6e10797a1",
+        "x": 270,
+        "y": 1540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5e9cf3b4afe04546",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "7047bcea21dc8e0d",
+        "type": "change",
+        "z": "56fe256bdc6888ea",
+        "g": "27cfd54d06969523",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "post",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "clientAdress",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1650,
+        "y": 1140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c40620de0f616fc8",
+        "type": "http request",
+        "z": "56fe256bdc6888ea",
+        "g": "27cfd54d06969523",
+        "name": "Info an Mikrocontroller zum Ausloggen",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 2030,
+        "y": 1140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ea6b689fcd6d6364",
+        "type": "comment",
+        "z": "56fe256bdc6888ea",
+        "g": "27cfd54d06969523",
+        "name": "Zurück gestellt",
+        "info": "",
+        "x": 220,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "2ef8075276287a84",
+        "type": "collection",
+        "z": "56fe256bdc6888ea",
+        "g": "69570ac14998a30b",
+        "name": "CurrentMessuringBuffer",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": false,
+        "action": "get entries",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "topic",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "str",
+        "outputs": 1,
+        "x": 470,
+        "y": 1380,
+        "wires": [
+            [
+                "94d5443828424b63"
+            ]
+        ]
+    },
+    {
+        "id": "10928063098554dd",
+        "type": "collection",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "Eintrag erweitern",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": false,
+        "action": "set",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "payload.machineName",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "msg",
+        "outputs": 1,
+        "x": 2450,
+        "y": 520,
+        "wires": [
+            [
+                "72df1a9f84434816"
+            ]
+        ]
+    },
+    {
+        "id": "e3a1c266dd789867",
+        "type": "collection",
+        "z": "56fe256bdc6888ea",
+        "g": "69570ac14998a30b",
+        "name": "CurrentMessuringBuffer",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": true,
+        "action": "clear",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "topic",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "msg",
+        "outputs": 1,
+        "x": 470,
+        "y": 1320,
+        "wires": [
+            [
+                "3af81448c05df57a"
             ]
         ]
     },
@@ -4483,24 +5116,13 @@
         "value": "payload",
         "valueInputType": "msg",
         "outputs": 1,
-        "x": 2630,
+        "x": 3030,
         "y": 800,
         "wires": [
             [
                 "40f2815f320a7491"
             ]
         ]
-    },
-    {
-        "id": "367781f0503baadb",
-        "type": "comment",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "Allgemeines Konto Daten direkt weg schreiben",
-        "info": "",
-        "x": 2090,
-        "y": 600,
-        "wires": []
     },
     {
         "id": "6cd10282e0de543b",
@@ -4520,7 +5142,7 @@
         "value": "payload",
         "valueInputType": "msg",
         "outputs": 1,
-        "x": 2780,
+        "x": 3180,
         "y": 660,
         "wires": [
             [
@@ -4546,7 +5168,7 @@
         "value": "payload",
         "valueInputType": "str",
         "outputs": 1,
-        "x": 540,
+        "x": 420,
         "y": 1000,
         "wires": [
             [
@@ -4555,22 +5177,313 @@
         ]
     },
     {
-        "id": "7d90581007d7da7f",
-        "type": "debug",
+        "id": "b78e456aca118fb3",
+        "type": "collection",
+        "z": "56fe256bdc6888ea",
+        "g": "69570ac14998a30b",
+        "name": "CurrentMessuringBuffer",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": false,
+        "action": "set",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "payload.machineName",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "msg",
+        "outputs": 1,
+        "x": 470,
+        "y": 1440,
+        "wires": [
+            [
+                "e6b116c3c3a0bbe6"
+            ]
+        ]
+    },
+    {
+        "id": "e8e5cb8219247199",
+        "type": "collection",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "Hole Eintrag für Maschine",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": false,
+        "action": "get value",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "machineName",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "msg",
+        "outputs": 1,
+        "x": 1670,
+        "y": 500,
+        "wires": [
+            [
+                "c811bdda2c2e41dc"
+            ]
+        ]
+    },
+    {
+        "id": "81e58d3615229780",
+        "type": "collection",
         "z": "56fe256bdc6888ea",
         "g": "27cfd54d06969523",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1170,
+        "name": "Eintrag zurücksetzten",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": false,
+        "action": "set",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "payload.machineName",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "msg",
+        "outputs": 1,
+        "x": 2080,
+        "y": 1020,
+        "wires": [
+            [
+                "55099211e08bdcb5"
+            ]
+        ]
+    },
+    {
+        "id": "f53a46c755b4cebd",
+        "type": "array-loop",
+        "z": "56fe256bdc6888ea",
+        "g": "27cfd54d06969523",
+        "name": "Schleife durch alle Einträge",
+        "key": "alf53a46c755b4cebd",
+        "keyType": "msg",
+        "reset": false,
+        "resetValue": "value-null",
+        "array": "array",
+        "arrayType": "msg",
+        "x": 740,
         "y": 1000,
-        "wires": []
+        "wires": [
+            [],
+            [
+                "4a061ccc7f34d9dd"
+            ]
+        ]
+    },
+    {
+        "id": "d6b1b6432ce06383",
+        "type": "change",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "machineName",
+                "pt": "msg",
+                "to": "Kreissäge",
+                "tot": "str",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 440,
+        "wires": [
+            [
+                "5eb7685e8e5bbc85"
+            ]
+        ],
+        "info": "Die Messwerte sind derzeit im payload gespeichert.\nWenn wir anschließen einen Eintrag zu der entsprechenden Maschine aus der Liste der Maschinen auslesen, werden die Messwerte überschrieben.\nDaher werden die Messwerte hier unter messuring zwischengespreichert und sind über das Property auch noch im späteren Verlauf des Flows abrufbar."
+    },
+    {
+        "id": "0e224c4203c11eda",
+        "type": "change",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "machineName",
+                "pt": "msg",
+                "to": "Tischkreissäge",
+                "tot": "str",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 480,
+        "wires": [
+            [
+                "5eb7685e8e5bbc85"
+            ]
+        ],
+        "info": "Die Messwerte sind derzeit im payload gespeichert.\nWenn wir anschließen einen Eintrag zu der entsprechenden Maschine aus der Liste der Maschinen auslesen, werden die Messwerte überschrieben.\nDaher werden die Messwerte hier unter messuring zwischengespreichert und sind über das Property auch noch im späteren Verlauf des Flows abrufbar."
+    },
+    {
+        "id": "0af2209aab664a04",
+        "type": "change",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "machineName",
+                "pt": "msg",
+                "to": "Hobel",
+                "tot": "str",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 520,
+        "wires": [
+            [
+                "5eb7685e8e5bbc85"
+            ]
+        ],
+        "info": "Die Messwerte sind derzeit im payload gespeichert.\nWenn wir anschließen einen Eintrag zu der entsprechenden Maschine aus der Liste der Maschinen auslesen, werden die Messwerte überschrieben.\nDaher werden die Messwerte hier unter messuring zwischengespreichert und sind über das Property auch noch im späteren Verlauf des Flows abrufbar."
+    },
+    {
+        "id": "e24885c2931457c7",
+        "type": "change",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "machineName",
+                "pt": "msg",
+                "to": "Bandschleifer",
+                "tot": "str",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 560,
+        "wires": [
+            [
+                "5eb7685e8e5bbc85"
+            ]
+        ],
+        "info": "Die Messwerte sind derzeit im payload gespeichert.\nWenn wir anschließen einen Eintrag zu der entsprechenden Maschine aus der Liste der Maschinen auslesen, werden die Messwerte überschrieben.\nDaher werden die Messwerte hier unter messuring zwischengespreichert und sind über das Property auch noch im späteren Verlauf des Flows abrufbar."
+    },
+    {
+        "id": "220f474c142926eb",
+        "type": "change",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "machineName",
+                "pt": "msg",
+                "to": "Drehmaschine",
+                "tot": "str",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 600,
+        "wires": [
+            [
+                "5eb7685e8e5bbc85"
+            ]
+        ],
+        "info": "Die Messwerte sind derzeit im payload gespeichert.\nWenn wir anschließen einen Eintrag zu der entsprechenden Maschine aus der Liste der Maschinen auslesen, werden die Messwerte überschrieben.\nDaher werden die Messwerte hier unter messuring zwischengespreichert und sind über das Property auch noch im späteren Verlauf des Flows abrufbar."
+    },
+    {
+        "id": "193cc0b8430efe0c",
+        "type": "change",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "machineName",
+                "pt": "msg",
+                "to": "Kappsäge",
+                "tot": "str",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 640,
+        "wires": [
+            [
+                "5eb7685e8e5bbc85"
+            ]
+        ],
+        "info": "Die Messwerte sind derzeit im payload gespeichert.\nWenn wir anschließen einen Eintrag zu der entsprechenden Maschine aus der Liste der Maschinen auslesen, werden die Messwerte überschrieben.\nDaher werden die Messwerte hier unter messuring zwischengespreichert und sind über das Property auch noch im späteren Verlauf des Flows abrufbar."
+    },
+    {
+        "id": "8b28b8b5c10e6862",
+        "type": "change",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "machineName",
+                "pt": "msg",
+                "to": "Schweißgerät",
+                "tot": "str",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1080,
+        "y": 680,
+        "wires": [
+            [
+                "5eb7685e8e5bbc85"
+            ]
+        ],
+        "info": "Die Messwerte sind derzeit im payload gespeichert.\nWenn wir anschließen einen Eintrag zu der entsprechenden Maschine aus der Liste der Maschinen auslesen, werden die Messwerte überschrieben.\nDaher werden die Messwerte hier unter messuring zwischengespreichert und sind über das Property auch noch im späteren Verlauf des Flows abrufbar."
     },
     {
         "id": "2b1b2c4302317ef9",
@@ -4738,265 +5651,6 @@
         ]
     },
     {
-        "id": "9b74d88b44c7ad75",
-        "type": "comment",
-        "z": "56fe256bdc6888ea",
-        "g": "69570ac14998a30b",
-        "name": "Test Trigger für die Zwischenspeicherliste",
-        "info": "",
-        "x": 300,
-        "y": 1600,
-        "wires": []
-    },
-    {
-        "id": "bc0ec04e16a6089e",
-        "type": "change",
-        "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "array",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg",
-                "dc": true
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 540,
-        "y": 1080,
-        "wires": [
-            [
-                "f53a46c755b4cebd"
-            ]
-        ]
-    },
-    {
-        "id": "f53a46c755b4cebd",
-        "type": "array-loop",
-        "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "name": "Schleife durch alle Einträge",
-        "key": "alf53a46c755b4cebd",
-        "keyType": "msg",
-        "reset": false,
-        "resetValue": "value-null",
-        "array": "array",
-        "arrayType": "msg",
-        "x": 860,
-        "y": 1000,
-        "wires": [
-            [],
-            [
-                "4a061ccc7f34d9dd"
-            ]
-        ]
-    },
-    {
-        "id": "32519552d91806ad",
-        "type": "function",
-        "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "name": "Prüfe ob Timer abgelaufen ist",
-        "func": "\n//If last messuring was more than 15 minutes ago\nif(new Date().getTime() - msg.payload[1].lastMessuringTime >= msg.timer){\n    msg.payload = msg.payload[1];\n    return msg;\n}\n\n\n\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1220,
-        "y": 1080,
-        "wires": [
-            [
-                "7d90581007d7da7f",
-                "5ad95efe7cc760f3"
-            ]
-        ]
-    },
-    {
-        "id": "b78e456aca118fb3",
-        "type": "collection",
-        "z": "56fe256bdc6888ea",
-        "g": "69570ac14998a30b",
-        "name": "CurrentMessuringBuffer",
-        "collection": "CurrentMessuringObject",
-        "collectionInputType": "global",
-        "collectionType": "Object",
-        "createCollection": false,
-        "action": "set",
-        "onConflict": "exception",
-        "warnOnConflict": true,
-        "keyOrIndex": "payload.machineName",
-        "keyInputType": "msg",
-        "value": "payload",
-        "valueInputType": "msg",
-        "outputs": 1,
-        "x": 470,
-        "y": 1760,
-        "wires": [
-            [
-                "e6b116c3c3a0bbe6"
-            ]
-        ]
-    },
-    {
-        "id": "3973b7e4608c75ab",
-        "type": "inject",
-        "z": "56fe256bdc6888ea",
-        "g": "69570ac14998a30b",
-        "name": "Edit Timer",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "{\"machineName\":\"Tischkreissäge\",\"userID\":100,\"startMessuringTime\":null,\"messuringDuration\":null,\"lastMessuringTime\":1666651167650,\"setupStartTime\":null,\"setupDuration\":null,\"energy\":null,\"ip\":null}",
-        "payloadType": "json",
-        "x": 220,
-        "y": 1760,
-        "wires": [
-            [
-                "b78e456aca118fb3"
-            ]
-        ]
-    },
-    {
-        "id": "e6b116c3c3a0bbe6",
-        "type": "debug",
-        "z": "56fe256bdc6888ea",
-        "g": "69570ac14998a30b",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 730,
-        "y": 1760,
-        "wires": []
-    },
-    {
-        "id": "4a061ccc7f34d9dd",
-        "type": "switch",
-        "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "name": "Prüfe ob schon eine Messung vorliegt",
-        "property": "payload[1].lastMessuringTime",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "null"
-            },
-            {
-                "t": "nnull"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 870,
-        "y": 1080,
-        "wires": [
-            [
-                "f53a46c755b4cebd"
-            ],
-            [
-                "32519552d91806ad"
-            ]
-        ]
-    },
-    {
-        "id": "e8e5cb8219247199",
-        "type": "collection",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "Hole Eintrag für Maschine",
-        "collection": "CurrentMessuringObject",
-        "collectionInputType": "global",
-        "collectionType": "Object",
-        "createCollection": false,
-        "action": "get value",
-        "onConflict": "exception",
-        "warnOnConflict": true,
-        "keyOrIndex": "machineName",
-        "keyInputType": "msg",
-        "value": "payload",
-        "valueInputType": "msg",
-        "outputs": 1,
-        "x": 1270,
-        "y": 500,
-        "wires": [
-            [
-                "c811bdda2c2e41dc"
-            ]
-        ]
-    },
-    {
-        "id": "198550b3bf6c8b23",
-        "type": "switch",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "User an Maschine angemeldet?",
-        "property": "payload.userID",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "100",
-                "vt": "num"
-            },
-            {
-                "t": "neq",
-                "v": "100",
-                "vt": "num"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 1670,
-        "y": 700,
-        "wires": [
-            [
-                "a67b5a153e359c44"
-            ],
-            [
-                "20921d3736e8d107"
-            ]
-        ]
-    },
-    {
-        "id": "72df1a9f84434816",
-        "type": "debug",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2250,
-        "y": 440,
-        "wires": []
-    },
-    {
         "id": "65871ea9527c1ea3",
         "type": "comment",
         "z": "56fe256bdc6888ea",
@@ -5005,447 +5659,6 @@
         "info": "",
         "x": 1460,
         "y": 220,
-        "wires": []
-    },
-    {
-        "id": "67f0f50d1f3e59c5",
-        "type": "function",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "Bestehende Messung in Eintrag um Messwerte erweitern",
-        "func": "\nvar messuringEndTime = new Date().getTime();\n\n//sum existing messuring values with new values\nmsg.payload.messuringDuration = msg.payload.messuringDuration + msg.messuring.time;\nmsg.payload.lastMessuringTime = messuringEndTime;\nmsg.payload.energy = msg.payload.energy + msg.messuring.energy\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 2270,
-        "y": 860,
-        "wires": [
-            [
-                "6dd2888976cb3d05"
-            ]
-        ]
-    },
-    {
-        "id": "6381be337809da09",
-        "type": "debug",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1590,
-        "y": 660,
-        "wires": []
-    },
-    {
-        "id": "f131cc992d7af3be",
-        "type": "debug",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2390,
-        "y": 580,
-        "wires": []
-    },
-    {
-        "id": "d3d96a5c0c10b29f",
-        "type": "function",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "Properties im Eintrag zurück setzten",
-        "func": "\nvar returnObject = {\n    machineName: msg.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    ip: null\n}\n\nmsg.payload = returnObject;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 2790,
-        "y": 580,
-        "wires": [
-            [
-                "6cd10282e0de543b"
-            ]
-        ]
-    },
-    {
-        "id": "20921d3736e8d107",
-        "type": "switch",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "Erste Messung?",
-        "property": "payload.energy",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "null"
-            },
-            {
-                "t": "nnull"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 1920,
-        "y": 800,
-        "wires": [
-            [
-                "2796066df1a2e319"
-            ],
-            [
-                "67f0f50d1f3e59c5"
-            ]
-        ]
-    },
-    {
-        "id": "2796066df1a2e319",
-        "type": "function",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "Eintrag um Messwerte erweitern",
-        "func": "\nvar messuringEndTime = new Date().getTime();\n\nmsg.payload.messuringDuration = msg.messuring.time;\nmsg.payload.lastMessuringTime = messuringEndTime;\nmsg.payload.energy = msg.messuring.energy\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 2190,
-        "y": 800,
-        "wires": [
-            [
-                "6dd2888976cb3d05"
-            ]
-        ]
-    },
-    {
-        "id": "40f2815f320a7491",
-        "type": "debug",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2810,
-        "y": 800,
-        "wires": []
-    },
-    {
-        "id": "82162ffd23778a1f",
-        "type": "queuedsqlite",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "mydb": "fe1131055cdbcae8",
-        "sqlquery": "msg.topic",
-        "dbName": "msg.database",
-        "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
-        "sql": "",
-        "name": "db",
-        "x": 2550,
-        "y": 700,
-        "wires": [
-            [
-                "c9332917b00e8832"
-            ]
-        ]
-    },
-    {
-        "id": "712dd35a6f7645a7",
-        "type": "subflow:2a14cb53da10968a",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "find db path in local directory",
-        "x": 2340,
-        "y": 700,
-        "wires": [
-            [
-                "82162ffd23778a1f"
-            ]
-        ]
-    },
-    {
-        "id": "c01ff320764ef67f",
-        "type": "function",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "Eintrag in DB schreiben",
-        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\n//edge case abfangen, wenn zu früh ausgeloggt wurde und\n//noch eine Messung rein kommt, aber startMessuringTime schon zurück gesetzt wurde!\nvar startMessuringTime;\n\nif(msg.payload.startMessuringTime == null) {\n    startMessuringTime = new Date().getTime() - msg.payload.messuringDuration;\n}else{\n    startMessuringTime = msg.payload.startMessuringTime;\n}\n\nvar messuringDuration = msg.payload.messuringDuration;\n\nvar power = msg.payload.energy;\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + maschineName + '\\u0022' + \",\" + startMessuringTime + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \")\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 2450,
-        "y": 640,
-        "wires": [
-            [
-                "712dd35a6f7645a7",
-                "d3d96a5c0c10b29f"
-            ]
-        ]
-    },
-    {
-        "id": "c9332917b00e8832",
-        "type": "debug",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 3010,
-        "y": 700,
-        "wires": []
-    },
-    {
-        "id": "4a25446c0c4da559",
-        "type": "comment",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "TODO Ende muss noch aus DB raus!",
-        "info": "",
-        "x": 2730,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "09f7804909e0af20",
-        "type": "subflow:2a14cb53da10968a",
-        "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "name": "find db path in local directory",
-        "x": 1800,
-        "y": 1080,
-        "wires": [
-            [
-                "fc6d41b917715a63"
-            ]
-        ]
-    },
-    {
-        "id": "5ad95efe7cc760f3",
-        "type": "function",
-        "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "name": "Eintrag in DB schreiben",
-        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\nvar startMessuringTime = msg.payload.startMessuringTime;\n\nvar messuringDuration = msg.payload.messuringDuration;\n\nvar power = msg.payload.energy;\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + maschineName + '\\u0022' + \",\" + startMessuringTime + \",\" + (startMessuringTime + messuringDuration) + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \")\";\n\nmsg.clientAdress = \"http://\" + msg.payload.ip + \"/autoLogout\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1530,
-        "y": 1080,
-        "wires": [
-            [
-                "09f7804909e0af20",
-                "9a5677174650b892"
-            ]
-        ]
-    },
-    {
-        "id": "fc6d41b917715a63",
-        "type": "queuedsqlite",
-        "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "mydb": "fe1131055cdbcae8",
-        "sqlquery": "msg.topic",
-        "dbName": "msg.database",
-        "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
-        "sql": "",
-        "name": "db",
-        "x": 2050,
-        "y": 1080,
-        "wires": [
-            [
-                "55099211e08bdcb5"
-            ]
-        ]
-    },
-    {
-        "id": "81e58d3615229780",
-        "type": "collection",
-        "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "name": "Eintrag zurücksetzten",
-        "collection": "CurrentMessuringObject",
-        "collectionInputType": "global",
-        "collectionType": "Object",
-        "createCollection": false,
-        "action": "set",
-        "onConflict": "exception",
-        "warnOnConflict": true,
-        "keyOrIndex": "payload.machineName",
-        "keyInputType": "msg",
-        "value": "payload",
-        "valueInputType": "msg",
-        "outputs": 1,
-        "x": 2200,
-        "y": 1020,
-        "wires": [
-            [
-                "55099211e08bdcb5"
-            ]
-        ]
-    },
-    {
-        "id": "9a5677174650b892",
-        "type": "function",
-        "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "name": "Properties im Eintrag zurück setzten",
-        "func": "\nvar returnObject = {\n    machineName: msg.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    ip: null\n}\n\nmsg.payload = returnObject;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1830,
-        "y": 1020,
-        "wires": [
-            [
-                "81e58d3615229780"
-            ]
-        ]
-    },
-    {
-        "id": "55099211e08bdcb5",
-        "type": "debug",
-        "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2430,
-        "y": 1080,
-        "wires": []
-    },
-    {
-        "id": "6396a60985c26813",
-        "type": "serial in",
-        "z": "56fe256bdc6888ea",
-        "name": "Serieller Input TEST für Schwellwerte",
-        "serial": "189d98b6e10797a1",
-        "x": 270,
-        "y": 1920,
-        "wires": [
-            [
-                "5e9cf3b4afe04546"
-            ]
-        ]
-    },
-    {
-        "id": "5e9cf3b4afe04546",
-        "type": "debug",
-        "z": "56fe256bdc6888ea",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 550,
-        "y": 1920,
-        "wires": []
-    },
-    {
-        "id": "7047bcea21dc8e0d",
-        "type": "change",
-        "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "method",
-                "pt": "msg",
-                "to": "post",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "clientAdress",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1770,
-        "y": 1140,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "c40620de0f616fc8",
-        "type": "http request",
-        "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "name": "Info an Mikrocontroller zum Ausloggen",
-        "method": "use",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "senderr": false,
-        "x": 2150,
-        "y": 1140,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "ea6b689fcd6d6364",
-        "type": "comment",
-        "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "name": "Zurück gestellt",
-        "info": "",
-        "x": 340,
-        "y": 1000,
         "wires": []
     }
 ]
