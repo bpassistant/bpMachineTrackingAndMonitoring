@@ -87,7 +87,9 @@
             "70b6a07615db8980"
         ],
         "x": 154,
-        "y": 39
+        "y": 39,
+        "w": 1812,
+        "h": 282
     },
     {
         "id": "89199902fcdf75a8",
@@ -112,10 +114,13 @@
             "3ce2fcefd9d45e8c",
             "1c47cae84a9535b8",
             "de62a886d974dd24",
-            "ee8cb9783b54dcf7"
+            "2f2a0091fb6bf425",
+            "b6d083d37c688ee7"
         ],
         "x": 154,
-        "y": 419
+        "y": 419,
+        "w": 1832,
+        "h": 182
     },
     {
         "id": "69570ac14998a30b",
@@ -141,7 +146,7 @@
             "e6b116c3c3a0bbe6"
         ],
         "x": 114,
-        "y": 1239,
+        "y": 1559,
         "w": 732,
         "h": 242
     },
@@ -167,7 +172,9 @@
             "65871ea9527c1ea3"
         ],
         "x": 114,
-        "y": 59
+        "y": 59,
+        "w": 1632,
+        "h": 202
     },
     {
         "id": "b885f38124686d57",
@@ -187,7 +194,9 @@
             "40548839ac496a07"
         ],
         "x": 54,
-        "y": 139
+        "y": 139,
+        "w": 872,
+        "h": 82
     },
     {
         "id": "fc2cb2ff3b2df9ef",
@@ -243,7 +252,9 @@
             "c9332917b00e8832"
         ],
         "x": 114,
-        "y": 359
+        "y": 359,
+        "w": 3012,
+        "h": 542
     },
     {
         "id": "27cfd54d06969523",
@@ -267,16 +278,44 @@
             "81e58d3615229780",
             "9a5677174650b892",
             "55099211e08bdcb5",
-            "c40620de0f616fc8",
-            "2ea929b1ffe168fb",
             "f6be19d698c8e981",
             "bc0ec04e16a6089e",
             "4a061ccc7f34d9dd",
             "f53a46c755b4cebd",
-            "7047bcea21dc8e0d"
+            "7047bcea21dc8e0d",
+            "c40620de0f616fc8",
+            "ea6b689fcd6d6364"
         ],
-        "x": 114,
-        "y": 939
+        "x": 234,
+        "y": 959,
+        "w": 2312,
+        "h": 222
+    },
+    {
+        "id": "633c6dec65d21494",
+        "type": "group",
+        "z": "838e54b719ad8caa",
+        "name": "",
+        "style": {
+            "stroke": "#6f2fa0",
+            "fill": "#dbcbe7",
+            "fill-opacity": "0.5",
+            "label": true
+        },
+        "nodes": [
+            "633ac16905b63ef3",
+            "61de7ef9aec533a4",
+            "366568672f2f8d07",
+            "7f72784462e7990f",
+            "1f42e3fcd2640ba1",
+            "a21f5fcfcf1d74d8",
+            "8bbc34e52c812ca4",
+            "06fe109c0f62f46f"
+        ],
+        "x": 154,
+        "y": 659,
+        "w": 1312,
+        "h": 182
     },
     {
         "id": "fe1131055cdbcae8",
@@ -785,7 +824,7 @@
         "name": "HTTP Antwort an den Mikrocontroller",
         "statusCode": "200",
         "headers": {},
-        "x": 1630,
+        "x": 1810,
         "y": 560,
         "wires": []
     },
@@ -803,7 +842,8 @@
         "y": 500,
         "wires": [
             [
-                "5f8fa0c6c734d247"
+                "5f8fa0c6c734d247",
+                "b6d083d37c688ee7"
             ]
         ]
     },
@@ -993,7 +1033,7 @@
         "y": 500,
         "wires": [
             [
-                "967ead936df91cca"
+                "2f2a0091fb6bf425"
             ]
         ]
     },
@@ -1002,14 +1042,14 @@
         "type": "function",
         "z": "838e54b719ad8caa",
         "g": "89199902fcdf75a8",
-        "name": "Eintrag in DB schreiben",
-        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\nvar startMessuringTime = msg.payload.startMessuringTime;\n\nvar messuringDuration = msg.payload.messuringDuration;\n\nvar power = msg.payload.energy;\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + maschineName + '\\u0022' + \",\" + startMessuringTime + \",\" + (startMessuringTime + messuringDuration) + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \")\";\n\nreturn msg;",
+        "name": "Eintrag für DB vorbereiten",
+        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\nvar startMessuringTime = msg.payload.startMessuringTime;\n\nvar messuringDuration = msg.payload.messuringDuration;\n\nvar power = msg.payload.energy;\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + maschineName + '\\u0022' + \",\" + startMessuringTime + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \")\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 670,
+        "x": 990,
         "y": 560,
         "wires": [
             [
@@ -1024,7 +1064,7 @@
         "z": "838e54b719ad8caa",
         "g": "89199902fcdf75a8",
         "name": "find db path in local directory",
-        "x": 960,
+        "x": 1280,
         "y": 560,
         "wires": [
             [
@@ -1043,7 +1083,7 @@
         "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
         "sql": "",
         "name": "db",
-        "x": 1170,
+        "x": 1510,
         "y": 560,
         "wires": [
             [
@@ -1064,7 +1104,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 990,
+        "x": 1170,
         "y": 500,
         "wires": [
             [
@@ -1090,7 +1130,7 @@
         "value": "payload",
         "valueInputType": "msg",
         "outputs": 1,
-        "x": 1280,
+        "x": 1460,
         "y": 500,
         "wires": [
             [
@@ -1112,19 +1152,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1550,
+        "x": 1730,
         "y": 500,
-        "wires": []
-    },
-    {
-        "id": "ee8cb9783b54dcf7",
-        "type": "comment",
-        "z": "838e54b719ad8caa",
-        "g": "89199902fcdf75a8",
-        "name": "TODO Ende muss noch aus DB raus!",
-        "info": "",
-        "x": 990,
-        "y": 460,
         "wires": []
     },
     {
@@ -1239,6 +1268,216 @@
         "statusType": "auto",
         "x": 1850,
         "y": 220,
+        "wires": []
+    },
+    {
+        "id": "633ac16905b63ef3",
+        "type": "http in",
+        "z": "838e54b719ad8caa",
+        "g": "633c6dec65d21494",
+        "name": "",
+        "url": "/checkAutoLogout",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 280,
+        "y": 740,
+        "wires": [
+            [
+                "61de7ef9aec533a4",
+                "06fe109c0f62f46f"
+            ]
+        ]
+    },
+    {
+        "id": "61de7ef9aec533a4",
+        "type": "function",
+        "z": "838e54b719ad8caa",
+        "g": "633c6dec65d21494",
+        "name": "Machinennamen dekodieren",
+        "func": "\nmsg.payload.machineName = decodeURIComponent(escape(msg.payload.machineName));\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 800,
+        "wires": [
+            [
+                "366568672f2f8d07"
+            ]
+        ]
+    },
+    {
+        "id": "366568672f2f8d07",
+        "type": "collection",
+        "z": "838e54b719ad8caa",
+        "g": "633c6dec65d21494",
+        "name": "Eintrag auslesen",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": false,
+        "action": "get value",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "payload.machineName",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "msg",
+        "outputs": 1,
+        "x": 570,
+        "y": 740,
+        "wires": [
+            [
+                "1f42e3fcd2640ba1"
+            ]
+        ]
+    },
+    {
+        "id": "7f72784462e7990f",
+        "type": "function",
+        "z": "838e54b719ad8caa",
+        "g": "633c6dec65d21494",
+        "name": "Pürfe ob der Timer überschritten wurde",
+        "func": "\n//If last messuring was more than 15 minutes ago\nif(msg.payload[1].lastMessuringTime != null){\n    \n    if(new Date().getTime() - msg.payload[1].lastMessuringTime >= msg.timer){\n        msg.payload = \"autoLogout\";\n    }else{\n        msg.payload = \"still active\";\n    }\n}else{\n        msg.payload = \"nothing messured yet\";\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 740,
+        "wires": [
+            [
+                "a21f5fcfcf1d74d8",
+                "8bbc34e52c812ca4"
+            ]
+        ]
+    },
+    {
+        "id": "1f42e3fcd2640ba1",
+        "type": "change",
+        "z": "838e54b719ad8caa",
+        "g": "633c6dec65d21494",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "timer",
+                "pt": "msg",
+                "to": "900000",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 800,
+        "wires": [
+            [
+                "7f72784462e7990f"
+            ]
+        ]
+    },
+    {
+        "id": "a21f5fcfcf1d74d8",
+        "type": "http response",
+        "z": "838e54b719ad8caa",
+        "g": "633c6dec65d21494",
+        "name": "HTTP Antwort an den Mikrocontroller",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1290,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "8bbc34e52c812ca4",
+        "type": "debug",
+        "z": "838e54b719ad8caa",
+        "g": "633c6dec65d21494",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1210,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "2f2a0091fb6bf425",
+        "type": "switch",
+        "z": "838e54b719ad8caa",
+        "g": "89199902fcdf75a8",
+        "name": "Liegt überhaupt eine Messung vor?",
+        "property": "payload.energy",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            },
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 680,
+        "y": 560,
+        "wires": [
+            [
+                "3ce2fcefd9d45e8c"
+            ],
+            [
+                "967ead936df91cca"
+            ]
+        ]
+    },
+    {
+        "id": "06fe109c0f62f46f",
+        "type": "debug",
+        "z": "838e54b719ad8caa",
+        "g": "633c6dec65d21494",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "b6d083d37c688ee7",
+        "type": "debug",
+        "z": "838e54b719ad8caa",
+        "g": "89199902fcdf75a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 460,
         "wires": []
     },
     {
@@ -1469,7 +1708,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "CREATE TABLE data( userid INTEGER NOT NULL, machineName TEXT NOT NULL, start INTEGER NOT NULL, setUpTime INTEGER, duration INTEGER NOT NULL, power INTEGER NOT NULL, message TEXT NOT NULL, PRIMARY KEY (userid, machineName, start ) FOREIGN KEY(userid) REFERENCES user(userid), FOREIGN KEY(machineName) REFERENCES machine(machineName))",
+        "topic": "CREATE TABLE data( userid INTEGER NOT NULL, machineName TEXT NOT NULL, start INTEGER NOT NULL, end INTEGER NOT NULL,setUpTime INTEGER NOT NULL, duration INTEGER NOT NULL, power INTEGER NOT NULL, PRIMARY KEY (userid, machineName, start ) FOREIGN KEY(userid) REFERENCES user(userid), FOREIGN KEY(machineName) REFERENCES machine(machineName))",
         "payload": "",
         "payloadType": "date",
         "x": 290,
@@ -1643,7 +1882,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 600000, 0, 5000,1200, \"Test Message\")",
+        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 600000, 800000, 0, 5000,1200)",
         "payload": "",
         "payloadType": "date",
         "x": 320,
@@ -2744,7 +2983,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1657975740000, 0, 1657993740000-1657993740000, 1200, \"Test Message\")",
+        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1657975740000, 1657993740000, 0, 1657993740000-1657993740000, 1200)",
         "payload": "",
         "payloadType": "date",
         "x": 310,
@@ -2773,7 +3012,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1647075600000, 0, 5000,1200, \"Test Message\")",
+        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1647075600000, 1647090000000, 0, 5000,1200)",
         "payload": "",
         "payloadType": "date",
         "x": 310,
@@ -2802,7 +3041,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1650636000000, 0, 5000,1200, \"Test Message\")",
+        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1650636000000, 1650650400000, 0, 5000,1200)",
         "payload": "",
         "payloadType": "date",
         "x": 310,
@@ -3633,35 +3872,6 @@
         "wires": []
     },
     {
-        "id": "445c16f470ef0f92",
-        "type": "inject",
-        "z": "5d3034dc83dfbde2",
-        "name": "CREATE logs",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "SQLITE_MAX_LENGTH",
-        "payload": "",
-        "payloadType": "date",
-        "x": 650,
-        "y": 140,
-        "wires": [
-            [
-                "0e854629aa4dc9fc"
-            ]
-        ]
-    },
-    {
         "id": "e85747894aceec43",
         "type": "function",
         "z": "56fe256bdc6888ea",
@@ -3739,7 +3949,7 @@
         "valueInputType": "str",
         "outputs": 1,
         "x": 470,
-        "y": 1380,
+        "y": 1700,
         "wires": [
             [
                 "94d5443828424b63"
@@ -3769,7 +3979,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 210,
-        "y": 1380,
+        "y": 1700,
         "wires": [
             [
                 "2ef8075276287a84"
@@ -4023,7 +4233,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 730,
-        "y": 1380,
+        "y": 1700,
         "wires": []
     },
     {
@@ -4201,7 +4411,7 @@
         "valueInputType": "msg",
         "outputs": 1,
         "x": 470,
-        "y": 1320,
+        "y": 1640,
         "wires": [
             [
                 "3af81448c05df57a"
@@ -4222,7 +4432,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 730,
-        "y": 1320,
+        "y": 1640,
         "wires": []
     },
     {
@@ -4248,7 +4458,7 @@
         "payload": "",
         "payloadType": "str",
         "x": 210,
-        "y": 1320,
+        "y": 1640,
         "wires": [
             [
                 "e3a1c266dd789867"
@@ -4319,32 +4529,6 @@
         ]
     },
     {
-        "id": "2ea929b1ffe168fb",
-        "type": "inject",
-        "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "name": "Setze Timer für auto Logout",
-        "props": [
-            {
-                "p": "timer",
-                "v": "900000",
-                "vt": "num"
-            }
-        ],
-        "repeat": "60",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "60",
-        "topic": "",
-        "x": 280,
-        "y": 980,
-        "wires": [
-            [
-                "f6be19d698c8e981"
-            ]
-        ]
-    },
-    {
         "id": "f6be19d698c8e981",
         "type": "collection",
         "z": "56fe256bdc6888ea",
@@ -4363,7 +4547,7 @@
         "valueInputType": "str",
         "outputs": 1,
         "x": 540,
-        "y": 980,
+        "y": 1000,
         "wires": [
             [
                 "bc0ec04e16a6089e"
@@ -4385,7 +4569,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1170,
-        "y": 980,
+        "y": 1000,
         "wires": []
     },
     {
@@ -4561,7 +4745,7 @@
         "name": "Test Trigger für die Zwischenspeicherliste",
         "info": "",
         "x": 300,
-        "y": 1280,
+        "y": 1600,
         "wires": []
     },
     {
@@ -4586,7 +4770,7 @@
         "to": "",
         "reg": false,
         "x": 540,
-        "y": 1060,
+        "y": 1080,
         "wires": [
             [
                 "f53a46c755b4cebd"
@@ -4606,7 +4790,7 @@
         "array": "array",
         "arrayType": "msg",
         "x": 860,
-        "y": 980,
+        "y": 1000,
         "wires": [
             [],
             [
@@ -4627,7 +4811,7 @@
         "finalize": "",
         "libs": [],
         "x": 1220,
-        "y": 1060,
+        "y": 1080,
         "wires": [
             [
                 "7d90581007d7da7f",
@@ -4654,7 +4838,7 @@
         "valueInputType": "msg",
         "outputs": 1,
         "x": 470,
-        "y": 1440,
+        "y": 1760,
         "wires": [
             [
                 "e6b116c3c3a0bbe6"
@@ -4680,7 +4864,7 @@
         "payload": "{\"machineName\":\"Tischkreissäge\",\"userID\":100,\"startMessuringTime\":null,\"messuringDuration\":null,\"lastMessuringTime\":1666651167650,\"setupStartTime\":null,\"setupDuration\":null,\"energy\":null,\"ip\":null}",
         "payloadType": "json",
         "x": 220,
-        "y": 1440,
+        "y": 1760,
         "wires": [
             [
                 "b78e456aca118fb3"
@@ -4701,7 +4885,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 730,
-        "y": 1440,
+        "y": 1760,
         "wires": []
     },
     {
@@ -4724,7 +4908,7 @@
         "repair": false,
         "outputs": 2,
         "x": 870,
-        "y": 1060,
+        "y": 1080,
         "wires": [
             [
                 "f53a46c755b4cebd"
@@ -5006,7 +5190,7 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Eintrag in DB schreiben",
-        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\nvar startMessuringTime = msg.payload.startMessuringTime;\n\nvar messuringDuration = msg.payload.messuringDuration;\n\nvar power = msg.payload.energy;\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + maschineName + '\\u0022' + \",\" + startMessuringTime + \",\" + (startMessuringTime + messuringDuration) + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \")\";\n\nreturn msg;",
+        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\n//edge case abfangen, wenn zu früh ausgeloggt wurde und\n//noch eine Messung rein kommt, aber startMessuringTime schon zurück gesetzt wurde!\nvar startMessuringTime;\n\nif(msg.payload.startMessuringTime == null) {\n    startMessuringTime = new Date().getTime() - msg.payload.messuringDuration;\n}else{\n    startMessuringTime = msg.payload.startMessuringTime;\n}\n\nvar messuringDuration = msg.payload.messuringDuration;\n\nvar power = msg.payload.energy;\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + maschineName + '\\u0022' + \",\" + startMessuringTime + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \")\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5057,7 +5241,7 @@
         "g": "27cfd54d06969523",
         "name": "find db path in local directory",
         "x": 1800,
-        "y": 1060,
+        "y": 1080,
         "wires": [
             [
                 "fc6d41b917715a63"
@@ -5077,12 +5261,11 @@
         "finalize": "",
         "libs": [],
         "x": 1530,
-        "y": 1060,
+        "y": 1080,
         "wires": [
             [
                 "09f7804909e0af20",
-                "9a5677174650b892",
-                "7047bcea21dc8e0d"
+                "9a5677174650b892"
             ]
         ]
     },
@@ -5098,7 +5281,7 @@
         "sql": "",
         "name": "db",
         "x": 2050,
-        "y": 1060,
+        "y": 1080,
         "wires": [
             [
                 "55099211e08bdcb5"
@@ -5124,7 +5307,7 @@
         "valueInputType": "msg",
         "outputs": 1,
         "x": 2200,
-        "y": 1000,
+        "y": 1020,
         "wires": [
             [
                 "55099211e08bdcb5"
@@ -5144,7 +5327,7 @@
         "finalize": "",
         "libs": [],
         "x": 1830,
-        "y": 1000,
+        "y": 1020,
         "wires": [
             [
                 "81e58d3615229780"
@@ -5166,31 +5349,39 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 2430,
-        "y": 1060,
+        "y": 1080,
         "wires": []
     },
     {
-        "id": "c40620de0f616fc8",
-        "type": "http request",
+        "id": "6396a60985c26813",
+        "type": "serial in",
         "z": "56fe256bdc6888ea",
-        "g": "27cfd54d06969523",
-        "name": "Info an Mikrocontroller zum Ausloggen",
-        "method": "use",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "senderr": false,
-        "x": 2150,
-        "y": 1120,
+        "name": "Serieller Input TEST für Schwellwerte",
+        "serial": "189d98b6e10797a1",
+        "x": 270,
+        "y": 1920,
         "wires": [
             [
-                "55099211e08bdcb5"
+                "5e9cf3b4afe04546"
             ]
         ]
+    },
+    {
+        "id": "5e9cf3b4afe04546",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 1920,
+        "wires": []
     },
     {
         "id": "7047bcea21dc8e0d",
@@ -5220,40 +5411,41 @@
         "to": "",
         "reg": false,
         "x": 1770,
-        "y": 1120,
+        "y": 1140,
         "wires": [
             []
         ]
     },
     {
-        "id": "6396a60985c26813",
-        "type": "serial in",
+        "id": "c40620de0f616fc8",
+        "type": "http request",
         "z": "56fe256bdc6888ea",
-        "name": "Serieller Input TEST für Schwellwerte",
-        "serial": "189d98b6e10797a1",
-        "x": 270,
-        "y": 1600,
+        "g": "27cfd54d06969523",
+        "name": "Info an Mikrocontroller zum Ausloggen",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 2150,
+        "y": 1140,
         "wires": [
-            [
-                "5e9cf3b4afe04546"
-            ]
+            []
         ]
     },
     {
-        "id": "5e9cf3b4afe04546",
-        "type": "debug",
+        "id": "ea6b689fcd6d6364",
+        "type": "comment",
         "z": "56fe256bdc6888ea",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 610,
-        "y": 1600,
+        "g": "27cfd54d06969523",
+        "name": "Zurück gestellt",
+        "info": "",
+        "x": 340,
+        "y": 1000,
         "wires": []
     }
 ]

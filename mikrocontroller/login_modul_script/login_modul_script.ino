@@ -31,8 +31,6 @@ String serverName = "http://192.168.10.82:1880/";
 int userId;
 int defaultId = 100;
 bool isLoggedIn = false;
-unsigned long timeOfLogin = 0;
-unsigned long loginDuration = 0;
 
 //--- LED config ---
 enum ledStates
@@ -136,6 +134,8 @@ void loop()
   checkPinPadInput();
 
   checkAutoLogoutTime();
+
+  checkLEDblink();
 }
 
 void checkPinPadInput()
@@ -187,6 +187,8 @@ void checkLogin()
   testID();
 
   evaluateCheckLoginPayload(payload);
+
+  inputID = ""; // clear input password
 }
 
 void evaluateCheckLoginPayload(String payload)
@@ -199,7 +201,6 @@ void evaluateCheckLoginPayload(String payload)
     ledState = green;
     updateLEDs(ledState);
     isLoggedIn = true;
-    timeOfLogin = currentMillis;
     bufferTimeBetweenRequests = currentMillis;
   }
   else if(payload == "")
@@ -208,7 +209,6 @@ void evaluateCheckLoginPayload(String payload)
     ledState = permissionNotHighEnough_Magenta;
     updateLEDs(ledState);
     isLoggedIn = true;
-    timeOfLogin = currentMillis;
     bufferTimeBetweenRequests = currentMillis;
   }
   else if(payload == "")
@@ -218,28 +218,24 @@ void evaluateCheckLoginPayload(String payload)
     blink = true;
     blinkStartMillis = currentMillis;
     userId = 0;
-    inputID = "";
   }
   else{
-
     //Error occured
     ledState = systemError_Blue;
     blink = true;
     blinkStartMillis = currentMillis;
     userId = 0;
-    inputID = "";
   }
 }
 
 void testID()
 {
 
-  if (test_id == inputID)
+  if (test_id == userId.toInt())
   {
     ledState = green;
     updateLEDs(green);
     isLoggedIn = true;
-    timeOfLogin = millis();
 
     #ifdef debugging
     Serial.println("ID is correct");
@@ -255,33 +251,19 @@ void testID()
     Serial.println("ID is incorrect, try again");
     #endif
   }
-
-  inputID = ""; // clear input password
 }
 
 void logout()
 {
-  loginDuration = millis() - timeOfLogin;
-
   sendDataToServer();
 
   reset();
 }
 
-void reset()
-{
-  loginDuration = 0;
-  timeOfLogin = 0;
-  bufferTimeBetweenRequests = 0;
-  userId = 0;
-
-  isLoggedIn = false;
-}
-
 void sendDataToServer()
 {
   //TODO vielleicht zwischen logoutFromMachine und autoLogoutFromMachine unterscheiden?
-  String serverPath = serverName + "logoutFromMachine" + "?userid=" + userId + "&machineName=" + machineName + "&loginDuration=" + loginDuration;
+  String serverPath = serverName + "logout" + "?userid=" + userId + "&machineName=" + machineName;
 
   String payload = httpGETRequest(serverPath);
 
@@ -299,11 +281,21 @@ void sendDataToServer()
   }
 }
 
+void reset()
+{
+  bufferTimeBetweenRequests = 0;
+  userId = 0;
+  isLoggedIn = false;
+}
+
 void checkAutoLogoutTime()
 {
   if (isLoggedIn && (millis() > bufferTimeBetweenRequests + TIME_CHECK_IF_SESSION_ACTIVE))
   {
-    // TODO Serial Print einbauen
+    #ifdef debugging
+    Serial.print("Sende Anfrage an Server, ob die Session noch aktiv ist.");
+    #endif
+
     checkActiveSession();
   }
 }
@@ -311,7 +303,7 @@ void checkAutoLogoutTime()
 void checkActiveSession()
 {
   // Send request to server and check whether the machine has still an active session
-  String serverPath = serverName + "checkForActiveSession" + "?machineName=" + machineName;
+  String serverPath = serverName + "checkAutoLogout" + "?machineName=" + machineName;
 
   String payload = httpGETRequest(serverPath);
 
@@ -326,20 +318,21 @@ void checkActiveSession()
 void evaluateActiveSessionPayload(String payload)
 {
 
-  if (payload == "nothing messured yet")
+  if (payload == "still active" || payload == "nothing messured yet")
   {
-    // Reset buffer to now
+    // reset buffer to now
     bufferTimeBetweenRequests = millis();
-  }
-  else if (payload == "something messured and timer is still active")
+
+  }else if (payload == "autoLogout")
   {
-    // TODO if the top two cases are the same, combine them
-    bufferTimeBetweenRequests = millis();
-  }
-  else if (payload == "something messured but timer is due")
-  {
-    // Auto logout
+    // auto logout
     logout();
+  }else
+  {
+    #ifdef debugging
+    Serial.print("Error in function evaluateActiveSessionPayload. Wrong payload!?");
+    Serial.println(payload);
+    #endif
   }
 }
 
