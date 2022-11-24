@@ -87,7 +87,9 @@
             "70b6a07615db8980"
         ],
         "x": 154,
-        "y": 39
+        "y": 39,
+        "w": 1812,
+        "h": 282
     },
     {
         "id": "89199902fcdf75a8",
@@ -116,7 +118,9 @@
             "b6d083d37c688ee7"
         ],
         "x": 154,
-        "y": 419
+        "y": 419,
+        "w": 1832,
+        "h": 182
     },
     {
         "id": "69570ac14998a30b",
@@ -290,7 +294,9 @@
             "06fe109c0f62f46f"
         ],
         "x": 154,
-        "y": 659
+        "y": 659,
+        "w": 1312,
+        "h": 182
     },
     {
         "id": "bdd517b93ca42ddf",
@@ -1630,7 +1636,7 @@
         "name": "Tabellen löschen:",
         "info": "",
         "x": 120,
-        "y": 860,
+        "y": 900,
         "wires": []
     },
     {
@@ -1680,7 +1686,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "CREATE TABLE machine( machineName TEXT PRIMARY KEY NOT NULL, permission INTEGER NOT NULL, setUpTime INTEGER NOT NULL, cost INTEGER NOT NULL, materialConsumption INTEGER , area TEXT, factor REAL NOT NULL )",
+        "topic": "CREATE TABLE machine( machineName TEXT PRIMARY KEY NOT NULL, permission INTEGER NOT NULL,  fixedCostsPerUsage INTEGER, area TEXT )",
         "payload": "",
         "payloadType": "date",
         "x": 310,
@@ -1709,7 +1715,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "CREATE TABLE data( userid INTEGER NOT NULL, machineName TEXT NOT NULL, start INTEGER NOT NULL, end INTEGER NOT NULL,setUpTime INTEGER NOT NULL, duration INTEGER NOT NULL, power INTEGER NOT NULL, PRIMARY KEY (userid, machineName, start ) FOREIGN KEY(userid) REFERENCES user(userid), FOREIGN KEY(machineName) REFERENCES machine(machineName))",
+        "topic": "CREATE TABLE data( userid INTEGER NOT NULL, machineName TEXT NOT NULL, start INTEGER NOT NULL, setUpTime INTEGER, workDuration INTEGER NOT NULL, power INTEGER NOT NULL,message TEXT, PRIMARY KEY (userid, machineName, start ) FOREIGN KEY(userid) REFERENCES user(userid), FOREIGN KEY(machineName) REFERENCES machine(machineName))",
         "payload": "",
         "payloadType": "date",
         "x": 290,
@@ -1767,7 +1773,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO machine VALUES(\"test maschine\", 2, 5, 0.99, NULL, \"holz\", 1)",
+        "topic": "INSERT INTO machine VALUES(\"test maschine\", 2, 1, \"holz\")",
         "payload": "",
         "payloadType": "date",
         "x": 300,
@@ -1883,7 +1889,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 600000, 800000, 0, 5000,1200)",
+        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 600000, 0, 5000,1200, \"Test Message\")",
         "payload": "",
         "payloadType": "date",
         "x": 320,
@@ -2240,7 +2246,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 310,
-        "y": 960,
+        "y": 1000,
         "wires": [
             [
                 "0e854629aa4dc9fc"
@@ -2269,7 +2275,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 320,
-        "y": 920,
+        "y": 960,
         "wires": [
             [
                 "0e854629aa4dc9fc"
@@ -2298,7 +2304,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 310,
-        "y": 880,
+        "y": 920,
         "wires": [
             [
                 "0e854629aa4dc9fc"
@@ -2330,7 +2336,7 @@
         "name": "DB Queries:",
         "info": "## ",
         "x": 170,
-        "y": 1060,
+        "y": 1080,
         "wires": []
     },
     {
@@ -2984,7 +2990,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1657975740000, 1657993740000, 0, 1657993740000-1657993740000, 1200)",
+        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1657975740000, 0, 1657993740000-1657993740000, 1200, \"Test Message\")",
         "payload": "",
         "payloadType": "date",
         "x": 310,
@@ -3013,7 +3019,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1647075600000, 1647090000000, 0, 5000,1200)",
+        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1647075600000, 0, 5000,1200, NULL)",
         "payload": "",
         "payloadType": "date",
         "x": 310,
@@ -3042,7 +3048,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1650636000000, 1650650400000, 0, 5000,1200)",
+        "topic": "INSERT INTO data VALUES(100, \"Schweißgerät\", 1650636000000, 0, 5000,1200, \"Test Message\")",
         "payload": "",
         "payloadType": "date",
         "x": 310,
@@ -3193,7 +3199,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO machine VALUES(\"Schweißgerät\", 5, 2, 3, NULL, \"Metal\", 1)",
+        "topic": "INSERT INTO machine VALUES(\"Schweißgerät\", 5, NULL, \"Metal\")",
         "payload": "",
         "payloadType": "date",
         "x": 300,
@@ -3351,7 +3357,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO machine VALUES(\"Säge\", 1, 1, 0, 0.49, \"Holz\", 1)",
+        "topic": "INSERT INTO machine VALUES(\"Säge\", 1,0.49, \"Holz\")",
         "payload": "",
         "payloadType": "date",
         "x": 300,
@@ -3413,7 +3419,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 590,
-        "y": 880,
+        "y": 920,
         "wires": [
             [
                 "0e854629aa4dc9fc"
@@ -3772,7 +3778,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "CREATE TABLE logs( id INTEGER, time INTEGER, message TEXT)",
+        "topic": "CREATE TABLE logs( id INTEGER PRIMARY KEY AUTOINCREMENT, time INTEGER NOT NULL, message TEXT NOT NULL)",
         "payload": "",
         "payloadType": "date",
         "x": 290,
@@ -3871,6 +3877,64 @@
         "x": 350,
         "y": 1680,
         "wires": []
+    },
+    {
+        "id": "646b3af70bf21fc8",
+        "type": "inject",
+        "z": "5d3034dc83dfbde2",
+        "name": "INSERT logs",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "INSERT INTO logs(time, message) VALUES(1669305208, \"testing message\")",
+        "payload": "",
+        "payloadType": "date",
+        "x": 290,
+        "y": 860,
+        "wires": [
+            [
+                "c48ee34242888ca3"
+            ]
+        ]
+    },
+    {
+        "id": "0a7cd3c5923e07a4",
+        "type": "inject",
+        "z": "5d3034dc83dfbde2",
+        "name": "DROP logs",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "DROP TABLE logs",
+        "payload": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 1040,
+        "wires": [
+            [
+                "c48ee34242888ca3"
+            ]
+        ]
     },
     {
         "id": "e85747894aceec43",
