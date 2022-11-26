@@ -1,6 +1,8 @@
 function convertMillisToDate(millis){
-    var date = new Date(millis);
-    return date.toLocaleString('de-DE', {day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'});
+    if(millis != null) {
+        var date = new Date(millis);
+        return date.toLocaleString('de-DE', {day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'});
+    }
 }
 
 function padTo2Digits(num) {
@@ -48,4 +50,11 @@ function calculateKWH(power, duration) {
 
 function calculatePrice(kWH, price) {
     return (kWH * price).toFixed(2) + " €";
+}
+
+function checkIfDefaultUser(user) {
+    if(user == 100) {
+        return "Werkstatt Konto";
+    }
+    return user;
 }

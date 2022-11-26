@@ -24,7 +24,10 @@
 
 const char *ssid = wifinetwork;
 const char *password = wifipassword;
-String serverName = "http://192.168.10.82:1880/";
+//Server Hostname: monitoringServer
+//IP zuhause: 192.168.10.101
+//IP b+p: 192.168.2.197
+String serverName = "http://monitoringServer:1880/";
 
 //--- User and Machine config ---
 #define machineName "Testmaschine"
