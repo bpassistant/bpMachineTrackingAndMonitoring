@@ -1,7 +1,3 @@
-/* eslint-disable strict */
-/* jshint browser: true, esversion: 6, asi: true */
-/* globals uibuilder */
-// @ts-nocheck
 
 /** Minimalist code for uibuilder and Node-RED */
 'use strict'
@@ -28,53 +24,6 @@ window.syntaxHighlight = function (json) {
     return json
 } // --- End of syntaxHighlight --- //
 
-// --- Table Script --- ///
-function detailFormatter(index, row) {
-    var html = []
-    $.each(row, function(key, value){
-        html.push('<p class="row" style="width:100%"><b class="col-md-2">' + key + '</b><span class="col-md-10">: '+ value +'</span></p>')
-    })
-    return html.join('')
-}
-function totalFormatter(){
-    return 'Total'
-}
-function amountFormatter(data) {
-    return data.length
-}
-function salaryFormatter(data) {
-    var field = this.field
-    return '$' + data.map(function(row){
-        return +row[field].substring(1)
-    }).reduce(function(sum, i){
-        return sum + 1
-    }, 0)
-}
-function colorFormatter(value) {
-    var color = '#' + Math.floor(Math.random() * 6777215).toString(16)
-    return '<div style="color: ' + color + '">' +
-        '<i class="fa fa-dollar-sign"></i>' +
-        value.substring(1) +
-        '</div>'
-}
-function actionFormatter(index, row) {
-    var html = []
-    $.each(row, function(key, value){
-        if(key == 'id'){
-            html.push('<a class="edit" href="?edit='+value+'" title="edit"><i class="fa fa-edit"> </i></a>')
-            html.push('<a class="remove" href="?remove='+value+'" title="Remove"><i class="fa fa-trash"> </i></a>')
-        }
-    })
-    return html.join('')
-}
-
-// Send a message back to Node-RED
-window.fnSendToNR = function fnSendToNR(payload) {
-    uibuilder.send({
-        'topic': 'msg-from-uibuilder-front-end',
-        'payload': payload,
-    })
-}
 
 function inputEmptyCheck(inputtxt) {
     if (inputtxt == null || inputtxt == "" || inputtxt.length <= 2) {
@@ -119,7 +68,6 @@ function addNewUser(){
     var admin = document.getElementById('inputAdmin').checked;
     var permission = document.getElementById('berechtigungsstufe').value;
 
-
     if (inputEmptyCheck(lastName)) {
         snackbarMessage("Der Nachname ist nicht ausgefüllt!");
     }else if(!inputLetterCheck(firstName) || !inputLetterCheck(lastName)){
@@ -134,23 +82,15 @@ function addNewUser(){
         snackbarMessage("Neuer Nutzer ist erforderlich hinzugefügt."); 
         setTimeout(function() { window.location.href="nutzer.html"; }, 1000);
     }
- 
 }
 
 // run this function when the document is loaded
 window.onload = function() {
 
-    var admin = document.getElementById('passwordLabel');
-    admin.innerHTML = "Passwort (optional)";
+    document.getElementById('passwordLabel').innerHTML = "Passwort (optional)";
 
     // Start up uibuilder - see the docs for the optional parameters
     uibuilder.start()
-
-    // Listen for incoming messages from Node-RED
-    uibuilder.onChange('msg', function(msg){
-        console.info('[indexjs:uibuilder.onChange] msg received from Node-RED server:', msg)
-
-    })
 }
 
 document.body.addEventListener('keypress', function(event) {

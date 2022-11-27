@@ -1,7 +1,3 @@
-/* eslint-disable strict */
-/* jshint browser: true, esversion: 6, asi: true */
-/* globals uibuilder */
-// @ts-nocheck
 
 /** Minimalist code for uibuilder and Node-RED */
 'use strict'
@@ -28,57 +24,9 @@ window.syntaxHighlight = function (json) {
     return json
 } // --- End of syntaxHighlight --- //
 
-// --- Table Script --- ///
-function detailFormatter(index, row) {
-    var html = []
-    $.each(row, function(key, value){
-        html.push('<p class="row" style="width:100%"><b class="col-md-2">' + key + '</b><span class="col-md-10">: '+ value +'</span></p>')
-    })
-    return html.join('')
-}
-function totalFormatter(){
-    return 'Total'
-}
-function amountFormatter(data) {
-    return data.length
-}
-function salaryFormatter(data) {
-    var field = this.field
-    return '$' + data.map(function(row){
-        return +row[field].substring(1)
-    }).reduce(function(sum, i){
-        return sum + 1
-    }, 0)
-}
-function colorFormatter(value) {
-    var color = '#' + Math.floor(Math.random() * 6777215).toString(16)
-    return '<div style="color: ' + color + '">' +
-        '<i class="fa fa-dollar-sign"></i>' +
-        value.substring(1) +
-        '</div>'
-}
-function actionFormatter(index, row) {
-    var html = []
-    $.each(row, function(key, value){
-        if(key == 'id'){
-            html.push('<a class="edit" href="?edit='+value+'" title="edit"><i class="fa fa-edit"> </i></a>')
-            html.push('<a class="remove" href="?remove='+value+'" title="Remove"><i class="fa fa-trash"> </i></a>')
-        }
-    })
-    return html.join('')
-}
-
-// Send a message back to Node-RED
-window.fnSendToNR = function fnSendToNR(payload) {
-    uibuilder.send({
-        'topic': 'msg-from-uibuilder-front-end',
-        'payload': payload,
-    })
-}
 
 function inputEmptyCheck(inputtxt) {
-    console.log(inputtxt.length);
-    if (inputtxt == null || inputtxt == "" || inputtxt.length <= 2) {
+    if (inputtxt == null || inputtxt == "") {
         return true;}
     else{
         return false;
@@ -94,7 +42,6 @@ function inputLetterCheck(inputtxt) {
     }
 }
 
-
 function snackbarMessage(str){
     var x = document.getElementById("snackbar");
     x.innerHTML= str;
@@ -102,38 +49,56 @@ function snackbarMessage(str){
     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
 
+function checkIfMachineExists(){
+    uibuilder.send({
+        'topic': "SELECT true FROM machine WHERE machineName ="+ "'" +document.getElementById('inputMaschinenname').value +"'",
+        'type': "machineExists"
+    });
+}
 
 function addNewMachine(){
+
     var machineName = document.getElementById('inputMaschinenname').value;
+    var phaseNumber = document.getElementById('inputStromphasen').value;
     var permission = document.getElementById('berechtigungsstufe').value;
-    var setUpTime = document.getElementById('inputRüstzeiten').value;
-    var cost = document.getElementById('inputKosten').value;
-    var materialConsumption = document.getElementById('inputMaterialverbrauch').value;
+    var fixedCostsPerUsage = document.getElementById('inputFixKosten').value;
     var area = document.getElementById('inputBereich').value;
-    var factor = document.getElementById('inputFaktor').value;
+
 
     if(inputEmptyCheck(machineName)){
-        snackbarMessage("Maschinenname darf nicht leer oder zu kürz sein!")   
-       }else{ 
+
+        snackbarMessage("Es muss ein Maschinenname angegeben werden!");
+
+    }else if(inputEmptyCheck(phaseNumber)){
+
+        snackbarMessage("Es muss eine Anzahl an Phasen angegeben werden!");
+
+    }else{ 
         uibuilder.send({
-        'topic': 'INSERT INTO machine VALUES("'+machineName+'", "'+permission+'", "'+setUpTime+'", "'+cost+'", "'+materialConsumption+'", "'+area+'", "'+factor+'")'
-        })
-        snackbarMessage("Neue Maschine ist hinzufügt");
+            'topic': 'INSERT INTO machine VALUES("'+machineName+'", "'+phaseNumber+'", "'+permission+'", "'+fixedCostsPerUsage+'", "'+area+'")'
+        });
+        snackbarMessage("Neue Maschine angelegt!");
         setTimeout(function() { window.location.href="maschinen.html"; }, 1000);
     }
 }
 
-
 // run this function when the document is loaded
 window.onload = function() {
     // Start up uibuilder - see the docs for the optional parameters
-    uibuilder.start()
+    uibuilder.start();
 
-    // Listen for incoming messages from Node-RED
     uibuilder.onChange('msg', function(msg){
-        console.info('[indexjs:uibuilder.onChange] msg received from Node-RED server:', msg)
+        console.info('[indexjs:uibuilder.onChange] msg received from Node-RED server:', msg);
 
-    })
+        if(msg.type == "machineExists"){
+
+            if(msg.payload.length != 0){
+                snackbarMessage("Es ist bereits eine Maschine mit diesem Namen vorhanden!");
+            }else{
+                addNewMachine();
+            }
+        }
+    });
 }
 
 document.body.addEventListener('keypress', function(event) {

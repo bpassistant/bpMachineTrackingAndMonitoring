@@ -1,7 +1,3 @@
-/* eslint-disable strict */
-/* jshint browser: true, esversion: 6, asi: true */
-/* globals uibuilder */
-// @ts-nocheck
 
 /** Minimalist code for uibuilder and Node-RED */
 'use strict'
@@ -28,56 +24,11 @@ window.syntaxHighlight = function (json) {
     return json
 } // --- End of syntaxHighlight --- //
 
-// --- Table Script --- ///
-function detailFormatter(index, row) {
-    var html = []
-    $.each(row, function(key, value){
-        html.push('<p class="row" style="width:100%"><b class="col-md-2">' + key + '</b><span class="col-md-10">: '+ value +'</span></p>')
-    })
-    return html.join('')
-}
-function totalFormatter(){
-    return 'Total'
-}
-function amountFormatter(data) {
-    return data.length
-}
-function salaryFormatter(data) {
-    var field = this.field
-    return '$' + data.map(function(row){
-        return +row[field].substring(1)
-    }).reduce(function(sum, i){
-        return sum + 1
-    }, 0)
-}
-function colorFormatter(value) {
-    var color = '#' + Math.floor(Math.random() * 6777215).toString(16)
-    return '<div style="color: ' + color + '">' +
-        '<i class="fa fa-dollar-sign"></i>' +
-        value.substring(1) +
-        '</div>'
-}
-function actionFormatter(index, row) {
-    var html = []
-    $.each(row, function(key, value){
-        if(key == 'id'){
-            html.push('<a class="edit" href="?edit='+value+'" title="edit"><i class="fa fa-edit"> </i></a>')
-            html.push('<a class="remove" href="?remove='+value+'" title="Remove"><i class="fa fa-trash"> </i></a>')
-        }
-    })
-    return html.join('')
-}
+var machineName;
 
-// Send a message back to Node-RED
-window.fnSendToNR = function fnSendToNR(payload) {
-    uibuilder.send({
-        'topic': 'msg-from-uibuilder-front-end',
-        'payload': payload,
-    })
-}
 function inputEmptyCheck(inputtxt) {
     console.log(inputtxt.length);
-    if (inputtxt == null || inputtxt == "" || inputtxt.length <= 2) {
+    if (inputtxt == null || inputtxt == "") {
         return true;}
     else{
         return false;
@@ -93,7 +44,6 @@ function inputLetterCheck(inputtxt) {
     }
 }
 
-
 function snackbarMessage(str){
     var x = document.getElementById("snackbar");
     x.innerHTML= str;
@@ -102,24 +52,22 @@ function snackbarMessage(str){
 }
 
 function editMachine(){
-    var machineNameOld = msg.payload[0].machineName;
-    var machineName = document.getElementById('inputMaschinenname').value;
+
+    var phaseNumber = document.getElementById('inputStromphasen').value;
     var permission = document.getElementById('berechtigungsstufe').value;
-    var setUpTime = document.getElementById('inputRüstzeiten').value;
-    var cost = document.getElementById('inputKosten').value;
-    var materialConsumption = document.getElementById('inputMaterialverbrauch').value;
+    var fixedCostsPerUsage = document.getElementById('inputFixKosten').value;
     var area = document.getElementById('inputBereich').value;
-    var factor = document.getElementById('inputFaktor').value;
 
+    if(inputEmptyCheck(phaseNumber)){
 
-    if(inputEmptyCheck(machineName)){
-        snackbarMessage("Maschinenname darf nicht leer oder zu kürz sein!")   
-       }else{ 
+        snackbarMessage("Es muss eine Anzahl an Phasen angegeben werden!");
+    }else{ 
         uibuilder.send({
-            'topic': 'UPDATE machine SET machineName = "'+machineName+'", permission='+permission+', setUpTime='+setUpTime+', cost ='+cost+', materialConsumption= '+materialConsumption+', area= "'+area+'", factor= '+factor+' WHERE machineName = "'+machineNameOld+'"'
+            'topic': 'UPDATE machine SET phaseNumber='+phaseNumber+', permission='+permission+', fixedCostsPerUsage='+fixedCostsPerUsage+', area= "'+area+'" WHERE machineName = "'+machineName+'"'
         });
+
         snackbarMessage("Die Daten wurden erfolgreich aktualisiert");
-        setTimeout(function() { window.location.href="maschinen.html"; }, 1000);
+        setTimeout(function() {window.location.href="maschinen.html"; }, 1000);
     }
 }
 
@@ -128,27 +76,29 @@ window.onload = function() {
     // Start up uibuilder - see the docs for the optional parameters
     uibuilder.start()
 
+    document.getElementById('inputMaschinenname').ariaReadOnly = true;
+
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const machine = urlParams.get('machine')
-    console.log("Test: "+machine);
+    machineName = urlParams.get('machine')
 
-    
-    uibuilder.send({
-        'topic': "SELECT * FROM machine WHERE machineName=" + "'" + machine + "'"
-    })
+    if(userID != undefined && typeof machineName === 'string'){
+
+        uibuilder.send({
+            'topic': "SELECT * FROM machine WHERE machineName=" + "'" + machine + "'"
+        });
+    }else{
+        snackbarMessage("Es wurde kein oder ein falscher Maschinenname als Parameter übergeben!");
+    }
     
     // Listen for incoming messages from Node-RED
     uibuilder.onChange('msg', function(msg){
         console.info('[indexjs:uibuilder.onChange] msg received from Node-RED server:', msg)
         
-        document.getElementById('inputMaschinenname').value = msg.payload[0].machineName;
+        document.getElementById('inputStromphasen').value = msg.payload[0].phaseNumber;
         document.getElementById('berechtigungsstufe').value = msg.payload[0].permission;
-        document.getElementById('inputRüstzeiten').value = msg.payload[0].setUpTime;
-        document.getElementById('inputKosten').value = msg.payload[0].cost;
-        document.getElementById('inputMaterialverbrauch').value = msg.payload[0].materialConsumption;
+        document.getElementById('inputFixKosten').value = msg.payload[0].fixedCostsPerUsage;
         document.getElementById('inputBereich').value = msg.payload[0].area;
-        document.getElementById('inputFaktor').value = msg.payload[0].factor;
     })
 }
 
@@ -157,6 +107,6 @@ document.body.addEventListener('keypress', function(event) {
         event.preventDefault();
         event.stopImmediatePropagation();
         
-        document.getElementById("addMachineButton").click();
+        document.getElementById("editMachineButton").click();
     }
 });

@@ -1,7 +1,3 @@
-/* eslint-disable strict */
-/* jshint browser: true, esversion: 6, asi: true */
-/* globals uibuilder */
-// @ts-nocheck
 
 /** Minimalist code for uibuilder and Node-RED */
 'use strict'
@@ -28,53 +24,7 @@ window.syntaxHighlight = function (json) {
     return json
 } // --- End of syntaxHighlight --- //
 
-// --- Table Script --- ///
-function detailFormatter(index, row) {
-    var html = []
-    $.each(row, function(key, value){
-        html.push('<p class="row" style="width:100%"><b class="col-md-2">' + key + '</b><span class="col-md-10">: '+ value +'</span></p>')
-    })
-    return html.join('')
-}
-function totalFormatter(){
-    return 'Total'
-}
-function amountFormatter(data) {
-    return data.length
-}
-function salaryFormatter(data) {
-    var field = this.field
-    return '$' + data.map(function(row){
-        return +row[field].substring(1)
-    }).reduce(function(sum, i){
-        return sum + 1
-    }, 0)
-}
-function colorFormatter(value) {
-    var color = '#' + Math.floor(Math.random() * 6777215).toString(16)
-    return '<div style="color: ' + color + '">' +
-        '<i class="fa fa-dollar-sign"></i>' +
-        value.substring(1) +
-        '</div>'
-}
-function actionFormatter(index, row) {
-    var html = []
-    $.each(row, function(key, value){
-        if(key == 'id'){
-            html.push('<a class="edit" href="?edit='+value+'" title="edit"><i class="fa fa-edit"> </i></a>')
-            html.push('<a class="remove" href="?remove='+value+'" title="Remove"><i class="fa fa-trash"> </i></a>')
-        }
-    })
-    return html.join('')
-}
-
-// Send a message back to Node-RED
-window.fnSendToNR = function fnSendToNR(payload) {
-    uibuilder.send({
-        'topic': 'msg-from-uibuilder-front-end',
-        'payload': payload,
-    })
-}
+var userID;
 
 function inputEmptyCheck(inputtxt) {
     if (inputtxt == null || inputtxt == "" || inputtxt.length <= 2) {
@@ -93,29 +43,15 @@ function inputLetterCheck(inputtxt) {
     }
 }
 
-
 function adminPassCheck(admin, password){
-    if(admin && !inputEmptyCheck(password)){
-        return true;
-    }else if (admin && inputEmptyCheck(password)){
+    if (admin && inputEmptyCheck(password)){
         return false;
-    }else if (!admin && inputEmptyCheck(password)){
-        return true;
-    }else if (!admin && !inputEmptyCheck(password)){
+    }else{
         return true;
     }
 }
-function snackbarMessage(str){
-    var x = document.getElementById("snackbar");
-    x.innerHTML= str;
-    x.className = "show";
-    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-}
 
 function editUser(){
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const userid = urlParams.get('userid');
 
     var firstName = document.getElementById('inputVorname').value;
     var lastName = document.getElementById('inputNachname').value;
@@ -125,15 +61,20 @@ function editUser(){
     var permission = document.getElementById('berechtigungsstufe').value;
 
     if (inputEmptyCheck(lastName)) {
-        snackbarMessage("Der Nachname ist nicht ausgefüllt!");
+
+        snackbarMessage("Der Nachname/Beschreibung ist nicht angegeben!");
+
     }else if(!inputLetterCheck(firstName) || !inputLetterCheck(lastName)){
-        snackbarMessage("Dürfen keine Sonderzeichnen oder Nummern bei den Namen eingegeben werden!"); 
+
+        snackbarMessage("Bei den Namen dürfen keine Sonderzeichnen oder Nummern angegeben werden!"); 
+
     }else if(!adminPassCheck(admin, password)){
-        snackbarMessage("Bei Admin muss ein Passwort gesetzt werden!"); 
+
+        snackbarMessage("Für einen Admin muss ein Passwort gesetzt werden!"); 
 
     }else{
         uibuilder.send({
-            'topic': 'UPDATE user SET password="'+password+'",lastName= "'+lastName+'",firstname ="'+firstName+'",admin= '+admin+',permission= '+permission+',company= "'+company+'" WHERE userid = '+userid+''
+            'topic': 'UPDATE user SET password="'+password+'",lastName= "'+lastName+'",firstname ="'+firstName+'",admin= '+admin+',permission= '+permission+',company= "'+company+'" WHERE userid = '+userID+''
         });
         snackbarMessage("Die Daten wurden erfolgreich aktualisiert"); 
         setTimeout(function() { window.location.href="nutzer.html"; }, 1000);
@@ -145,31 +86,37 @@ window.onload = function() {
     // Start up uibuilder - see the docs for the optional parameters
     uibuilder.start()
 
+    document.getElementById('passwordLabel').innerHTML = "Passwort (optional)";
+
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const userid = urlParams.get('userid')
-    console.log("Test: "+userid);
+    userID = urlParams.get('userid');
 
-    
-    uibuilder.send({
-        'topic': "SELECT * FROM user WHERE userid=" + userid
-    })
-    
+    if(userID != undefined && userID.length == 3){
+        uibuilder.send({
+            'topic': "SELECT * FROM user WHERE userid=" + userID
+        })
+    }else{
+        snackbarMessage("Es wurde keine oder eine falsche UserID als Parameter übergeben!");
+    }
 
     // Listen for incoming messages from Node-RED
     uibuilder.onChange('msg', function(msg){
         console.info('[indexjs:uibuilder.onChange] msg received from Node-RED server:', msg)
 
-
-        document.getElementById('inputVorname').value = msg.payload[0].firstName;
-        document.getElementById('inputNachname').value = msg.payload[0].lastName;
-        document.getElementById('inputPasswort').value = msg.payload[0].password;
-        document.getElementById('inputFirma').value = msg.payload[0].company;
-        document.getElementById('inputAdmin').checked = msg.payload[0].admin;
-        document.getElementById('berechtigungsstufe').value = msg.payload[0].permission;
-
-        document.getElementById('inputPasswort').type = "text";
+        fillForm(msg);
     })
+}
+
+function fillForm(msg) {
+    document.getElementById('inputVorname').value = msg.payload[0].firstName
+    document.getElementById('inputNachname').value = msg.payload[0].lastName
+    document.getElementById('inputPasswort').value = msg.payload[0].password
+    document.getElementById('inputFirma').value = msg.payload[0].company
+    document.getElementById('inputAdmin').checked = msg.payload[0].admin
+    document.getElementById('berechtigungsstufe').value = msg.payload[0].permission
+
+    document.getElementById('inputPasswort').type = "text"
 }
 
 document.body.addEventListener('keypress', function(event) {
@@ -177,7 +124,7 @@ document.body.addEventListener('keypress', function(event) {
         event.preventDefault();
         event.stopImmediatePropagation();
         
-        document.getElementById("addUserButton").click();
+        document.getElementById("editUserButton").click();
     }
 });
 
@@ -189,4 +136,11 @@ function isAdmin(checkbox){
     } else {
         admin.innerHTML = "Passwort (Optional)";
     }
+}
+
+function snackbarMessage(str){
+    var x = document.getElementById("snackbar");
+    x.innerHTML= str;
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }

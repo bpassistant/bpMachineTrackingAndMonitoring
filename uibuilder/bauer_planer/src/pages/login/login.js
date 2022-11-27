@@ -20,22 +20,12 @@ window.login = function login() {
 
         uibuilder.send({
             'topic': "SELECT true FROM user WHERE userID ="+userID,
-            'name': "checkUser"
+            'type': "checkUser"
         })
 
     } else {
 
         showLoginErrorMessage("Die Benutzer ID muss 3 Ziffern lang sein.");
-    }
-}
-
-function navigator(admin) {
-   if (admin){
-        window.location.href="../übersicht/übersicht.html";
-        console.log("Login succeeded as Admin");
-    }else{
-        window.location.href="../übersicht/übersichtNormalerNutzer.html";
-        console.log("Login succeeded as user");
     }
 }
 
@@ -51,7 +41,7 @@ window.onload = function() {
     uibuilder.onChange('msg', function(msg){
         console.info('[indexjs:uibuilder.onChange] msg received from Node-RED server:', msg.payload)
    
-        if (msg.name == "checkUser"){
+        if (msg.type == "checkUser"){
 
             if(msg.payload == ""){
 
@@ -61,16 +51,13 @@ window.onload = function() {
 
                 uibuilder.send({
                     'topic': "SELECT password, admin, firstName, lastname  FROM user WHERE userID =" +userID,
-                    'name' : "checkPass"
+                    'type' : "checkPass"
                 })
-                console.log("User exist")
             }
 
-        }else if (msg.name == "checkPass"){
+        }else if (msg.type == "checkPass"){
 
             if ( msg.payload[0]["password"] ==  password ){
-
-                navigator(msg.payload[0]["admin"]);
 
                 var name;
                 if(msg.payload[0]["firstName"] === undefined){
@@ -83,6 +70,8 @@ window.onload = function() {
                 localStorage.setItem("name", name);
                 localStorage.setItem("admin", msg.payload[0]["admin"]);
                 localStorage.setItem("userID", userID);
+
+                navigator(msg.payload[0]["admin"]);
 
             } else {
 
@@ -108,3 +97,11 @@ function showLoginErrorMessage(message) {
     errorMessage.style.display = "block";
     errorMessage.innerHTML = message;
 }
+
+function navigator(admin) {
+    if (admin){
+         window.location.href="../übersicht/übersicht.html";
+     }else{
+         window.location.href="../übersicht/übersichtNormalerNutzer.html";
+     }
+ }

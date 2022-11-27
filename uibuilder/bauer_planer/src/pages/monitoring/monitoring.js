@@ -232,7 +232,7 @@ function exportXLSX(){
     var workBook = XLSX.utils.book_new();                               
     workBook.Props = {
         Title: "Übersicht für ausgewählten Zeitraum",
-        Author: localStorage.getItem("fullName"),
+        Author: localStorage.getItem("name"),
         CreatedDate: new Date()
     };
 
