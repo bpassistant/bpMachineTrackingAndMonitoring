@@ -28,6 +28,9 @@ window.syntaxHighlight = function (json) {
 function stringFormat(str) {
     return str.replace(/['"]+/g, '');
 }
+
+var bufferData;
+var bufferEntry;
  
 // run this function when the document is loaded
 window.onload = function() {
@@ -67,10 +70,13 @@ window.onload = function() {
                     title: 'Berechtigungsstufe',
                 }],
                 data: msg.payload
-              })
+            })
         }
 
         if(msg.type == "getDataForDataTable") {
+
+            bufferData = msg.payload;
+
             $('#dataTable').bootstrapTable({
                 columns: [{
                     field: 'machineName',
@@ -94,51 +100,48 @@ window.onload = function() {
                     clickToSelect: false,
                     formatter : function(value,row,index) {
                         
-                        return '<a href="übersichtNormalerNutzer.html" type="button" class="mr-4 btn btn-primary" role="button" ><i class="fas fa-info" aria-hidden="true"></a>';
+                        return '<a href="übersichtNormalerNutzer.html" type="button" class="mr-4 btn btn-primary" role="button" data-toggle="modal" data-target="#exampleModalCenter" onclick="getEntryDataFromBuffer('+index+')"><i class="fas fa-info" aria-hidden="true"></a>';
                     }
                 }],
                 data: msg.payload
             })
-            /*
-                , {
-                    field: 'steUpTime',
-                    title: 'Einrichtungsdauer',
-                    sortable: "true",
-                    formatter: "convertMillisToHoursMinutesSeconds"
-                }, {
-                    field: 'power',
-                    title: 'Strom in Watt',
-                    sortable: "true",
-                    formatter: "wattFormatter"
-                }, {
-                    field: 'kWh',
-                    title: 'kWh',
-                    sortable: "true",
-                    formatter: "calculateKWHFromRow"
-                }
-
-            */
         }
     })
-
 }
 
-function changePowerCosts(){
-    var inputPowerCosts = document.getElementById('inputPowerCosts').value;
-   
-    //TODO Console.log löschen und Wert an Datenbank Senden!
-    console.log(inputPowerCosts);
+function getEntryDataFromBuffer(index){
 
-    const eMsg_2 = document.getElementById('powerCosts')
-    eMsg_2.innerHTML = inputPowerCosts;
+    bufferEntry = bufferData[index];
+
+    var entryArray = [];
+    entryArray.push({fieldName: "Maschinenname", entry: bufferEntry.machineName});
+    entryArray.push({fieldName: "Start", entry: convertMillisToDate(bufferEntry.start)});
+    entryArray.push({fieldName: "Rüstzeit", entry: convertMillisToHoursMinutesSeconds(bufferEntry.setUpTime)});
+    entryArray.push({fieldName: "Arbeitszeit", entry: convertMillisToHoursMinutesSeconds(bufferEntry.workDuration)});
+    entryArray.push({fieldName: "Wattstunden", entry: kWHFormatter(bufferEntry.power)});
+    entryArray.push({fieldName: "Kosten", entry: calculatePrice(bufferEntry.power, localStorage.getItem("powerCost"))});
+
+    $('#entryTable').bootstrapTable({
+        columns: [{
+            field: 'fieldName',
+            title: 'Beschreibung'
+        },{
+            field: 'entry',
+            title: 'Eintrag'
+        }],
+        data: entryArray
+    })
+
+    document.getElementById("message").innerHTML = bufferEntry.message;
 }
 
-/*
-function checkAdmin(adminPath, normalPath){
-    if(localStorage.getItem("admin") === 1){
-        window.location.href="../übersicht/übersicht.html";
-    } else {
-        window.location.href="../übersicht/übersichtNormalerNutzer.html";
-    }
+function saveMessage(){
+
+    var message = document.getElementById("message").value;
+    var machineName = bufferEntry.machineName;
+    var start = bufferEntry.start;
+    
+    uibuilder.send({
+        'topic': 'UPDATE data SET message="'+message+'" WHERE machineName="'+machineName+'" AND start='+start+''
+    });
 }
-*/

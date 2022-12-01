@@ -1,7 +1,3 @@
-/* eslint-disable strict */
-/* jshint browser: true, esversion: 6, asi: true */
-/* globals uibuilder */
-// @ts-nocheck
 
 /** Minimalist code for uibuilder and Node-RED */
 'use strict'
@@ -15,6 +11,7 @@ const MessageType = {
 
 var startDatePicker;
 var endDatePicker;
+var bufferData;
 
 function stringFormat(str) {
     return str.replace(/['"]+/g, '');
@@ -38,7 +35,27 @@ uibuilder.onChange('msg', function(msg){
 
     console.info('[indexjs:uibuilder.onChange] msg received from Node-RED server:', msg)
     
-    if(msg.messageType == MessageType.getDataForThisMonth || msg.messageType == MessageType.getDataForSelected){
+    if(msg.messageType == MessageType.getDataForThisMonth){
+
+        var overViewData = createOverviewDataObject(msg.payload);
+
+        $('#overviewTable').bootstrapTable({
+            columns: [{
+                field: 'machineHours',
+                title: 'Maschinenstunden',
+            }, {
+                field: 'wattHours',
+                title: 'Wattstunden',
+                formatter: "kWHFormatter"
+            }, {
+                field: 'powerCosts',
+                title: 'Stromkosten (' + localStorage.getItem("powerCost") + " €/kWh)",
+            }],
+            data: overViewData
+        });
+    } else if(msg.messageType == MessageType.getDataForThisMonth || msg.messageType == MessageType.getDataForSelected){
+
+        bufferData = msg.payload;
 
         $('#dataTable').bootstrapTable({
             columns: [{
@@ -63,66 +80,32 @@ uibuilder.onChange('msg', function(msg){
                 sortable: "true",
                 formatter: "convertMillisToDate"
             }, {
-                field: 'end',
-                title: 'Ende',
-                sortable: "true",
-                formatter: "convertMillisToDate"
-            }, {
-                field: 'duration',
-                title: 'Dauer',
+                field: 'setUpTime',
+                title: 'Rüstzeit',
                 sortable: "true",
                 formatter: "convertMillisToHoursMinutesSeconds"
             }, {
-                field: 'power',
-                title: 'Strom in Watt',
+                field: 'workDuration',
+                title: 'Dauer',
                 sortable: "true",
-                formatter: "wattFormatter"
-            }, {
-                field: 'kWh',
-                title: 'kWh',
-                sortable: "true",
-                formatter: "calculateKWHFromRow"
+                formatter: "convertMillisToHoursMinutesSeconds"
             },{
-                field: 'company',
-                title: 'Firma',
-                sortable: "true"
-            },]
+                field: 'power',
+                title: 'Wattstunden',
+                sortable: "true",
+                formatter: "kWHFormatter"
+            }]
         });
         
         $('#dataTable').bootstrapTable("load", msg.payload);
-    }   
-   
 
-    if(msg.messageType == MessageType.getDataForThisMonth){
-
-        var overViewData = createOverviewDataObject(msg.payload);
-
-        $('#overviewTable').bootstrapTable({
-            columns: [{
-                field: 'machineHours',
-                title: 'Maschinenstunden',
-            }, {
-                field: 'wattHours',
-                title: 'Wattstunden',
-                formatter: "kWHFormatter"
-            }, {
-                field: 'powerCosts',
-                title: 'Stromkosten (' + localStorage.getItem("powerCost") + " €/kWh)",
-            }],
-            data: overViewData
-        });
-    }
-
-    if(msg.messageType == MessageType.getUserNames){
+    } else if(msg.messageType == MessageType.getUserNames){
         fillUserDropdown(msg.payload);
-    }
 
-    if(msg.messageType == MessageType.getMachineNames){
+    } else if(msg.messageType == MessageType.getMachineNames){
         fillMachineDropdown(msg.payload);
     }
-    
 });
-
 
 function getUserAndMachines(){
 
@@ -146,25 +129,31 @@ function getAllDataForSelected() {
     var querry;
 
     var selectedUserid = document.getElementById("userDropdown").value;
+    var machineDropdown = document.getElementById("machineDropdown");
+    var selectedMachine = machineDropdown.options[machineDropdown.selectedIndex].text;
 
-    var e = document.getElementById("machineDropdown");
-    var selectedMachine = e.options[e.selectedIndex].text;
+    var startDate = new Date(startDatePicker.value).getTime();
+    var endData = new Date(endDatePicker.value).getTime();
 
+    //get all entrys
     if(selectedMachine == "Alle" && selectedUserid == 0){
 
-        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE start >= " + new Date(startDatePicker.value).getTime() + " AND start <= " + new Date(endDatePicker.value).getTime() + " ORDER BY start";
+        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
 
     }else if(selectedUserid != 0 && selectedMachine == "Alle"){
 
-        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE user.userid = "+ selectedUserid +" AND start >= " + new Date(startDatePicker.value).getTime() + " AND start <= " + new Date(endDatePicker.value).getTime() + " ORDER BY start";
+        //Select all entrys from specific user on all machines
+        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE user.userid = "+ selectedUserid +" AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
 
     }else if(selectedUserid == 0 && selectedMachine != "Alle"){
 
-        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE data.machineName = '"+ selectedMachine +"' AND start >= " + new Date(startDatePicker.value).getTime() + " AND start <= " + new Date(endDatePicker.value).getTime() + " ORDER BY start";
+        //Select all entrys from specific machine for all users
+        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE data.machineName = '"+ selectedMachine +"' AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
 
     }else{
 
-        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE user.userid = "+ selectedUserid +" AND data.machineName = '"+ selectedMachine +"' AND start >= " + new Date(startDatePicker.value).getTime() + " AND start <= " + new Date(endDatePicker.value).getTime() + " ORDER BY start";
+        //Select all entrys from specific user for specific machine
+        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE user.userid = "+ selectedUserid +" AND data.machineName = '"+ selectedMachine +"' AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
     }
 
     uibuilder.send({
@@ -190,11 +179,11 @@ function setDatePicker() {
     endDatePicker = document.getElementById("end");
 
     var date = new Date();
+    //set endDatePicker to current date
     endDatePicker.valueAsDate = date;
+
+    //set startDatePicker to first day in current month
     date.setDate(1);
-    //TODO das muss noch raus
-    date.setMonth(0);
-    date.setFullYear(2000);
     startDatePicker.valueAsDate = date;
 }
 
@@ -202,6 +191,7 @@ function getSelectedDateRangeAsString() {
 
     var startDate = new Date(startDatePicker.value);
     var endData = new Date(endDatePicker.value);
+
     return startDate.getDate()+"."+(startDate.getMonth()+1)+"."+startDate.getFullYear()+"-"+endData.getDate()+"."+(endData.getMonth()+1)+"."+endData.getFullYear();
 }
 
@@ -216,10 +206,11 @@ function createOverviewDataObject(array){
     var sumMachineHours = 0;
     var sumWatt = 0;
 
-    array.forEach(element => {
-        sumMachineHours = sumMachineHours + element.duration;
-        sumWatt = sumWatt + Number(calculateKWH(element.power, element.duration));
+    array.forEach(dataEntry => {
+        sumMachineHours = sumMachineHours + dataEntry.workDuration;
+        sumWatt = sumWatt + Number(dataEntry.power);
     });
+    
     overViewData[0].machineHours = convertMillisToHoursMinutesSeconds(sumMachineHours);
     overViewData[0].wattHours = (sumWatt).toFixed(2);
     overViewData[0].powerCosts = calculatePrice(overViewData[0].wattHours, localStorage.getItem("powerCost"));
@@ -241,12 +232,34 @@ function exportXLSX(){
     var workSheet;
     var workBookOut;
     
-    workSheet = XLSX.utils.table_to_sheet(document.getElementById("dataTable"));
+    workSheet = XLSX.utils.json_to_sheet(setExportObject());
     workBook.Sheets["Übersicht_"+getSelectedDateRangeAsString()] = workSheet;
 
     workBookOut = XLSX.write(workBook, {bookType:'xlsx',  type: 'binary'});
     
     saveAs(new Blob([s2ab(workBookOut)],{type:"application/octet-stream"}), 'Uebersicht_'+getSelectedDateRangeAsString()+'.xlsx');
+}
+
+function setExportObject() {
+
+    var exportArray = [];
+
+    bufferData.forEach(element => {
+
+        exportArray.push({
+            UserID: element.userid,
+            Vorname: element.firstName,
+            Nachname: element.lastName,
+            Firma: element.company,
+            Maschinenname: element.machineName,
+            Start: convertMillisToDate(element.start),
+            Rüstzeit: convertMillisToHoursMinutesSeconds(element.setUpTime),
+            Arbeitszeit: convertMillisToHoursMinutesSeconds(element.workDuration),
+            Wattstunden: kWHFormatter(element.power),
+            Stromkosten: calculatePrice(element.power, localStorage.getItem("powerCost"))
+        });
+    });
+    return exportArray;
 }
 
 //Helper function

@@ -49,11 +49,14 @@ window.onload = function() {
             }, {
                 field: 'fixedCostsPerUsage',
                 title: 'Fixkosten/Nutzung',
-                sortable: "true"
+                sortable: "true",
+                formatter: function(value){
+                    return value + " €";
+                }
             },{
                 field: 'phaseNumber',
                 title: 'Anzahl Stromphasen',
-                sortable: "true"
+                sortable: "true",
             },{
                 field: 'area',
                 title: 'Bereich',

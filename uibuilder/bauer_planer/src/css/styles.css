@@ -5833,7 +5833,7 @@ a.close.disabled {
     height: min-content;
   }
   .modal-sm {
-    max-width: 300px;
+    max-width: 350px;
   }
 }
 

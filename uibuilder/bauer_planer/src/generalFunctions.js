@@ -32,10 +32,6 @@ function convertMillisToHoursMinutesSeconds(duration) {
     return hours + ":" + minutes + ":" + seconds + "." + milliseconds + " h";
 }
 
-function wattFormatter(value) {
-    return value + " W";
-}
-
 function kWHFormatter(value) {
     return value + " kWh";
 }

@@ -24,14 +24,6 @@ window.syntaxHighlight = function (json) {
     return json
 } // --- End of syntaxHighlight --- //
 
-// Send a message back to Node-RED
-window.fnSendToNR = function fnSendToNR(payload) {
-    uibuilder.send({
-        'topic': 'msg-from-uibuilder-front-end',
-        'payload': payload,
-    })
-}
-
 function stringFormat(str) {
     return str.replace(/['"]+/g, '');
 }
@@ -106,8 +98,6 @@ window.onload = function() {
 function changePowerCosts(){
     var inputPowerCosts = document.getElementById('inputPowerCosts').value;
    
-    //TODO Console.log löschen und Wert an Datenbank Senden!
-    console.log(inputPowerCosts);
     uibuilder.send({
         'topic': "UPDATE config SET powerCost = "+inputPowerCosts,
         'type': "changedPowerCosts"
