@@ -751,9 +751,9 @@
         "type": "uibuilder",
         "z": "55b2ce4ea70984fe",
         "g": "b885f38124686d57",
-        "name": "",
+        "name": "Frontend",
         "topic": "",
-        "url": "bauer_planer",
+        "url": "monitoring",
         "fwdInMessages": false,
         "allowScripts": false,
         "allowStyles": false,
@@ -761,10 +761,11 @@
         "templateFolder": "blank",
         "extTemplate": "",
         "showfolder": false,
+        "oldUrl": "bauer_planer",
         "reload": false,
         "sourceFolder": "src",
         "deployedVersion": "5.0.2",
-        "x": 180,
+        "x": 200,
         "y": 220,
         "wires": [
             [
@@ -4448,9 +4449,7 @@
         "x": 240,
         "y": 440,
         "wires": [
-            [
-                "e85747894aceec43"
-            ]
+            []
         ]
     },
     {
@@ -4509,9 +4508,7 @@
         "x": 230,
         "y": 480,
         "wires": [
-            [
-                "e85747894aceec43"
-            ]
+            []
         ]
     },
     {
