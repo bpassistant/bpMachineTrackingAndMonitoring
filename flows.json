@@ -87,9 +87,7 @@
             "70b6a07615db8980"
         ],
         "x": 154,
-        "y": 39,
-        "w": 1812,
-        "h": 282
+        "y": 39
     },
     {
         "id": "89199902fcdf75a8",
@@ -118,9 +116,7 @@
             "b6d083d37c688ee7"
         ],
         "x": 154,
-        "y": 419,
-        "w": 1832,
-        "h": 182
+        "y": 419
     },
     {
         "id": "69570ac14998a30b",
@@ -149,28 +145,6 @@
         "y": 1239,
         "w": 732,
         "h": 242
-    },
-    {
-        "id": "b885f38124686d57",
-        "type": "group",
-        "z": "55b2ce4ea70984fe",
-        "name": "Web Server",
-        "style": {
-            "stroke": "#0070c0",
-            "fill": "#bfdbef",
-            "fill-opacity": "0.48",
-            "label": true
-        },
-        "nodes": [
-            "18714dd186fd682c",
-            "b9cf832bb689f99d",
-            "62cb54b2da55f518",
-            "40548839ac496a07"
-        ],
-        "x": 54,
-        "y": 139,
-        "w": 872,
-        "h": 82
     },
     {
         "id": "fc2cb2ff3b2df9ef",
@@ -230,7 +204,8 @@
             "e24885c2931457c7",
             "220f474c142926eb",
             "193cc0b8430efe0c",
-            "8b28b8b5c10e6862"
+            "8b28b8b5c10e6862",
+            "5e0cf69435a38deb"
         ],
         "x": 114,
         "y": 359,
@@ -294,9 +269,7 @@
             "06fe109c0f62f46f"
         ],
         "x": 154,
-        "y": 659,
-        "w": 1312,
-        "h": 182
+        "y": 659
     },
     {
         "id": "bdd517b93ca42ddf",
@@ -317,12 +290,41 @@
             "a591606526e6c6e1",
             "455ad6e4f3c1a6c2",
             "6bc8cd7a7aa88c70",
-            "65871ea9527c1ea3"
+            "8eb34b6a54fd950c",
+            "6ea9e6d61f4c7143",
+            "25d263035b0a9512"
         ],
         "x": 114,
         "y": 59,
-        "w": 1632,
-        "h": 202
+        "w": 1732,
+        "h": 162
+    },
+    {
+        "id": "b885f38124686d57",
+        "type": "group",
+        "z": "55b2ce4ea70984fe",
+        "name": "Web Server",
+        "style": {
+            "stroke": "#0070c0",
+            "fill": "#bfdbef",
+            "fill-opacity": "0.48",
+            "label": true
+        },
+        "nodes": [
+            "18714dd186fd682c",
+            "b9cf832bb689f99d",
+            "62cb54b2da55f518",
+            "40548839ac496a07",
+            "af25affe9ceb6a29",
+            "13de7844ee166a11",
+            "6e264cca030727b3",
+            "17534dca9b039be1",
+            "0a791186ac97c2ed"
+        ],
+        "x": 74,
+        "y": 39,
+        "w": 1332,
+        "h": 222
     },
     {
         "id": "fe1131055cdbcae8",
@@ -377,33 +379,6 @@
             [
                 "ae6b9eec80b9e3bc"
             ]
-        ]
-    },
-    {
-        "id": "18714dd186fd682c",
-        "type": "uibuilder",
-        "z": "55b2ce4ea70984fe",
-        "g": "b885f38124686d57",
-        "name": "",
-        "topic": "",
-        "url": "bauer_planer",
-        "fwdInMessages": false,
-        "allowScripts": false,
-        "allowStyles": false,
-        "copyIndex": true,
-        "templateFolder": "blank",
-        "extTemplate": "",
-        "showfolder": false,
-        "reload": false,
-        "sourceFolder": "src",
-        "deployedVersion": "5.0.2",
-        "x": 160,
-        "y": 180,
-        "wires": [
-            [
-                "62cb54b2da55f518"
-            ],
-            []
         ]
     },
     {
@@ -772,6 +747,34 @@
         ]
     },
     {
+        "id": "18714dd186fd682c",
+        "type": "uibuilder",
+        "z": "55b2ce4ea70984fe",
+        "g": "b885f38124686d57",
+        "name": "Frontend",
+        "topic": "",
+        "url": "monitoring",
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "templateFolder": "blank",
+        "extTemplate": "",
+        "showfolder": false,
+        "oldUrl": "bauer_planer",
+        "reload": false,
+        "sourceFolder": "src",
+        "deployedVersion": "5.0.2",
+        "x": 200,
+        "y": 220,
+        "wires": [
+            [
+                "af25affe9ceb6a29"
+            ],
+            []
+        ]
+    },
+    {
         "id": "b9cf832bb689f99d",
         "type": "queuedsqlite",
         "z": "55b2ce4ea70984fe",
@@ -782,12 +785,11 @@
         "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
         "sql": "",
         "name": "db_1",
-        "x": 630,
-        "y": 180,
+        "x": 730,
+        "y": 220,
         "wires": [
             [
-                "18714dd186fd682c",
-                "40548839ac496a07"
+                "17534dca9b039be1"
             ]
         ]
     },
@@ -797,8 +799,8 @@
         "z": "55b2ce4ea70984fe",
         "g": "b885f38124686d57",
         "name": "find db path in local directory",
-        "x": 420,
-        "y": 180,
+        "x": 520,
+        "y": 220,
         "wires": [
             [
                 "b9cf832bb689f99d"
@@ -819,8 +821,124 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 810,
-        "y": 180,
+        "x": 1290,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "af25affe9ceb6a29",
+        "type": "switch",
+        "z": "55b2ce4ea70984fe",
+        "g": "b885f38124686d57",
+        "name": "Was wird abgefragt?",
+        "property": "type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "getNumberOfActiveUsersAndMachines",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 360,
+        "y": 160,
+        "wires": [
+            [
+                "6e264cca030727b3"
+            ],
+            [
+                "62cb54b2da55f518"
+            ]
+        ]
+    },
+    {
+        "id": "13de7844ee166a11",
+        "type": "function",
+        "z": "55b2ce4ea70984fe",
+        "g": "b885f38124686d57",
+        "name": "Alle aktiven Anmeldungen suchen und Anzahl zurück geben",
+        "func": "\nvar array = [];\n\nmsg.payload.forEach(entry => {\n    if(entry.userID != 100 || entry.startMessuringTime != null){\n        array.push({\n            \"userID\": entry.userID, \n            \"machineName\": entry.machineName,\n            \"setupStartTime\": entry.setupStartTime,\n            \"startMessuringTime\": entry.startMessuringTime\n        })\n    }\n})\n\nmsg.payload = array;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 160,
+        "wires": [
+            [
+                "18714dd186fd682c"
+            ]
+        ]
+    },
+    {
+        "id": "6e264cca030727b3",
+        "type": "collection",
+        "z": "55b2ce4ea70984fe",
+        "g": "b885f38124686d57",
+        "name": "Holle alle Einträge",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": false,
+        "action": "get values",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "topic",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "str",
+        "outputs": 1,
+        "x": 570,
+        "y": 120,
+        "wires": [
+            [
+                "13de7844ee166a11"
+            ]
+        ]
+    },
+    {
+        "id": "17534dca9b039be1",
+        "type": "switch",
+        "z": "55b2ce4ea70984fe",
+        "g": "b885f38124686d57",
+        "name": "Wenn nur etwas gesetzt wurde ohne Rückgabe",
+        "property": "type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "changedPowerCosts",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1000,
+        "y": 220,
+        "wires": [
+            [
+                "18714dd186fd682c",
+                "40548839ac496a07"
+            ]
+        ]
+    },
+    {
+        "id": "0a791186ac97c2ed",
+        "type": "comment",
+        "z": "55b2ce4ea70984fe",
+        "g": "b885f38124686d57",
+        "name": "TODO Neuanlegen einer Maschine abfragen und zu liste hinzufügen",
+        "info": "",
+        "x": 480,
+        "y": 80,
         "wires": []
     },
     {
@@ -1024,7 +1142,7 @@
         "z": "838e54b719ad8caa",
         "g": "89199902fcdf75a8",
         "name": "Eintrag für DB vorbereiten",
-        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\nvar startMessuringTime = msg.payload.startMessuringTime;\n\nvar messuringDuration = msg.payload.messuringDuration;\n\nvar power = msg.payload.energy;\n\nvar message = \"\";\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + machineName + '\\u0022' + \",\" + startMessuringTime + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \",\" + '\\u0022' + message + '\\u0022' + \")\";\n\nreturn msg;",
+        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\nvar startMessuringTime = msg.payload.startMessuringTime;\n\nvar messuringDuration = msg.payload.messuringDuration;\n\n//Der Strom wird nur an einer Phase gemessen.\n//Daher wird die verbrauchte Energie mit der Anzahl an Phasen multipliziert.\nvar power = msg.payload.energy * msg.payload.phaseNumber;\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + machineName + '\\u0022' + \",\" + startMessuringTime + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \")\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1636,7 +1754,7 @@
         "name": "Tabellen löschen:",
         "info": "",
         "x": 120,
-        "y": 900,
+        "y": 940,
         "wires": []
     },
     {
@@ -1686,7 +1804,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "CREATE TABLE machine( machineName TEXT PRIMARY KEY NOT NULL, permission INTEGER NOT NULL,  fixedCostsPerUsage INTEGER, area TEXT )",
+        "topic": "CREATE TABLE machine( machineName TEXT PRIMARY KEY NOT NULL, phaseNumber INTERGER NOT NULL, permission INTEGER NOT NULL, fixedCostsPerUsage INTEGER, area TEXT)",
         "payload": "",
         "payloadType": "date",
         "x": 310,
@@ -1773,7 +1891,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO machine VALUES(\"test maschine\", 2, 1, \"holz\")",
+        "topic": "INSERT INTO machine VALUES(\"Plattensäge\", 3, 3, 0, \"Holz\")",
         "payload": "",
         "payloadType": "date",
         "x": 300,
@@ -1864,7 +1982,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 320,
-        "y": 780,
+        "y": 820,
         "wires": [
             [
                 "c48ee34242888ca3"
@@ -1893,7 +2011,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 320,
-        "y": 620,
+        "y": 660,
         "wires": [
             [
                 "0e854629aa4dc9fc"
@@ -2246,7 +2364,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 310,
-        "y": 1000,
+        "y": 1040,
         "wires": [
             [
                 "0e854629aa4dc9fc"
@@ -2275,7 +2393,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 320,
-        "y": 960,
+        "y": 1000,
         "wires": [
             [
                 "0e854629aa4dc9fc"
@@ -2304,7 +2422,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 310,
-        "y": 920,
+        "y": 960,
         "wires": [
             [
                 "0e854629aa4dc9fc"
@@ -2336,7 +2454,7 @@
         "name": "DB Queries:",
         "info": "## ",
         "x": 170,
-        "y": 1080,
+        "y": 1120,
         "wires": []
     },
     {
@@ -2994,7 +3112,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 310,
-        "y": 660,
+        "y": 700,
         "wires": [
             [
                 "0e854629aa4dc9fc"
@@ -3023,7 +3141,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 310,
-        "y": 700,
+        "y": 740,
         "wires": [
             [
                 "0e854629aa4dc9fc"
@@ -3052,7 +3170,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 310,
-        "y": 740,
+        "y": 780,
         "wires": [
             [
                 "0e854629aa4dc9fc"
@@ -3199,7 +3317,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO machine VALUES(\"Schweißgerät\", 5, NULL, \"Metal\")",
+        "topic": "INSERT INTO machine VALUES(\"Tischkreissäge\", 3, 3, 0, \"Holz\")",
         "payload": "",
         "payloadType": "date",
         "x": 300,
@@ -3357,7 +3475,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO machine VALUES(\"Säge\", 1,0.49, \"Holz\")",
+        "topic": "INSERT INTO machine VALUES(\"Hobel\", 3, 3, 0, \"Holz\")",
         "payload": "",
         "payloadType": "date",
         "x": 300,
@@ -3753,7 +3871,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 310,
-        "y": 820,
+        "y": 860,
         "wires": [
             [
                 "0e854629aa4dc9fc"
@@ -3900,7 +4018,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 290,
-        "y": 860,
+        "y": 900,
         "wires": [
             [
                 "c48ee34242888ca3"
@@ -3929,10 +4047,39 @@
         "payload": "",
         "payloadType": "date",
         "x": 300,
-        "y": 1040,
+        "y": 1080,
         "wires": [
             [
                 "c48ee34242888ca3"
+            ]
+        ]
+    },
+    {
+        "id": "18595559d9c06b15",
+        "type": "inject",
+        "z": "5d3034dc83dfbde2",
+        "name": "INSERT machine",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "INSERT INTO machine VALUES(\"Bandschleifer\", 3, 3, 0, \"Holz\")",
+        "payload": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 620,
+        "wires": [
+            [
+                "0e854629aa4dc9fc"
             ]
         ]
     },
@@ -3942,7 +4089,7 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Aufsplitten des Inputs",
-        "func": "\nvar output = msg.payload.split(\" \");\n\nvar nodeID = parseInt(output[0]);\nvar power1 = parseFloat(output[1]);\nvar power2 = parseFloat(output[2]);\nvar power3 = parseFloat(output[3]);\nvar power4 = parseFloat(output[4]);\nvar power5 = parseFloat(output[5]);\nvar power6 = parseFloat(output[6]);\nvar power7 = parseFloat(output[7]);\n\nvar kreissaege = {payload: power1};\nvar tischkreissaege = {payload: power2};\nvar hobel = {payload: power3};\nvar bandschleifer = {payload: power4};\nvar drehmaschine = {payload: power5};\nvar kappsaege = {payload: power6};\nvar schweissgeraet = {payload: power7};\n\nreturn [msg, \n        kreissaege, \n        tischkreissaege, \n        hobel, \n        bandschleifer, \n        drehmaschine, \n        kappsaege, \n        schweissgeraet];",
+        "func": "\n//Trennt den übermittelten String an den Leerzeichen und\n//erstellt daraus ein Array.\nvar output = msg.payload.split(\" \");\n\n//Erster Wert hat keine messtechnische Relevanz\nvar nodeID = parseInt(output[0]);\n\n//Parsen der Strings zu Float Werten.\nvar power1 = parseFloat(output[1]);\nvar power2 = parseFloat(output[2]);\nvar power3 = parseFloat(output[3]);\nvar power4 = parseFloat(output[4]);\nvar power5 = parseFloat(output[5]);\nvar power6 = parseFloat(output[6]);\nvar power7 = parseFloat(output[7]);\nvar power8 = parseFloat(output[8]);\n\nvar plattensaege = {payload: power1};\nvar tischkreissaege = {payload: power2};\nvar hobel = {payload: power3};\nvar bandschleifer = {payload: power4};\n\nreturn [msg, \n        plattensaege, \n        tischkreissaege, \n        hobel, \n        bandschleifer];",
         "outputs": 8,
         "noerr": 0,
         "initialize": "",
@@ -3963,7 +4110,9 @@
             [
                 "feddcaf095aaba6f"
             ],
-            [],
+            [
+                "f8855c74fcdf9766"
+            ],
             [],
             [],
             []
@@ -3977,7 +4126,7 @@
         "name": "Serieller Input - Strommodul",
         "serial": "189d98b6e10797a1",
         "x": 260,
-        "y": 580,
+        "y": 560,
         "wires": [
             [
                 "e85747894aceec43"
@@ -4050,7 +4199,7 @@
         "type": "power-monitor",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "Kreissäge Trigger",
+        "name": "Plattensäge Trigger",
         "startthreshold": "42",
         "stopthreshold": "42",
         "startafter": 1,
@@ -4324,7 +4473,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1500,
+        "x": 1440,
         "y": 560,
         "wires": [
             [
@@ -4846,7 +4995,7 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Eintrag in DB schreiben",
-        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\n//edge case abfangen, wenn zu früh ausgeloggt wurde und\n//noch eine Messung rein kommt, aber startMessuringTime schon zurück gesetzt wurde!\nvar startMessuringTime;\n\nif(msg.payload.startMessuringTime == null) {\n    startMessuringTime = new Date().getTime() - msg.payload.messuringDuration;\n}else{\n    startMessuringTime = msg.payload.startMessuringTime;\n}\n\nvar messuringDuration = msg.payload.messuringDuration;\n\nvar power = msg.payload.energy;\n\nvar message = \"\";\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + machineName + '\\u0022' + \",\" + startMessuringTime + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \",\" + '\\u0022' + message + '\\u0022' + \")\";\n\nreturn msg;",
+        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\n//edge case abfangen, wenn zu früh ausgeloggt wurde und\n//noch eine Messung rein kommt, aber startMessuringTime schon zurück gesetzt wurde!\nvar startMessuringTime;\n\nif(msg.payload.startMessuringTime == null) {\n    startMessuringTime = new Date().getTime() - msg.payload.messuringDuration;\n}else{\n    startMessuringTime = msg.payload.startMessuringTime;\n}\n\nvar messuringDuration = msg.payload.messuringDuration;\n\n//Der Strom wird nur an einer Phase gemessen.\n//Daher wird die verbrauchte Energie mit der Anzahl an Phasen multipliziert.\nvar power = msg.payload.energy * msg.payload.phaseNumber;\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + machineName + '\\u0022' + \",\" + startMessuringTime + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \")\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5336,13 +5485,13 @@
         "type": "change",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "",
+        "name": "Setzte Machinenname",
         "rules": [
             {
                 "t": "set",
                 "p": "machineName",
                 "pt": "msg",
-                "to": "Kreissäge",
+                "to": "Plattensäge",
                 "tot": "str",
                 "dc": true
             }
@@ -5352,7 +5501,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1080,
+        "x": 1070,
         "y": 440,
         "wires": [
             [
@@ -5366,7 +5515,7 @@
         "type": "change",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "",
+        "name": "Setzte Machinenname",
         "rules": [
             {
                 "t": "set",
@@ -5382,7 +5531,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1080,
+        "x": 1070,
         "y": 480,
         "wires": [
             [
@@ -5396,7 +5545,7 @@
         "type": "change",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "",
+        "name": "Setzte Machinenname",
         "rules": [
             {
                 "t": "set",
@@ -5412,7 +5561,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1080,
+        "x": 1070,
         "y": 520,
         "wires": [
             [
@@ -5426,7 +5575,7 @@
         "type": "change",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "",
+        "name": "Setzte Machinenname",
         "rules": [
             {
                 "t": "set",
@@ -5442,7 +5591,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1080,
+        "x": 1070,
         "y": 560,
         "wires": [
             [
@@ -5456,7 +5605,7 @@
         "type": "change",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "",
+        "name": "Setzte Machinenname",
         "rules": [
             {
                 "t": "set",
@@ -5472,7 +5621,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1080,
+        "x": 1070,
         "y": 600,
         "wires": [
             [
@@ -5486,7 +5635,7 @@
         "type": "change",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "",
+        "name": "Setzte Machinenname",
         "rules": [
             {
                 "t": "set",
@@ -5502,7 +5651,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1080,
+        "x": 1070,
         "y": 640,
         "wires": [
             [
@@ -5516,7 +5665,7 @@
         "type": "change",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "",
+        "name": "Setzte Machinenname",
         "rules": [
             {
                 "t": "set",
@@ -5532,7 +5681,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1080,
+        "x": 1070,
         "y": 680,
         "wires": [
             [
@@ -5580,14 +5729,14 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 620,
+        "x": 520,
         "y": 100,
         "wires": [
             [
-                "24a99a43b6fd867b"
+                "25d263035b0a9512"
             ],
             [
-                "24a99a43b6fd867b"
+                "25d263035b0a9512"
             ]
         ]
     },
@@ -5597,13 +5746,13 @@
         "z": "56fe256bdc6888ea",
         "g": "bdd517b93ca42ddf",
         "name": "Array mit Einträgen erstellen",
-        "func": "\nvar entryArray = [\n    {\n        machineName: \"Kreissäge\", \n        userID: 100, \n        startMessuringTime: null,\n        messuringDuration: null,\n        lastMessuringTime: null, \n        setupStartTime: null, \n        setupDuration: null, \n        energy: null,\n        ip: null\n    },\n        \n    {\n        machineName: \"Tischkreissäge\", \n        userID: 100, \n        startMessuringTime: null,\n        messuringDuration: null,\n        lastMessuringTime: null, \n        setupStartTime: null, \n        setupDuration: null, \n        energy: null,\n        ip: null   \n    },\n    \n    {\n        machineName: \"Hobel\", \n        userID: 100, \n        startMessuringTime: null, \n        lastMessuringTime: null, \n        setupTime: null, \n        setupStartTime: null, \n        messuringDuration: null, \n        energy: null,\n        ip: null\n    },\n    \n    {\n        machineName: \"Bandschleifer\", \n        userID: 100, \n        startMessuringTime: null,\n        messuringDuration: null,\n        lastMessuringTime: null, \n        setupTime: null, \n        setupStartTime: null, \n        energy: null,\n        ip: null\n    },\n    \n    {\n        machineName: \"Drehmaschine\", \n        userID: 100, \n        startMessuringTime: null, \n        messuringDuration: null,\n        lastMessuringTime: null, \n        setupStartTime: null, \n        setupDuration: null, \n        energy: null,\n        ip: null\n    },\n    \n    {\n        machineName: \"Kappsäge\", \n        userID: 100, \n        startMessuringTime: null, \n        messuringDuration: null,\n        lastMessuringTime: null, \n        setupStartTime: null, \n        setupDuration: null, \n        energy: null,\n        ip: null\n    },\n    \n    {\n        machineName: \"Schweißgerät\", \n        userID: 100, \n        startMessuringTime: null,\n        messuringDuration: null, \n        lastMessuringTime: null, \n        setupStartTime: null, \n        setupDuration: null,\n        energy: null,\n        ip: null\n    },\n];\n\nmsg.payload = entryArray;\nreturn msg;\n",
+        "func": "\nvar entryArray = [];\n\nmsg.payload.forEach(machine => {\n    \n    entryArray.push({\n        machineName: machine.machineName, \n        userID: 100, \n        startMessuringTime: null,\n        messuringDuration: null,\n        lastMessuringTime: null, \n        setupStartTime: null, \n        setupDuration: null, \n        energy: null,\n        phaseNumber: machine.phaseNumber\n    })\n\n});\n\nglobal.set(\"CurrentMessuringObject\")\n\nmsg.payload = entryArray;\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 880,
+        "x": 940,
         "y": 160,
         "wires": [
             [
@@ -5623,7 +5772,7 @@
         "resetValue": "value-null",
         "array": "array",
         "arrayType": "msg",
-        "x": 1380,
+        "x": 1480,
         "y": 100,
         "wires": [
             [],
@@ -5646,7 +5795,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1630,
+        "x": 1730,
         "y": 160,
         "wires": []
     },
@@ -5671,8 +5820,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1060,
-        "y": 100,
+        "x": 1200,
+        "y": 160,
         "wires": [
             [
                 "9a61e006b06aea53"
@@ -5697,7 +5846,7 @@
         "value": "payload",
         "valueInputType": "msg",
         "outputs": 1,
-        "x": 1370,
+        "x": 1470,
         "y": 180,
         "wires": [
             [
@@ -5707,14 +5856,75 @@
         ]
     },
     {
-        "id": "65871ea9527c1ea3",
-        "type": "comment",
+        "id": "8eb34b6a54fd950c",
+        "type": "subflow:2a14cb53da10968a",
         "z": "56fe256bdc6888ea",
         "g": "bdd517b93ca42ddf",
-        "name": "Hier keine Code Liste erstellen sondern einzelne Nodes!",
-        "info": "",
-        "x": 1460,
-        "y": 220,
+        "name": "find db path in local directory",
+        "x": 880,
+        "y": 100,
+        "wires": [
+            [
+                "6ea9e6d61f4c7143"
+            ]
+        ]
+    },
+    {
+        "id": "6ea9e6d61f4c7143",
+        "type": "queuedsqlite",
+        "z": "56fe256bdc6888ea",
+        "g": "bdd517b93ca42ddf",
+        "mydb": "fe1131055cdbcae8",
+        "sqlquery": "msg.topic",
+        "dbName": "msg.database",
+        "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
+        "sql": "",
+        "name": "db_1",
+        "x": 1070,
+        "y": 100,
+        "wires": [
+            [
+                "24a99a43b6fd867b"
+            ]
+        ]
+    },
+    {
+        "id": "25d263035b0a9512",
+        "type": "change",
+        "z": "56fe256bdc6888ea",
+        "g": "bdd517b93ca42ddf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "SELECT * FROM machine",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 160,
+        "wires": [
+            [
+                "8eb34b6a54fd950c"
+            ]
+        ]
+    },
+    {
+        "id": "5e0cf69435a38deb",
+        "type": "comment",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "Hinweis warum manuelles Eintragen der Namen",
+        "info": "Die Offset Nodes (Trigger) scheinen alle vorher in der msg zusätzlich zum payload angelegten parameter zu löschen...\nDaher muss an dieser Stelle manuell eingetragen werden, um welche Maschine es sich handelt, da diese Info sonst verloren geht.\n",
+        "x": 1160,
+        "y": 400,
         "wires": []
     }
 ]

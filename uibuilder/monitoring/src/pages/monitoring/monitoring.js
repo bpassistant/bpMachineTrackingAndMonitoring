@@ -1,0 +1,309 @@
+
+/** Minimalist code for uibuilder and Node-RED */
+'use strict'
+
+const MessageType = {
+    getUserNames: "getUserNames",
+    getMachineNames: "getMachineNames",
+    getDataForThisMonth: "getDataForThisMonth",
+    getDataForSelected: "getDataForSelected"
+}
+
+var startDatePicker;
+var endDatePicker;
+var bufferData;
+
+function stringFormat(str) {
+    return str.replace(/['"]+/g, '');
+}
+ 
+// run this function when the document is loaded
+window.onload = function() {
+
+    setDatePicker();
+
+    // Start up uibuilder - see the docs for the optional parameters
+    uibuilder.start()
+
+    getAllDataForThisMonth();
+
+    getUserAndMachines();
+}
+
+// Listen for incoming messages from Node-RED
+uibuilder.onChange('msg', function(msg){
+
+    console.info('[indexjs:uibuilder.onChange] msg received from Node-RED server:', msg)
+    
+    if(msg.messageType == MessageType.getDataForThisMonth){
+
+        var overViewData = createOverviewDataObject(msg.payload);
+
+        $('#overviewTable').bootstrapTable({
+            columns: [{
+                field: 'machineHours',
+                title: 'Maschinenstunden',
+            }, {
+                field: 'wattHours',
+                title: 'Wattstunden',
+                formatter: "kWHFormatter"
+            }, {
+                field: 'powerCosts',
+                title: 'Stromkosten (' + localStorage.getItem("powerCost") + " €/kWh)",
+            }],
+            data: overViewData
+        });
+    } else if(msg.messageType == MessageType.getDataForThisMonth || msg.messageType == MessageType.getDataForSelected){
+
+        bufferData = msg.payload;
+
+        $('#dataTable').bootstrapTable({
+            columns: [{
+                field: 'userid',
+                title: 'UserID',
+                sortable: "true"
+            },{
+                field: 'firstName',
+                title: 'Vorname',
+                sortable: "true"
+            },{
+                field: 'lastName',
+                title: 'Nachname',
+                sortable: "true"
+            },{
+                field: 'machineName',
+                title: 'Maschinenname',
+                sortable: "true"
+            }, {
+                field: 'start',
+                title: 'Start',
+                sortable: "true",
+                formatter: "convertMillisToDate"
+            }, {
+                field: 'setUpTime',
+                title: 'Rüstzeit',
+                sortable: "true",
+                formatter: "convertMillisToHoursMinutesSeconds"
+            }, {
+                field: 'workDuration',
+                title: 'Dauer',
+                sortable: "true",
+                formatter: "convertMillisToHoursMinutesSeconds"
+            },{
+                field: 'power',
+                title: 'Wattstunden',
+                sortable: "true",
+                formatter: "kWHFormatter"
+            }]
+        });
+        
+        $('#dataTable').bootstrapTable("load", msg.payload);
+
+    } else if(msg.messageType == MessageType.getUserNames){
+        fillUserDropdown(msg.payload);
+
+    } else if(msg.messageType == MessageType.getMachineNames){
+        fillMachineDropdown(msg.payload);
+    }
+});
+
+function getUserAndMachines(){
+
+    var querry = "SELECT userid, firstName, lastName FROM user";
+
+    uibuilder.send({
+        'topic': querry,
+        'messageType': MessageType.getUserNames
+    });
+
+    querry = "SELECT machineName FROM machine";
+
+    uibuilder.send({
+        'topic': querry,
+        'messageType': MessageType.getMachineNames
+    });
+}
+
+function getAllDataForSelected() {
+
+    var querry;
+
+    var selectedUserid = document.getElementById("userDropdown").value;
+    var machineDropdown = document.getElementById("machineDropdown");
+    var selectedMachine = machineDropdown.options[machineDropdown.selectedIndex].text;
+
+    var startDate = new Date(startDatePicker.value).getTime();
+    var endData = new Date(endDatePicker.value).getTime();
+
+    //get all entrys
+    if(selectedMachine == "Alle" && selectedUserid == 0){
+
+        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
+
+    }else if(selectedUserid != 0 && selectedMachine == "Alle"){
+
+        //Select all entrys from specific user on all machines
+        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE user.userid = "+ selectedUserid +" AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
+
+    }else if(selectedUserid == 0 && selectedMachine != "Alle"){
+
+        //Select all entrys from specific machine for all users
+        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE data.machineName = '"+ selectedMachine +"' AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
+
+    }else{
+
+        //Select all entrys from specific user for specific machine
+        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE user.userid = "+ selectedUserid +" AND data.machineName = '"+ selectedMachine +"' AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
+    }
+
+    uibuilder.send({
+        'topic': querry,
+        'messageType': MessageType.getDataForSelected
+    });
+}
+
+function getAllDataForThisMonth() {
+
+    var querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE start >= " + new Date(startDatePicker.value).getTime() + " AND start <= " + new Date(endDatePicker.value).getTime() + " ORDER BY start";
+
+    uibuilder.send({
+        'topic': querry,
+        'messageType': MessageType.getDataForThisMonth
+    });
+}
+
+
+function setDatePicker() {
+    
+    startDatePicker = document.getElementById("start");
+    endDatePicker = document.getElementById("end");
+
+    var date = new Date();
+    //set endDatePicker to current date
+    endDatePicker.valueAsDate = date;
+
+    //set startDatePicker to first day in current month
+    date.setDate(1);
+    startDatePicker.valueAsDate = date;
+}
+
+function getSelectedDateRangeAsString() {
+
+    var startDate = new Date(startDatePicker.value);
+    var endData = new Date(endDatePicker.value);
+
+    return startDate.getDate()+"."+(startDate.getMonth()+1)+"."+startDate.getFullYear()+"-"+endData.getDate()+"."+(endData.getMonth()+1)+"."+endData.getFullYear();
+}
+
+function createOverviewDataObject(array){
+
+    var overViewData = [{
+        machineHours: "",
+        wattHours: "",
+        powerCosts: ""
+    }];
+
+    var sumMachineHours = 0;
+    var sumWatt = 0;
+
+    array.forEach(dataEntry => {
+        sumMachineHours = sumMachineHours + dataEntry.workDuration;
+        sumWatt = sumWatt + Number(dataEntry.power);
+    });
+    
+    overViewData[0].machineHours = convertMillisToHoursMinutesSeconds(sumMachineHours);
+    overViewData[0].wattHours = (sumWatt).toFixed(2);
+    overViewData[0].powerCosts = calculatePrice(overViewData[0].wattHours, localStorage.getItem("powerCost"));
+
+    return overViewData;
+}
+
+function exportXLSX(){
+
+    var workBook = XLSX.utils.book_new();                               
+    workBook.Props = {
+        Title: "Übersicht für ausgewählten Zeitraum",
+        Author: localStorage.getItem("name"),
+        CreatedDate: new Date()
+    };
+
+    workBook.SheetNames.push("Übersicht_"+getSelectedDateRangeAsString());
+
+    var workSheet;
+    var workBookOut;
+    
+    workSheet = XLSX.utils.json_to_sheet(setExportObject());
+    workBook.Sheets["Übersicht_"+getSelectedDateRangeAsString()] = workSheet;
+
+    workBookOut = XLSX.write(workBook, {bookType:'xlsx',  type: 'binary'});
+    
+    saveAs(new Blob([s2ab(workBookOut)],{type:"application/octet-stream"}), 'Uebersicht_'+getSelectedDateRangeAsString()+'.xlsx');
+}
+
+function setExportObject() {
+
+    var exportArray = [];
+
+    bufferData.forEach(element => {
+
+        exportArray.push({
+            UserID: element.userid,
+            Vorname: element.firstName,
+            Nachname: element.lastName,
+            Firma: element.company,
+            Maschinenname: element.machineName,
+            Start: convertMillisToDate(element.start),
+            Rüstzeit: convertMillisToHoursMinutesSeconds(element.setUpTime),
+            Arbeitszeit: convertMillisToHoursMinutesSeconds(element.workDuration),
+            Wattstunden: kWHFormatter(element.power),
+            Stromkosten: calculatePrice(element.power, localStorage.getItem("powerCost"))
+        });
+    });
+    return exportArray;
+}
+
+//Helper function
+function s2ab(s) {
+
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+}
+
+function fillUserDropdown(userArray){
+
+    var select = document.getElementById("userDropdown");
+
+    var opt = document.createElement("option");
+    opt.value = 0;
+    opt.innerHTML = "Alle";
+
+    select.appendChild(opt);
+
+    userArray.forEach(user => {
+        var opt = document.createElement("option");
+        opt.value = user.userid;
+        opt.innerHTML = user.firstName + " " + user.lastName;
+
+        select.appendChild(opt);
+    });
+};
+
+function fillMachineDropdown(machineArray){
+
+    var select = document.getElementById("machineDropdown");
+
+    var opt = document.createElement("option");
+    opt.innerHTML = "Alle";
+
+    select.appendChild(opt);
+
+    machineArray.forEach(function callback(machine, index){
+        var opt = document.createElement("option");
+        opt.value = index;
+        opt.innerHTML = machine.machineName;
+
+        select.appendChild(opt);
+    });
+};
