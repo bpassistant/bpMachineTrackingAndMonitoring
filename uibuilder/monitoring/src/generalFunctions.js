@@ -33,7 +33,7 @@ function convertMillisToHoursMinutesSeconds(duration) {
 }
 
 function kWHFormatter(value) {
-    return value.toFixed(4) + " kWh";
+    return (value * 1).toFixed(4) + " kWh";
 }
 
 function calculateKWHFromRow(value, row) {

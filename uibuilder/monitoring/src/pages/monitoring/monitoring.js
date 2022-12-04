@@ -53,7 +53,10 @@ uibuilder.onChange('msg', function(msg){
             }],
             data: overViewData
         });
-    } else if(msg.messageType == MessageType.getDataForThisMonth || msg.messageType == MessageType.getDataForSelected){
+    }
+    
+    //Important: no else if in this case, because we want to fill both tables
+    if(msg.messageType == MessageType.getDataForThisMonth || msg.messageType == MessageType.getDataForSelected){
 
         bufferData = msg.payload;
 
@@ -133,7 +136,8 @@ function getAllDataForSelected() {
     var selectedMachine = machineDropdown.options[machineDropdown.selectedIndex].text;
 
     var startDate = new Date(startDatePicker.value).getTime();
-    var endData = new Date(endDatePicker.value).getTime();
+    //Date starts with 00:00 so entrys for the same day might not be found. Added 23 h and 59 min.
+    var endData = new Date(endDatePicker.value).getTime() +86364000;
 
     //get all entrys
     if(selectedMachine == "Alle" && selectedUserid == 0){
@@ -163,8 +167,9 @@ function getAllDataForSelected() {
 }
 
 function getAllDataForThisMonth() {
-
-    var querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE start >= " + new Date(startDatePicker.value).getTime() + " AND start <= " + new Date(endDatePicker.value).getTime() + " ORDER BY start";
+    
+    //Date starts with 00:00 so entrys for the same day might not be found. Added 23 h and 59 min du end date.
+    var querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE start >= " + new Date(startDatePicker.value).getTime() + " AND start <= " + new Date(endDatePicker.value).getTime()+ 82800000 + " ORDER BY start";
 
     uibuilder.send({
         'topic': querry,
@@ -179,6 +184,7 @@ function setDatePicker() {
     endDatePicker = document.getElementById("end");
 
     var date = new Date();
+    //date.setHours(0, 0, 0);
     //set endDatePicker to current date
     endDatePicker.valueAsDate = date;
 
