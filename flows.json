@@ -87,7 +87,9 @@
             "70b6a07615db8980"
         ],
         "x": 154,
-        "y": 39
+        "y": 39,
+        "w": 1812,
+        "h": 282
     },
     {
         "id": "89199902fcdf75a8",
@@ -116,7 +118,9 @@
             "b6d083d37c688ee7"
         ],
         "x": 154,
-        "y": 419
+        "y": 419,
+        "w": 1832,
+        "h": 182
     },
     {
         "id": "69570ac14998a30b",
@@ -183,7 +187,6 @@
             "367781f0503baadb",
             "e8e5cb8219247199",
             "198550b3bf6c8b23",
-            "72df1a9f84434816",
             "6381be337809da09",
             "20921d3736e8d107",
             "2796066df1a2e319",
@@ -196,7 +199,6 @@
             "82162ffd23778a1f",
             "6cd10282e0de543b",
             "d3d96a5c0c10b29f",
-            "4a25446c0c4da559",
             "c9332917b00e8832",
             "d6b1b6432ce06383",
             "0e224c4203c11eda",
@@ -205,7 +207,8 @@
             "220f474c142926eb",
             "193cc0b8430efe0c",
             "8b28b8b5c10e6862",
-            "5e0cf69435a38deb"
+            "5e0cf69435a38deb",
+            "8ec24850c5ea712c"
         ],
         "x": 114,
         "y": 359,
@@ -269,7 +272,9 @@
             "06fe109c0f62f46f"
         ],
         "x": 154,
-        "y": 659
+        "y": 659,
+        "w": 1312,
+        "h": 182
     },
     {
         "id": "bdd517b93ca42ddf",
@@ -1142,7 +1147,7 @@
         "z": "838e54b719ad8caa",
         "g": "89199902fcdf75a8",
         "name": "Eintrag für DB vorbereiten",
-        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\nvar startMessuringTime = msg.payload.startMessuringTime;\n\nvar messuringDuration = msg.payload.messuringDuration;\n\n//Der Strom wird nur an einer Phase gemessen.\n//Daher wird die verbrauchte Energie mit der Anzahl an Phasen multipliziert.\nvar power = msg.payload.energy * msg.payload.phaseNumber;\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + machineName + '\\u0022' + \",\" + startMessuringTime + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \")\";\n\nreturn msg;",
+        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar start = msg.payload.setupStartTime;\n\nvar setupTime = msg.payload.setupDuration;\n\nvar workDuration = msg.payload.messuringDuration;\n\n//Der Strom wird nur an einer Phase gemessen.\n//Daher wird die verbrauchte Energie mit der Anzahl an Phasen multipliziert.\nvar power = msg.payload.energy * msg.payload.phaseNumber;\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + machineName + '\\u0022' + \",\" + start + \",\" + setupTime + \",\" + workDuration + \",\" + power + \",\" + null +\")\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1197,7 +1202,7 @@
         "z": "838e54b719ad8caa",
         "g": "89199902fcdf75a8",
         "name": "Properties im Eintrag zurück setzten",
-        "func": "\nvar returnObject = {\n    machineName: msg.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    ip: null\n}\n\nmsg.payload = returnObject;\nreturn msg;",
+        "func": "\nvar returnObject = {\n    machineName: msg.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    phaseNumber: msg.payload.phaseNumber\n}\n\nmsg.payload = returnObject;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1258,8 +1263,8 @@
         "type": "function",
         "z": "838e54b719ad8caa",
         "g": "8e35ff28fa9d3a76",
-        "name": "Eintrag um Messwerte erweitern",
-        "func": "var setupStartTime = new Date().getTime();\n\nmsg.payload.userID = msg.requestParameter.userID;\nmsg.payload.setupStartTime = setupStartTime;\n\n//TODO add ip!!!\n\n\nreturn msg;",
+        "name": "Eintrag um Zeitpunkt erweitern",
+        "func": "var setupStartTime = new Date().getTime();\n\nmsg.payload.userID = msg.requestParameter.userID;\nmsg.payload.setupStartTime = setupStartTime;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4098,9 +4103,7 @@
         "x": 520,
         "y": 560,
         "wires": [
-            [
-                "5e56578f2c78f47d"
-            ],
+            [],
             [
                 "bfd408908909c8f6"
             ],
@@ -4126,7 +4129,7 @@
         "name": "Serieller Input - Strommodul",
         "serial": "189d98b6e10797a1",
         "x": 260,
-        "y": 560,
+        "y": 580,
         "wires": [
             [
                 "e85747894aceec43"
@@ -4200,8 +4203,8 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Plattensäge Trigger",
-        "startthreshold": "42",
-        "stopthreshold": "42",
+        "startthreshold": "125",
+        "stopthreshold": "125",
         "startafter": 1,
         "stopafter": 1,
         "energydecimals": 4,
@@ -4356,7 +4359,7 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Daten für Bestehenden Eintrag erweitern",
-        "func": "\n//when messuring starts, the setup time for the machine ends\nvar setupEndTime = new Date().getTime();\n\nmsg.payload.setupDuration = (setupEndTime - msg.payload.setupStartTime);\nmsg.payload.startMessuringTime = setupEndTime;\n\nreturn msg;",
+        "func": "\n//when messuring starts, the setup time for the machine ends\nvar setupEndTime = new Date().getTime();\n\nif (msg.payload.setupStartTime != null) {\n    msg.payload.setupDuration = (setupEndTime - msg.payload.setupStartTime);\n}\nmsg.payload.startMessuringTime = setupEndTime;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4401,8 +4404,7 @@
                 "927615031fb184de"
             ],
             [
-                "198550b3bf6c8b23",
-                "6381be337809da09"
+                "198550b3bf6c8b23"
             ]
         ]
     },
@@ -4444,7 +4446,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "11 100.27 555.19 33.11",
+        "payload": "11 250.27 2.19 33.11",
         "payloadType": "str",
         "x": 240,
         "y": 440,
@@ -4477,7 +4479,6 @@
         "y": 560,
         "wires": [
             [
-                "b0a4c113bcfd75d1",
                 "e8e5cb8219247199"
             ]
         ],
@@ -4545,7 +4546,6 @@
         "y": 640,
         "wires": [
             [
-                "f131cc992d7af3be",
                 "c01ff320764ef67f"
             ]
         ]
@@ -4795,30 +4795,12 @@
         ]
     },
     {
-        "id": "72df1a9f84434816",
-        "type": "debug",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2650,
-        "y": 440,
-        "wires": []
-    },
-    {
         "id": "67f0f50d1f3e59c5",
         "type": "function",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Bestehende Messung in Eintrag um Messwerte erweitern",
-        "func": "\nvar messuringEndTime = new Date().getTime();\n\n//sum existing messuring values with new values\nmsg.payload.messuringDuration = msg.payload.messuringDuration + msg.messuring.time;\nmsg.payload.lastMessuringTime = messuringEndTime;\nmsg.payload.energy = msg.payload.energy + msg.messuring.energy\n\nreturn msg;",
+        "func": "\nvar messuringEndTime = new Date().getTime();\n\n//sum existing messuring values with new values\nmsg.payload.messuringDuration = msg.payload.messuringDuration + msg.messuring.time;\nmsg.payload.lastMessuringTime = messuringEndTime;\nmsg.payload.energy = msg.payload.energy + msg.messuring.energy;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4864,8 +4846,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2790,
-        "y": 580,
+        "x": 3130,
+        "y": 500,
         "wires": []
     },
     {
@@ -4874,7 +4856,7 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Properties im Eintrag zurück setzten",
-        "func": "\nvar returnObject = {\n    machineName: msg.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    ip: null\n}\n\nmsg.payload = returnObject;\nreturn msg;",
+        "func": "\nvar returnObject = {\n    machineName: msg.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    phaseNumber: msg.payload.phaseNumber\n}\n\nmsg.payload = returnObject;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4924,7 +4906,7 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Eintrag um Messwerte erweitern",
-        "func": "\nvar messuringEndTime = new Date().getTime();\n\nmsg.payload.messuringDuration = msg.messuring.time;\nmsg.payload.lastMessuringTime = messuringEndTime;\nmsg.payload.energy = msg.messuring.energy\n\nreturn msg;",
+        "func": "\nvar messuringEndTime = new Date().getTime();\n\nmsg.payload.messuringDuration = msg.messuring.time;\nmsg.payload.lastMessuringTime = messuringEndTime;\nmsg.payload.energy = msg.messuring.energy;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4995,7 +4977,7 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Eintrag in DB schreiben",
-        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar setupDuration = msg.payload.setupDuration;\n\n//edge case abfangen, wenn zu früh ausgeloggt wurde und\n//noch eine Messung rein kommt, aber startMessuringTime schon zurück gesetzt wurde!\nvar startMessuringTime;\n\nif(msg.payload.startMessuringTime == null) {\n    startMessuringTime = new Date().getTime() - msg.payload.messuringDuration;\n}else{\n    startMessuringTime = msg.payload.startMessuringTime;\n}\n\nvar messuringDuration = msg.payload.messuringDuration;\n\n//Der Strom wird nur an einer Phase gemessen.\n//Daher wird die verbrauchte Energie mit der Anzahl an Phasen multipliziert.\nvar power = msg.payload.energy * msg.payload.phaseNumber;\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + machineName + '\\u0022' + \",\" + startMessuringTime + \",\" + setupDuration + \",\" + messuringDuration + \",\" + power + \")\";\n\nreturn msg;",
+        "func": "var userID = msg.payload.userID;\n\nvar machineName = msg.payload.machineName;\n\nvar start;\nvar setUpTime;\n\nif (msg.payload.setupStartTime == null){\n    setUpTime = null;\n    start = msg.payload.startMessuringTime;\n}else{\n    setUpTime = msg.payload.setupDuration;\n    start = msg.payload.setupStartTime;\n}\n\n//edge case abfangen, wenn zu früh ausgeloggt wurde und\n//noch eine Messung rein kommt, aber startMessuringTime schon zurück gesetzt wurde!\n\nvar workDuration = msg.payload.messuringDuration;\n\n//Der Strom wird nur an einer Phase gemessen.\n//Daher wird die verbrauchte Energie mit der Anzahl an Phasen multipliziert.\nvar power = msg.payload.energy * msg.payload.phaseNumber;\n\n//Strings wie machinenName muss in Anführungszeichen gesetzt werden. Das ASCII Zeichen dafür ist '\\u0022'\nmsg.topic = \"INSERT INTO data VALUES (\" + userID + \",\" + '\\u0022' + machineName + '\\u0022' + \",\" + start + \",\" + setUpTime + \",\" + workDuration + \",\" + power + \",\" + null + \")\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5026,17 +5008,6 @@
         "statusType": "auto",
         "x": 3410,
         "y": 700,
-        "wires": []
-    },
-    {
-        "id": "4a25446c0c4da559",
-        "type": "comment",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "TODO Ende muss noch aus DB raus!",
-        "info": "",
-        "x": 3130,
-        "y": 540,
         "wires": []
     },
     {
@@ -5272,9 +5243,7 @@
         "x": 2450,
         "y": 520,
         "wires": [
-            [
-                "72df1a9f84434816"
-            ]
+            []
         ]
     },
     {
@@ -5286,7 +5255,7 @@
         "collection": "CurrentMessuringObject",
         "collectionInputType": "global",
         "collectionType": "Object",
-        "createCollection": true,
+        "createCollection": false,
         "action": "clear",
         "onConflict": "exception",
         "warnOnConflict": true,
@@ -5351,7 +5320,7 @@
         "y": 660,
         "wires": [
             [
-                "c9332917b00e8832"
+                "8ec24850c5ea712c"
             ]
         ]
     },
@@ -5746,7 +5715,7 @@
         "z": "56fe256bdc6888ea",
         "g": "bdd517b93ca42ddf",
         "name": "Array mit Einträgen erstellen",
-        "func": "\nvar entryArray = [];\n\nmsg.payload.forEach(machine => {\n    \n    entryArray.push({\n        machineName: machine.machineName, \n        userID: 100, \n        startMessuringTime: null,\n        messuringDuration: null,\n        lastMessuringTime: null, \n        setupStartTime: null, \n        setupDuration: null, \n        energy: null,\n        phaseNumber: machine.phaseNumber\n    })\n\n});\n\nglobal.set(\"CurrentMessuringObject\")\n\nmsg.payload = entryArray;\nreturn msg;\n",
+        "func": "\nvar entryArray = [];\n\nmsg.payload.forEach(machine => {\n    \n    entryArray.push({\n        machineName: machine.machineName, \n        userID: 100, \n        startMessuringTime: null,\n        messuringDuration: null,\n        lastMessuringTime: null, \n        setupStartTime: null, \n        setupDuration: null, \n        energy: null,\n        phaseNumber: machine.phaseNumber\n    })\n\n});\n\nmsg.payload = entryArray;\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5925,6 +5894,24 @@
         "info": "Die Offset Nodes (Trigger) scheinen alle vorher in der msg zusätzlich zum payload angelegten parameter zu löschen...\nDaher muss an dieser Stelle manuell eingetragen werden, um welche Maschine es sich handelt, da diese Info sonst verloren geht.\n",
         "x": 1160,
         "y": 400,
+        "wires": []
+    },
+    {
+        "id": "8ec24850c5ea712c",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3410,
+        "y": 660,
         "wires": []
     }
 ]
