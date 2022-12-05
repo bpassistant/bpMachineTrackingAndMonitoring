@@ -4094,7 +4094,7 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Aufsplitten des Inputs",
-        "func": "\n//Trennt den übermittelten String an den Leerzeichen und\n//erstellt daraus ein Array.\nvar output = msg.payload.split(\" \");\n\n//Erster Wert hat keine messtechnische Relevanz\nvar nodeID = parseInt(output[0]);\n\n//Parsen der Strings zu Float Werten.\nvar power1 = parseFloat(output[1]);\nvar power2 = parseFloat(output[2]);\nvar power3 = parseFloat(output[3]);\nvar power4 = parseFloat(output[4]);\nvar power5 = parseFloat(output[5]);\nvar power6 = parseFloat(output[6]);\nvar power7 = parseFloat(output[7]);\nvar power8 = parseFloat(output[8]);\n\nvar plattensaege = {payload: power1};\nvar tischkreissaege = {payload: power2};\nvar hobel = {payload: power3};\nvar bandschleifer = {payload: power4};\n\nreturn [msg, \n        plattensaege, \n        tischkreissaege, \n        hobel, \n        bandschleifer];",
+        "func": "\n//Trennt den übermittelten String an den Leerzeichen und\n//erstellt daraus ein Array.\nvar output = msg.payload.split(\" \");\n\n//Erster Wert hat keine messtechnische Relevanz\nvar nodeID = parseInt(output[0]);\n\n//Parsen der Strings zu Float Werten.\nvar power1 = parseFloat(output[1]);\nvar power2 = parseFloat(output[2]);\nvar power3 = parseFloat(output[3]);\nvar power4 = parseFloat(output[4]);\nvar power5 = parseFloat(output[5]);\nvar power6 = parseFloat(output[6]);\nvar power7 = parseFloat(output[7]);\nvar power8 = parseFloat(output[8]);\n\nvar tischkreissaege = {payload: power1};\nvar plattensaege = {payload: power2};\nvar hobel = {payload: power3};\nvar bandschleifer = {payload: power4};\n\nreturn [msg, \n        tischkreissaege, \n        plattensaege, \n        hobel, \n        bandschleifer];",
         "outputs": 8,
         "noerr": 0,
         "initialize": "",
@@ -4202,14 +4202,14 @@
         "type": "power-monitor",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "Plattensäge Trigger",
+        "name": "Tischkreissäge Trigger",
         "startthreshold": "142",
         "stopthreshold": "142",
         "startafter": "2",
         "stopafter": "2",
         "energydecimals": 4,
         "emitidle": false,
-        "x": 810,
+        "x": 820,
         "y": 440,
         "wires": [
             [
@@ -4222,14 +4222,14 @@
         "type": "power-monitor",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "Tischkreissäge Trigger",
+        "name": "Plattensäge Trigger",
         "startthreshold": "42",
         "stopthreshold": "42",
         "startafter": 1,
         "stopafter": 1,
         "energydecimals": 4,
         "emitidle": false,
-        "x": 820,
+        "x": 810,
         "y": 480,
         "wires": [
             [
@@ -5460,7 +5460,7 @@
                 "t": "set",
                 "p": "machineName",
                 "pt": "msg",
-                "to": "Plattensäge",
+                "to": "Tischkreissäge",
                 "tot": "str",
                 "dc": true
             }
@@ -5490,7 +5490,7 @@
                 "t": "set",
                 "p": "machineName",
                 "pt": "msg",
-                "to": "Tischkreissäge",
+                "to": "Plattensäge",
                 "tot": "str",
                 "dc": true
             }
