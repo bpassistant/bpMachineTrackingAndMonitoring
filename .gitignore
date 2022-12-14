@@ -1,3 +1,5 @@
 *.backup
 
 /flows_cred.json
+
+/database.db
