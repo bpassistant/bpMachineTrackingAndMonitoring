@@ -84,7 +84,9 @@
             "e17c278db83e40ef",
             "b1ef769e563322d0",
             "26eea8dbc2cf4d20",
-            "70b6a07615db8980"
+            "70b6a07615db8980",
+            "09e58f5fdfe7c1bf",
+            "1dca9b166ff86127"
         ],
         "x": 154,
         "y": 39,
@@ -115,12 +117,14 @@
             "1c47cae84a9535b8",
             "de62a886d974dd24",
             "2f2a0091fb6bf425",
-            "b6d083d37c688ee7"
+            "b6d083d37c688ee7",
+            "1fb88466e932e364",
+            "f8bca5de021b1401"
         ],
         "x": 154,
-        "y": 419,
-        "w": 1832,
-        "h": 182
+        "y": 399,
+        "w": 1872,
+        "h": 242
     },
     {
         "id": "69570ac14998a30b",
@@ -146,9 +150,7 @@
             "e6b116c3c3a0bbe6"
         ],
         "x": 114,
-        "y": 1239,
-        "w": 732,
-        "h": 242
+        "y": 1239
     },
     {
         "id": "fc2cb2ff3b2df9ef",
@@ -211,9 +213,7 @@
             "8ec24850c5ea712c"
         ],
         "x": 114,
-        "y": 359,
-        "w": 3412,
-        "h": 542
+        "y": 359
     },
     {
         "id": "27cfd54d06969523",
@@ -246,9 +246,7 @@
             "ea6b689fcd6d6364"
         ],
         "x": 114,
-        "y": 959,
-        "w": 2312,
-        "h": 222
+        "y": 959
     },
     {
         "id": "633c6dec65d21494",
@@ -300,9 +298,7 @@
             "25d263035b0a9512"
         ],
         "x": 114,
-        "y": 59,
-        "w": 1732,
-        "h": 162
+        "y": 59
     },
     {
         "id": "b885f38124686d57",
@@ -954,7 +950,7 @@
         "name": "HTTP Antwort an den Mikrocontroller",
         "statusCode": "200",
         "headers": {},
-        "x": 1810,
+        "x": 1850,
         "y": 560,
         "wires": []
     },
@@ -993,7 +989,8 @@
         "y": 560,
         "wires": [
             [
-                "0b10820ae0bca9b6"
+                "0b10820ae0bca9b6",
+                "1fb88466e932e364"
             ]
         ]
     },
@@ -1016,7 +1013,7 @@
         "name": "HTTP Antwort an den Mikrocontroller",
         "statusCode": "200",
         "headers": {},
-        "x": 1170,
+        "x": 1510,
         "y": 160,
         "wires": []
     },
@@ -1121,9 +1118,9 @@
         "y": 160,
         "wires": [
             [
-                "bb365524f4051b03",
                 "ced57a5f39c0999b",
-                "f439c74ac4bd2f32"
+                "f439c74ac4bd2f32",
+                "09e58f5fdfe7c1bf"
             ]
         ]
     },
@@ -1202,7 +1199,7 @@
         "z": "838e54b719ad8caa",
         "g": "89199902fcdf75a8",
         "name": "Properties im Eintrag zurück setzten",
-        "func": "\nvar returnObject = {\n    machineName: msg.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    phaseNumber: msg.payload.phaseNumber\n}\n\nmsg.payload = returnObject;\nreturn msg;",
+        "func": "\nvar returnObject = {\n    machineName: msg.payload.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    phaseNumber: msg.payload.phaseNumber\n}\n\nmsg.payload = returnObject;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1230,8 +1227,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1730,
-        "y": 500,
+        "x": 1710,
+        "y": 440,
         "wires": []
     },
     {
@@ -1528,7 +1525,8 @@
         "y": 500,
         "wires": [
             [
-                "de62a886d974dd24"
+                "de62a886d974dd24",
+                "f8bca5de021b1401"
             ]
         ]
     },
@@ -1609,6 +1607,91 @@
                 "1f42e3fcd2640ba1"
             ]
         ]
+    },
+    {
+        "id": "1fb88466e932e364",
+        "type": "debug",
+        "z": "838e54b719ad8caa",
+        "g": "89199902fcdf75a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "f8bca5de021b1401",
+        "type": "change",
+        "z": "838e54b719ad8caa",
+        "g": "89199902fcdf75a8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "logout",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1730,
+        "y": 500,
+        "wires": [
+            [
+                "6dc9de411da24725"
+            ]
+        ]
+    },
+    {
+        "id": "09e58f5fdfe7c1bf",
+        "type": "function",
+        "z": "838e54b719ad8caa",
+        "g": "8e35ff28fa9d3a76",
+        "name": "Setze Rückgabewerte",
+        "func": "\nif(msg.payload[0].userExists == 1 && msg.payload[0].permissionIsHighEnough == 1) {\n    msg.payload = \"userExistsPermissionHighEnough\";\n} else if(msg.payload[0].userExists == 1 && msg.payload[0].permissionIsHighEnough != 1) {\n    msg.payload = \"userExistsPermissionNOTHighEnough\";\n} else if(msg.payload[0].userExists != 1 ) {\n    msg.payload = \"userDoesNotExist\";\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 160,
+        "wires": [
+            [
+                "bb365524f4051b03",
+                "1dca9b166ff86127"
+            ]
+        ]
+    },
+    {
+        "id": "1dca9b166ff86127",
+        "type": "debug",
+        "z": "838e54b719ad8caa",
+        "g": "8e35ff28fa9d3a76",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1430,
+        "y": 120,
+        "wires": []
     },
     {
         "id": "7dbfda298598df33",

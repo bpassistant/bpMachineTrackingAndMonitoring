@@ -10,6 +10,7 @@
 #include <HTTPClient.h>
 #include <FastLED.h>
 #include <Keypad.h>
+#include <EasyMFRC522.h>
 
 //--- Config ---
 // If you want to see outputs and logs, the mikrocontroller must be connected to a pc.
@@ -25,13 +26,13 @@
 const char *ssid = wifinetwork;
 const char *password = wifipassword;
 //Server Hostname: monitoringServer
-//IP zuhause: 192.168.10.101
 //IP b+p: 192.168.2.197
-String serverName = "http://monitoringServer:1880/";
+String serverName = "http://192.168.10.82:1880/";
+
 
 //--- User and Machine config ---
-#define machineName "Testmaschine"
-int userId;
+#define machineName "Tischkreissäge"
+int userId = 0;
 int defaultId = 100;
 bool isLoggedIn = false;
 
@@ -70,17 +71,62 @@ char keys[ROW_NUMBER][COLUM_NUMBER] = {
     {'7', '8', '9'},
     {'r', '0', 'g'}};
 
-byte pin_rows[ROW_NUMBER] = {5, 17, 15, 2}; // connect to the row pinouts of the keypad
-byte pin_column[COLUM_NUMBER] = {16, 4, 0}; // connect to the column pinouts of the keypad
+byte pin_rows[ROW_NUMBER] = {25, 26, 0, 2}; // connect to the row pinouts of the keypad
+byte pin_column[COLUM_NUMBER] = {27, 14, 15}; // connect to the column pinouts of the keypad
 
 Keypad keypad = Keypad(makeKeymap(keys), pin_rows, pin_column, ROW_NUMBER, COLUM_NUMBER);
 
-const String test_id = "100"; // change your test id here
+//Remove the two Slashes before #define to uncomment the line. Then you can test without a server communication.
+//Dont forget to recomment the line before active use!
+//#define TestWithoutServerCommunication
+int test_id = 100; // change your test id here
 String inputID;
+
+/**
+ * ----------------------------------------------------------------------------
+ * Easy MFRC522 library - Unlabeled Data - Example #1
+ * (Further information: https://github.com/pablo-sampaio/easy_mfrc522)
+ * 
+ * -----------------------------------------
+ * Simple example of reading/writing data chunks using the unlabeled operations. 
+ * You must provide the exact number of bytes both to write and to read. 
+ * (Useful if your data size is fixed). 
+ * 
+ * In this example, we store and retrieve the content of a "struct" variable.
+ * 
+ * -----------------------------------------
+ * Pin layout used (where * indicates configurable pin):
+ * -----------------------------------------
+ * MFRC522      Arduino       NodeMCU
+ * Reader       Uno           Esp8266
+ * Pin          Pin           Pin    
+ * -----------------------------------------
+ * SDA(SS)      4*            D4*
+ * SCK          13            D5   
+ * MOSI         11            D7
+ * MISO         12            D6
+ * RST          3*            D3*
+ * NC(IRQ)      not used      not used
+ * 3.3V         3.3V          3V
+ * GND          GND           GND
+ * --------------------------------------------------------------------------
+ * Obs.: This code may not work if you use different types of boards to alternately
+ * read/write, because of the memory size and alignment of the struct.
+ */
+#define SDA  5
+#define RST  17
+int sizeOfInputInByte = 4;
+
+EasyMFRC522 rfidReader(SDA, RST); //the MFRC522 reader, with the SDA and RST pins given
+                                //the default (factory) keys A and B are used (or used setKeys to change)
+
+#define BLOCK  1    //the initial block for all operations
 
 //--- Timer ---
 // Wait this time in milliseconds until the script asks the server, if there is still an activ session for the machine
 #define TIME_CHECK_IF_SESSION_ACTIVE 900000
+unsigned long bufferTimeBetweenRFIDReadRequests = 0;
+unsigned int timeBetweenRFIDReadRequests = 100;
 unsigned long bufferTimeBetweenRequests = 0;
 
 // Sets some initial values
@@ -95,6 +141,10 @@ void setup()
     ; // Wait till a serial Monitor is connected.
   }
   #endif
+
+  // you must call this initialization function!
+  rfidReader.init(); 
+  delay(500);
 
   WiFi.begin(ssid, password);
 
@@ -127,7 +177,7 @@ void setup()
   updateLEDs(red);
 
   #ifdef debugging
-  Serial.println("Hallo");
+  Serial.println("APPROACH a RFID tag. Waiting...");
   #endif
 }
 
@@ -139,6 +189,11 @@ void loop()
   checkAutoLogoutTime();
 
   checkLEDblink();
+
+  //Call checkRFIDInput() every 100 milliseconds
+  if(millis() >= bufferTimeBetweenRFIDReadRequests + timeBetweenRFIDReadRequests){
+    checkRFIDInput();
+  }
 }
 
 void checkPinPadInput()
@@ -160,8 +215,12 @@ void checkPinPadInput()
     }
     else if (key == 'g' && !isLoggedIn)
     {
-
-      checkLogin();
+      userId = inputID.toInt();
+      #ifdef TestWithoutServerCommunication
+        testID();
+      #else
+        checkLogin();
+      #endif
     }
     else
     {
@@ -176,19 +235,15 @@ void checkPinPadInput()
 void checkLogin()
 {
 
-  userId = inputID.toInt();
   // Send request to server and check if user exists and permission is high enough
   String serverPath = serverName + "checkIfUserExists" + "?userid=" + userId + "&machineName=" + machineName;
 
   String payload = httpGETRequest(serverPath);
-
   #ifdef debugging
   Serial.print("Payload from check login request: ");
   Serial.println(payload);
   #endif
-
-  testID();
-
+  
   evaluateCheckLoginPayload(payload);
 
   inputID = ""; // clear input password
@@ -197,8 +252,8 @@ void checkLogin()
 void evaluateCheckLoginPayload(String payload)
 {
   unsigned long currentMillis = millis();
-
-  if(payload == "")
+  
+  if(payload == "userExistsPermissionHighEnough")
   {
     //if user exists and permission is correct, buffer user id -> LEDs green
     ledState = green;
@@ -206,7 +261,7 @@ void evaluateCheckLoginPayload(String payload)
     isLoggedIn = true;
     bufferTimeBetweenRequests = currentMillis;
   }
-  else if(payload == "")
+  else if(payload == "userExistsPermissionNOTHighEnough")
   {
     //if user exists and permission is not high enough, buffer user id -> LEDs blink magenta
     ledState = permissionNotHighEnough_Magenta;
@@ -214,7 +269,7 @@ void evaluateCheckLoginPayload(String payload)
     isLoggedIn = true;
     bufferTimeBetweenRequests = currentMillis;
   }
-  else if(payload == "")
+  else if(payload == "userDoesNotExist")
   {
     //if user does not exists -> LEDs blink short time red, than back to constant red
     ledState = red;
@@ -233,13 +288,11 @@ void evaluateCheckLoginPayload(String payload)
 
 void testID()
 {
-
-  if (test_id == userId.toInt())
+  if (test_id == userId)
   {
     ledState = green;
     updateLEDs(green);
     isLoggedIn = true;
-
     #ifdef debugging
     Serial.println("ID is correct");
     #endif
@@ -249,17 +302,22 @@ void testID()
     ledState = red;
     blink = true;
     blinkStartMillis = millis();
-
     #ifdef debugging
     Serial.println("ID is incorrect, try again");
     #endif
   }
+  inputID = ""; // clear input id
 }
 
 void logout()
 {
-  sendDataToServer();
-
+  #ifdef TestWithoutServerCommunication
+    ledState = red;
+    updateLEDs(red);
+  #else
+    sendDataToServer();
+  #endif
+  
   reset();
 }
 
@@ -275,12 +333,14 @@ void sendDataToServer()
   Serial.println(payload);
   #endif
 
-  //TODO Better error handling
-  if (payload != "200")
+  if (payload != "logout")
   {
     ledState = systemError_Blue;
     blink = true;
     blinkStartMillis = millis();
+  }else{
+    ledState = red;
+    updateLEDs(red);
   }
 }
 
@@ -400,19 +460,16 @@ void checkLEDblink()
     }else if (currentMillis - blinkPreviousMillis >= BLINK_INTERVALL)
     {
       blinkPreviousMillis = currentMillis;
-
       if(ledsOn)
       {
         // Switch leds of
         updateLEDs(off);
-
       }else
       {
         updateLEDs(ledState);
       }
-
       // Toggle ledsOn
-      ledsOn != ledsOn;
+      ledsOn = !ledsOn;
     }
   }
 }
@@ -443,4 +500,58 @@ void updateLEDs(ledStates ledState)
       break;
   }
   FastLED.show();
+}
+
+void checkRFIDInput(){
+
+  //Reset call time for checkRFIDInput() function to 100
+  if(timeBetweenRFIDReadRequests >= 4000) {
+    timeBetweenRFIDReadRequests = 100;
+  }
+
+  bufferTimeBetweenRFIDReadRequests = millis();
+
+  bool success = rfidReader.detectTag();
+
+  if(success){
+
+    #ifdef debugging
+      Serial.println("RFID Tag detected!");
+    #endif
+
+    if(isLoggedIn){
+      logout();
+    }else {
+      int result;
+
+      // starting from the given block, reads the data from the tag (for the amount of bytes given), loading to the variable "inputID"
+      // attention: if you didn't write the inputID before, you will get "garbage" here
+      result = rfidReader.readRaw(BLOCK, (byte*)&userId, sizeOfInputInByte);
+  
+      if (result >= 0) {
+  
+        #ifdef debugging
+          Serial.print("RFID Input: ");
+          Serial.println(userId);
+        #endif
+        
+        #ifdef TestWithoutServerCommunication
+          testID();
+        #else
+          checkLogin();
+        #endif
+        
+      } else { 
+        #ifdef debugging
+          Serial.print("Error reading the tag, got ");
+          Serial.println(userId);
+        #endif
+      }
+    }
+    // call this after doing all desired operations in the tag
+    rfidReader.unselectMifareTag();
+
+    //Set call time for checkRFIDInput() function to 4 seconds to avoid a second input from the same RFID chip
+    timeBetweenRFIDReadRequests = 4000;
+  }
 }
