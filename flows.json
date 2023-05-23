@@ -85,13 +85,10 @@
             "b1ef769e563322d0",
             "26eea8dbc2cf4d20",
             "70b6a07615db8980",
-            "09e58f5fdfe7c1bf",
-            "1dca9b166ff86127"
+            "09e58f5fdfe7c1bf"
         ],
         "x": 154,
-        "y": 39,
-        "w": 1812,
-        "h": 282
+        "y": 39
     },
     {
         "id": "89199902fcdf75a8",
@@ -122,9 +119,7 @@
             "f8bca5de021b1401"
         ],
         "x": 154,
-        "y": 399,
-        "w": 1872,
-        "h": 242
+        "y": 399
     },
     {
         "id": "69570ac14998a30b",
@@ -150,7 +145,9 @@
             "e6b116c3c3a0bbe6"
         ],
         "x": 114,
-        "y": 1239
+        "y": 1239,
+        "w": 732,
+        "h": 242
     },
     {
         "id": "fc2cb2ff3b2df9ef",
@@ -213,7 +210,9 @@
             "8ec24850c5ea712c"
         ],
         "x": 114,
-        "y": 359
+        "y": 359,
+        "w": 3412,
+        "h": 542
     },
     {
         "id": "27cfd54d06969523",
@@ -246,7 +245,9 @@
             "ea6b689fcd6d6364"
         ],
         "x": 114,
-        "y": 959
+        "y": 959,
+        "w": 2312,
+        "h": 222
     },
     {
         "id": "633c6dec65d21494",
@@ -270,9 +271,7 @@
             "06fe109c0f62f46f"
         ],
         "x": 154,
-        "y": 659,
-        "w": 1312,
-        "h": 182
+        "y": 659
     },
     {
         "id": "bdd517b93ca42ddf",
@@ -298,7 +297,9 @@
             "25d263035b0a9512"
         ],
         "x": 114,
-        "y": 59
+        "y": 59,
+        "w": 1732,
+        "h": 162
     },
     {
         "id": "b885f38124686d57",
@@ -762,7 +763,6 @@
         "templateFolder": "blank",
         "extTemplate": "",
         "showfolder": false,
-        "oldUrl": "bauer_planer",
         "reload": false,
         "sourceFolder": "src",
         "deployedVersion": "5.0.2",
@@ -1670,28 +1670,9 @@
         "y": 160,
         "wires": [
             [
-                "bb365524f4051b03",
-                "1dca9b166ff86127"
+                "bb365524f4051b03"
             ]
         ]
-    },
-    {
-        "id": "1dca9b166ff86127",
-        "type": "debug",
-        "z": "838e54b719ad8caa",
-        "g": "8e35ff28fa9d3a76",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1430,
-        "y": 120,
-        "wires": []
     },
     {
         "id": "7dbfda298598df33",
@@ -4177,7 +4158,7 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Aufsplitten des Inputs",
-        "func": "\n//Trennt den übermittelten String an den Leerzeichen und\n//erstellt daraus ein Array.\nvar output = msg.payload.split(\" \");\n\n//Erster Wert hat keine messtechnische Relevanz\nvar nodeID = parseInt(output[0]);\n\n//Parsen der Strings zu Float Werten.\nvar power1 = parseFloat(output[1]);\nvar power2 = parseFloat(output[2]);\nvar power3 = parseFloat(output[3]);\nvar power4 = parseFloat(output[4]);\nvar power5 = parseFloat(output[5]);\nvar power6 = parseFloat(output[6]);\nvar power7 = parseFloat(output[7]);\nvar power8 = parseFloat(output[8]);\n\nvar tischkreissaege = {payload: power1};\nvar plattensaege = {payload: power2};\nvar hobel = {payload: power3};\nvar bandschleifer = {payload: power4};\n\nreturn [msg, \n        tischkreissaege, \n        plattensaege, \n        hobel, \n        bandschleifer];",
+        "func": "\n//Trennt den übermittelten String an den Leerzeichen und\n//erstellt daraus ein Array.\nvar output = msg.payload.split(\" \");\n\n//Erster Wert hat keine messtechnische Relevanz\nvar nodeID = parseInt(output[0]);\n\n//Parsen der Strings zu Float Werten.\nvar power1 = parseFloat(output[1]);\nvar power2 = parseFloat(output[2]);\nvar power3 = parseFloat(output[3]);\nvar power4 = parseFloat(output[4]);\nvar power5 = parseFloat(output[5]);\nvar power6 = parseFloat(output[6]);\nvar power7 = parseFloat(output[7]);\nvar power8 = parseFloat(output[8]);\n\nvar tischkreissaege = {payload: power1};\nvar hobel = {payload: power2};\nvar bandschleifer = {payload: power3};\nvar tischfaese = {payload: power4};\nvar plattensaege = { payload: power5 };\n\nreturn [msg, \n        tischkreissaege, \n        hobel, \n        bandschleifer, \n        tischfaese,\n        plattensaege];",
         "outputs": 8,
         "noerr": 0,
         "initialize": "",
@@ -4186,7 +4167,9 @@
         "x": 520,
         "y": 560,
         "wires": [
-            [],
+            [
+                "5e56578f2c78f47d"
+            ],
             [
                 "bfd408908909c8f6"
             ],
@@ -4199,7 +4182,9 @@
             [
                 "f8855c74fcdf9766"
             ],
-            [],
+            [
+                "ea629855e546870b"
+            ],
             [],
             []
         ]
@@ -4265,14 +4250,14 @@
         "type": "power-monitor",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "Drehmaschine Trigger",
-        "startthreshold": "42",
-        "stopthreshold": "42",
+        "name": "Plattensäge Trigger",
+        "startthreshold": "30",
+        "stopthreshold": "30",
         "startafter": 1,
         "stopafter": 1,
         "energydecimals": 4,
         "emitidle": false,
-        "x": 820,
+        "x": 810,
         "y": 600,
         "wires": [
             [
@@ -4286,8 +4271,8 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Tischkreissäge Trigger",
-        "startthreshold": "142",
-        "stopthreshold": "142",
+        "startthreshold": "150",
+        "stopthreshold": "150",
         "startafter": "2",
         "stopafter": "2",
         "energydecimals": 4,
@@ -4305,14 +4290,14 @@
         "type": "power-monitor",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "Plattensäge Trigger",
-        "startthreshold": "42",
-        "stopthreshold": "42",
+        "name": "Hobel Trigger",
+        "startthreshold": "30",
+        "stopthreshold": "30",
         "startafter": 1,
         "stopafter": 1,
         "energydecimals": 4,
         "emitidle": false,
-        "x": 810,
+        "x": 800,
         "y": 480,
         "wires": [
             [
@@ -4325,14 +4310,14 @@
         "type": "power-monitor",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "Hobel Trigger",
-        "startthreshold": "42",
-        "stopthreshold": "42",
+        "name": "Bandschleider Trigger",
+        "startthreshold": "30",
+        "stopthreshold": "30",
         "startafter": 1,
         "stopafter": 1,
         "energydecimals": 4,
         "emitidle": false,
-        "x": 800,
+        "x": 820,
         "y": 520,
         "wires": [
             [
@@ -4345,14 +4330,14 @@
         "type": "power-monitor",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "Bandschleifer Trigger",
-        "startthreshold": "42",
-        "stopthreshold": "42",
+        "name": "Tischfräse Trigger",
+        "startthreshold": "20",
+        "stopthreshold": "20",
         "startafter": 1,
         "stopafter": 1,
         "energydecimals": 4,
         "emitidle": false,
-        "x": 820,
+        "x": 810,
         "y": 560,
         "wires": [
             [
@@ -5573,7 +5558,7 @@
                 "t": "set",
                 "p": "machineName",
                 "pt": "msg",
-                "to": "Plattensäge",
+                "to": "Hobel",
                 "tot": "str",
                 "dc": true
             }
@@ -5603,7 +5588,7 @@
                 "t": "set",
                 "p": "machineName",
                 "pt": "msg",
-                "to": "Hobel",
+                "to": "Bandschleifer",
                 "tot": "str",
                 "dc": true
             }
@@ -5633,7 +5618,7 @@
                 "t": "set",
                 "p": "machineName",
                 "pt": "msg",
-                "to": "Bandschleifer",
+                "to": "Tischfräse",
                 "tot": "str",
                 "dc": true
             }
@@ -5663,7 +5648,7 @@
                 "t": "set",
                 "p": "machineName",
                 "pt": "msg",
-                "to": "Drehmaschine",
+                "to": "Plattensäge",
                 "tot": "str",
                 "dc": true
             }
