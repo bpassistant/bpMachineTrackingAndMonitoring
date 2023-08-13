@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Monitoring - Monitoring</title>
+    <title>Monitoring - Übersicht</title>
 
     <script type="text/javascript" src="../../sidebar.js"></script>
     <script type="text/javascript" src="../../modals.js"></script>
@@ -22,13 +22,9 @@
     <link href="../../css/styles.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css">
-    
-    <!-- Custom scripts -->
-    <script lang="javascript" src="../../vendor/sheetjs/xlsx.full.min.js"></script>
-    <script lang="javascript" src="../../vendor/FileSaver/FileSaver.min.js"></script>
-    <script src="../../vendor/jquery/jquery.min.js"></script>
 
     <link rel="icon" href="../../favicon.ico">
+
 </head>
 
 <body id="page-top">
@@ -37,12 +33,13 @@
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-    </ul>
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"></ul>
 
     <script>
-        document.getElementById("accordionSidebar").innerHTML = renderSidebar("monitoring");
+        document.getElementById("accordionSidebar").innerHTML = renderSidebar("overview");
     </script>
+
+    <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -52,11 +49,11 @@
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                <h1 class="h3 mb-0 text-gray-800">Monitoring</h1>
+                <h1 class="h3 mb-0 text-gray-800">Übersicht</h1>
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
-
+                    
                     <button type="button" class="btn btn-secondary" onclick="window.location.href='../changePassword/changePassword.html';">Passwort ändern</button>
 
                     <!-- Nav Item - User Information -->
@@ -67,65 +64,38 @@
                         </a>
                     </li>
                 </ul>
-
             </nav>
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
+
+                <h5>Angemeldet als: <span id="userID" class="mb-4"></span></h5>
+                <br>
+
                 <div class="card shadow mb-4">
                     <div class="card-body">
+                        <!-- Page Heading -->
+                        <h6 class="mb-4">Liste der aktuell angemeldeten Nutzer und der aktiven Maschinen:</h6>
 
-                        <h5 class="mb-4">Daten aus dem aktuellen Monat (alle Nutzer und Maschinen)<span class="mb-4"></span></h5>
-
-                        <!-- Data Table -->
-                        <table id="overviewTable" 
+                        <table id="dataTable" class="mb-4"
+                            data-pagination="true"
                             data-search="false"                   
-                            data-height="75%">
+                            data-height="75%"
+                            data-show-footer="false">
                         </table>
-
                     </div>
                 </div>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-
-                        <h5 class="mb-4">Detailsuche für Nutzer, Maschinen und spezielle Zeiträume<span class="mb-4"></span></h5>
-
-                        <!-- Date Picker -->
-                        <div class="justify-content-between mt-4" id="d">
-                            <div>
-                                Alle Einträge von
-                                <input type = "date" id = "start" class="ml-2 mr-2">
-                                bis
-                                <input type = "date" id = "end" class="ml-2 mr-2">
-                            </div>
-                        </div>
+                        <h6 class="mb-4">Liste der letzten Log-Einträge des Systems:</h6>
                         
-                        <div class="justify-content-between mt-4">
-                            
-                            <label > UserID: </label>
-                            <select class="btn btn-secondary dropdown-toggle ml-2 mr-2" style="margin-bottom: 15px;" id="userDropdown"></select>
-
-                            <label > Maschinen: </label>
-                            <select class="btn btn-secondary dropdown-toggle ml-2 mr-2" style="margin-bottom: 15px;" id="machineDropdown"></select>
-                                
-                            <button class="btn btn-primary ml-2" style="margin-bottom: 15px;" onclick="getAllDataForSelected()"><i class="fas fa-check" style="padding-right: 10px;"></i>Alles Übernehmen</button>
-                        
-                        </div>
-                        
-                        <!-- Liste / Tabelle -->
-                        <table id="dataTable"
+                        <table id="logTable" class="mb-4" style="word-wrap: break-word;"
                             data-pagination="true"
                             data-search="true"                   
                             data-height="75%"
                             data-show-footer="false">
                         </table>
-                        
-                        <!-- CSV Export Button -->
-                        <div class="mt-4">
-                            <h5> CSV Export der Daten für den ausgewählten Zeitraum</h5>
-                            <button id="button-a" class="btn btn-primary mr-2" onclick="exportXLSX()"><i class="fas fa-download" style="margin-right: 10px;"></i>Exportieren</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -134,17 +104,19 @@
         </div>
         <!-- End of Main Content -->
 
-        <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; bauer + planer 2022</span>
-                </div>
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; bauer + planer 2022</span>
             </div>
-        </footer>
-        <!-- End of Footer -->
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
     </div>
     <!-- End of Content Wrapper -->
+
 </div>
 <!-- End of Page Wrapper -->
 
@@ -163,17 +135,18 @@
 <script src="../../vendor/jquery/jquery.min.js"></script>
 <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
-
 <!-- Bootstrap Table-->
 <script src="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- #region Supporting Scripts. These MUST be in the right order. Note no leading / -->
 <script src="../../../uibuilder/vendor/socket.io/socket.io.js">/* REQUIRED: Socket.IO is loaded only once for all instances. Without this, you don't get a websocket connection */</script>
 <script src="../../uibuilderfe.min.js">/* REQUIRED: remove 'min.' to use dev version */</script>
-<script src="monitoring.js">/* OPTIONAL: Put your custom code here */</script>
+<script src="uebersicht.js">/* OPTIONAL: Put your custom code here */</script>
 <script src="../../generalFunctions.js"></script>
+
 <!-- #endregion -->
 
 </body>

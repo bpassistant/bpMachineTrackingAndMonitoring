@@ -14,18 +14,17 @@ var errorMessage;
 window.login = function login() {
 
     userID = document.getElementById('userID').value;
-    password = document.getElementById('password').value;
+    password = convertPasswordToHash(document.getElementById('password').value);
 
-    if (userID.length == 3){
+    if (userID.length >= 3){
 
         uibuilder.send({
-            'topic': "SELECT true FROM user WHERE userID ="+userID,
+            'topic': "SELECT true FROM user WHERE userid ="+userID,
             'type': "checkUser"
         })
-
     } else {
 
-        showLoginErrorMessage("Die Benutzer ID muss 3 Ziffern lang sein.");
+        showLoginErrorMessage("Die Benutzer ID muss mindestens 3 Ziffern lang sein.");
     }
 }
 
@@ -50,24 +49,16 @@ window.onload = function() {
             }else if (msg.payload[0]["true"] == 1){
 
                 uibuilder.send({
-                    'topic': "SELECT password, admin, firstName, lastname  FROM user WHERE userID =" +userID,
+                    'topic': "SELECT password, admin FROM user WHERE userID =" +userID,
                     'type' : "checkPass"
                 })
             }
 
         }else if (msg.type == "checkPass"){
 
-            if ( msg.payload[0]["password"] ==  password ){
-
-                var name;
-                if(msg.payload[0]["firstName"] === undefined){
-                    name = msg.payload[0]["lastName"];
-                } else {
-                    name = msg.payload[0]["firstName"] + " " + msg.payload[0]["lastName"];
-                }
+            if ( msg.payload[0]["password"] == String(password)){
 
                 //set local variables wich will be saved till the browser session is over.
-                localStorage.setItem("name", name);
                 localStorage.setItem("admin", msg.payload[0]["admin"]);
                 localStorage.setItem("userID", userID);
 
@@ -100,8 +91,8 @@ function showLoginErrorMessage(message) {
 
 function navigator(admin) {
     if (admin){
-         window.location.href="../übersicht/übersicht.html";
+         window.location.href="../uebersicht/uebersicht.html";
      }else{
-         window.location.href="../übersicht/übersichtNormalerNutzer.html";
+         window.location.href="../uebersicht/uebersichtNormalerNutzer.html";
      }
  }

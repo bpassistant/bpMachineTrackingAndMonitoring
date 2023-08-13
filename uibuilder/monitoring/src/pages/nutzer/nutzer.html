@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
 
@@ -11,6 +11,9 @@
 
     <title>Monitoring - Nutzerverwaltung</title>
 
+    <script type="text/javascript" src="../../sidebar.js"></script>
+    <script type="text/javascript" src="../../modals.js"></script>
+
     <!-- Custom fonts for this template-->
     <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -21,6 +24,8 @@
     <link href="../../css/styles.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css">
+    
+    <link rel="icon" href="../../favicon.ico">
 
 </head>
 
@@ -31,61 +36,11 @@
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-        <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../übersicht/übersicht.html">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
-            </div>
-            <div class="sidebar-brand-text mx-3">B+P</div>
-        </a>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Nav Item - Übersicht -->
-        <li class="nav-item">
-            <a class="nav-link" href="../übersicht/übersicht.html">
-                <i class="fas fa-home"></i>
-                <span>Übersicht</span>
-            </a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Nav Item - Nutzer -->
-        <li class="nav-item active">
-            <a class="nav-link" href="../nutzer/nutzer.html">
-                <i class="fas fa-user"></i>
-                <span>Nutzer</span>
-            </a>
-        </li>
-
-        <!-- Nav Item - Maschinen -->
-        <li class="nav-item">
-            <a class="nav-link" href="../maschinen/maschinen.html">
-                <i class="fas fa-cog"></i>
-                <span>Maschinen</span>
-            </a>
-        </li>
-
-        <!-- Nav Item - Monitoring -->
-        <li class="nav-item">
-            <a class="nav-link" href="../monitoring/monitoring.html">
-                <i class="fas fa-tachometer-alt"></i>
-                <span>Monitoring</span>
-            </a>
-        </li>
-        
-        <!-- Sidebar Toggler (Sidebar) -->
-        <!--
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-        -->
     </ul>
-    <!-- End of Sidebar -->
+
+    <script>
+        document.getElementById("accordionSidebar").innerHTML = renderSidebar("user");
+    </script>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -100,9 +55,11 @@
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
 
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='../changePassword/changePassword.html';">Passwort ändern</button>
+
                      <!-- Nav Item - User Information -->
                      <li class="nav-item dropdown no-arrow">
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target='#logoutModal'>
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Logout
                         </a>
@@ -119,7 +76,7 @@
                     <div class="card-body">
                         <table id="table" 
                             data-pagination="true"
-                            data-search="false"                   
+                            data-search="true"                   
                             data-height="75%"
                             data-show-footer="true">
                         </table>
@@ -155,24 +112,12 @@
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Bereit zu gehen?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Wählen Sie "Abmelden", wenn Sie bereit sind, Ihre aktuelle Sitzung zu beenden.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
-                <a class="btn btn-primary" href="../login/login.html">Abmelden</a>
-            </div>
-        </div>
-    </div>
-</div>
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
+<!-- Info Modal -->
+<div class="modal fade" id="deletionWarnModal" tabindex="-1" role="dialog" aria-labelledby="infoModal" aria-hidden="true"></div>
+<script>
+    document.getElementById("logoutModal").innerHTML = renderLogoutModal();
+</script>
 
 <!-- Bootstrap core JavaScript-->
 <script src="../../vendor/jquery/jquery.min.js"></script>
@@ -191,6 +136,7 @@
 <script src="../../../uibuilder/vendor/socket.io/socket.io.js">/* REQUIRED: Socket.IO is loaded only once for all instances. Without this, you don't get a websocket connection */</script>
 <script src="../../uibuilderfe.min.js">/* REQUIRED: remove 'min.' to use dev version */</script>
 <script src="nutzer.js">/* OPTIONAL: Put your custom code here */</script>
+<script src="../../generalFunctions.js"></script>
 <!-- #endregion -->
 
 </body>

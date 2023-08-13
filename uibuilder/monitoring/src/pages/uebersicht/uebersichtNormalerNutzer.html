@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
 
@@ -22,6 +22,13 @@
 
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css">
 
+    <link rel="icon" href="../../favicon.ico">
+
+    <script type="text/javascript" src="../../modals.js"></script>
+
+    <script lang="javascript" src="../../vendor/sheetjs/xlsx.full.min.js"></script>
+    <script lang="javascript" src="../../vendor/FileSaver/FileSaver.min.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -33,7 +40,7 @@
     <ul class="navbar-nav testTableVisible bg-gradient-primary sidebar sidebar-dark accordion sidebar-hidden" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../übersicht/übersichtNormalerNutzer.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../uebersicht/uebersichtNormalerNutzer.html">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
@@ -45,7 +52,7 @@
 
         <!-- Nav Item - Übersicht -->
         <li class="nav-item active">
-            <a class="nav-link" href="../übersicht/übersichtNormalerNutzer.html">
+            <a class="nav-link" href="../uebersicht/uebersichtNormalerNutzer.html">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Übersicht</span></a>
         </li>
@@ -69,6 +76,8 @@
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
 
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='../changePassword/changePassword.html';">Passwort ändern</button>
+
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -86,20 +95,44 @@
             <div class="container-fluid">
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <p class="mb-4">Willkomen <span id="fullName" class="mb-4"></span></p>
+                        <h5 class="mb-4">Willkommen! Angemeldet mit der ID: <span id="userID" class="mb-4"></span></h5>
 
                         <table  class="table table-hover=false" 
                             id="userTable"
                             data-search="false"                   
                             data-height="75%">
                         </table>
-                        
+                    </div>
+                </div>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+
+                        <h5 class="mb-4">Alle deine Einträge für einen ausgewählten Zeitraum<span class="mb-4"></span></h5>
+
+                        <!-- Date Picker -->
+                        <div class="justify-content-between mt-4" id="d">
+                            <div>
+                                Einträge von
+                                <input type = "date" id = "start" class="ml-2 mr-2">
+                                bis
+                                <input type = "date" id = "end" class="ml-2 mr-2">
+
+                                <button class="btn btn-primary ml-2" style="margin-bottom: 15px;" onclick="getAllDataForSelected()"><i class="fas fa-check" style="padding-right: 10px;"></i>Alles Übernehmen</button>
+                            </div>
+                        </div>
+
                         <table id="dataTable" 
                             data-pagination="true"
-                            data-search="false"                   
+                            data-search="true"                   
                             data-height="75%"
                             data-show-footer="true">
                         </table>
+
+                        <!-- CSV Export Button -->
+                        <div class="mt-4">
+                            <h5> CSV Export der Daten für den ausgewählten Zeitraum</h5>
+                            <button id="button-a" class="btn btn-primary mr-2" onclick="exportXLSX()"><i class="fas fa-download" style="margin-right: 10px;"></i>Exportieren</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -130,65 +163,15 @@
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Bereit zu gehen?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Wählen Sie "Abmelden", wenn Sie bereit sind, Ihre aktuelle Sitzung zu beenden.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
-                <a class="btn btn-primary" href="../login/login.html">Abmelden</a>
-            </div>
-        </div>
-    </div>
-</div>
-
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModal" aria-hidden="true"></div>
 <!-- Entry Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Eintrag</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
+<div class="modal fade" id="entryModal" tabindex="-1" role="dialog" aria-labelledby="entryModal" aria-hidden="true"></div>
 
-            <table id="entryTable" 
-                data-search="false"                   
-                data-height="75%">
-            </table>
-            <br>
-            <p class="mb-3" style="font-weight: bold;">Notiz:</p>
+<script>
+    document.getElementById("logoutModal").innerHTML = renderLogoutModal();
+</script>
 
-            <!--TODO style auslagern-->
-            <textarea 
-                id="message" 
-                rows="4" 
-                placeholder="Hier eine Notiz anlegen..." 
-                style="display: block;
-                width: 100%;
-                overflow: hidden;
-                resize: both;
-                min-height: 40px;
-                line-height: 20px;">
-            </textarea>
-            <br>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
-          <button type="button" class="btn btn-primary" onclick="saveMessage()" data-dismiss="modal" aria-label="Close">Nachricht speichern</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
 <!-- Bootstrap core JavaScript-->
 <script src="../../vendor/jquery/jquery.min.js"></script>
@@ -203,7 +186,7 @@
 <!-- #region Supporting Scripts. These MUST be in the right order. Note no leading / -->
 <script src="../../../uibuilder/vendor/socket.io/socket.io.js">/* REQUIRED: Socket.IO is loaded only once for all instances. Without this, you don't get a websocket connection */</script>
 <script src="../../uibuilderfe.min.js">/* REQUIRED: remove 'min.' to use dev version */</script>
-<script src="übersichtNormalerNutzer.js">/* OPTIONAL: Put your custom code here */</script>
+<script src="uebersichtNormalerNutzer.js">/* OPTIONAL: Put your custom code here */</script>
 <script src="../../generalFunctions.js"></script>
 
 <!-- #endregion -->

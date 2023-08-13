@@ -115,7 +115,6 @@
             "de62a886d974dd24",
             "2f2a0091fb6bf425",
             "b6d083d37c688ee7",
-            "1fb88466e932e364",
             "f8bca5de021b1401"
         ],
         "x": 154,
@@ -145,9 +144,7 @@
             "e6b116c3c3a0bbe6"
         ],
         "x": 114,
-        "y": 1239,
-        "w": 732,
-        "h": 242
+        "y": 1439
     },
     {
         "id": "fc2cb2ff3b2df9ef",
@@ -189,7 +186,6 @@
             "6381be337809da09",
             "20921d3736e8d107",
             "2796066df1a2e319",
-            "f131cc992d7af3be",
             "c01ff320764ef67f",
             "712dd35a6f7645a7",
             "67f0f50d1f3e59c5",
@@ -210,9 +206,7 @@
             "8ec24850c5ea712c"
         ],
         "x": 114,
-        "y": 359,
-        "w": 3412,
-        "h": 542
+        "y": 359
     },
     {
         "id": "27cfd54d06969523",
@@ -245,9 +239,7 @@
             "ea6b689fcd6d6364"
         ],
         "x": 114,
-        "y": 959,
-        "w": 2312,
-        "h": 222
+        "y": 1159
     },
     {
         "id": "633c6dec65d21494",
@@ -289,17 +281,18 @@
             "fe20e42f5546c86e",
             "24a99a43b6fd867b",
             "9a61e006b06aea53",
-            "a591606526e6c6e1",
             "455ad6e4f3c1a6c2",
             "6bc8cd7a7aa88c70",
             "8eb34b6a54fd950c",
             "6ea9e6d61f4c7143",
-            "25d263035b0a9512"
+            "25d263035b0a9512",
+            "7e44060492b15b19",
+            "7d39ce45f0755820",
+            "89f504276df55fd1",
+            "81b59ade269b4c68"
         ],
         "x": 114,
-        "y": 59,
-        "w": 1732,
-        "h": 162
+        "y": 59
     },
     {
         "id": "b885f38124686d57",
@@ -320,13 +313,131 @@
             "af25affe9ceb6a29",
             "13de7844ee166a11",
             "6e264cca030727b3",
-            "17534dca9b039be1",
-            "0a791186ac97c2ed"
+            "17534dca9b039be1"
         ],
         "x": 74,
-        "y": 39,
-        "w": 1332,
-        "h": 222
+        "y": 79,
+        "w": 1312,
+        "h": 182
+    },
+    {
+        "id": "32be6167ea16cce8",
+        "type": "group",
+        "z": "838e54b719ad8caa",
+        "name": "",
+        "style": {
+            "stroke": "#ff0000",
+            "fill": "#ffbfbf",
+            "fill-opacity": "0.5",
+            "label": true
+        },
+        "nodes": [
+            "471cbbd715d3a1f9",
+            "83f246bc05ac7087",
+            "9767a4fea2032874",
+            "8fd53483dee4588b",
+            "ab94a3cac0842b55",
+            "641811ea31011d8e",
+            "6ef9b89535160967",
+            "8503f01a041301a8"
+        ],
+        "x": 154,
+        "y": 879
+    },
+    {
+        "id": "1301b45190885759",
+        "type": "group",
+        "z": "55b2ce4ea70984fe",
+        "name": "Logging von Fehlern",
+        "style": {
+            "stroke": "#001f60",
+            "fill": "#bfc7d7",
+            "label": true,
+            "fill-opacity": "0.5"
+        },
+        "nodes": [
+            "778861b2446f2ca8",
+            "39aa21e74b7c0ef3",
+            "2a6352e3d78821b3",
+            "b20bdfa96ff9fb3f",
+            "98c28375adb33251"
+        ],
+        "x": 74,
+        "y": 759,
+        "w": 1052,
+        "h": 82
+    },
+    {
+        "id": "91acb7739a8d47f4",
+        "type": "group",
+        "z": "838e54b719ad8caa",
+        "name": "",
+        "style": {
+            "stroke": "#001f60",
+            "fill": "#bfc7d7",
+            "label": true,
+            "fill-opacity": "0.5"
+        },
+        "nodes": [
+            "339e328119fa41e2",
+            "26a9ab07c5920d41",
+            "941a792ebce6b697",
+            "93b611ca1c35bc25",
+            "3920c8481be5ae72"
+        ],
+        "x": 154,
+        "y": 1119
+    },
+    {
+        "id": "fa4960f3ed0d6b0e",
+        "type": "group",
+        "z": "56fe256bdc6888ea",
+        "name": "",
+        "style": {
+            "stroke": "#001f60",
+            "fill": "#bfc7d7",
+            "label": true,
+            "fill-opacity": "0.5"
+        },
+        "nodes": [
+            "075708a59f6ee846",
+            "05cf048c6bab2021",
+            "296671d3ae1062a4",
+            "2861c27dbb6e55b9",
+            "a79890251ac01517"
+        ],
+        "x": 114,
+        "y": 959
+    },
+    {
+        "id": "cfdb8f3f974908a9",
+        "type": "group",
+        "z": "55b2ce4ea70984fe",
+        "name": "Einmal die Woche Neustarten und alte Daten löschen",
+        "style": {
+            "stroke": "#6f2fa0",
+            "fill": "#dbcbe7",
+            "fill-opacity": "0.5",
+            "label": true
+        },
+        "nodes": [
+            "6dc02239eb24f240",
+            "ecb227a94691b30b",
+            "b7e0c10a33999a5b",
+            "81fc86234846cc1a",
+            "07d15f70aa0e2695",
+            "a9a5a52ae61b38c4",
+            "05b8b9a798f27994",
+            "25c70fb620a058cf",
+            "b933314577dabf34",
+            "6058778f94f3f3ef",
+            "041facaadf78178a",
+            "72f78ffa9868f11f"
+        ],
+        "x": 74,
+        "y": 299,
+        "w": 792,
+        "h": 402
     },
     {
         "id": "fe1131055cdbcae8",
@@ -380,371 +491,6 @@
         "wires": [
             [
                 "ae6b9eec80b9e3bc"
-            ]
-        ]
-    },
-    {
-        "id": "44b6d9dfd4aa2217",
-        "type": "inject",
-        "z": "55b2ce4ea70984fe",
-        "name": "Entering UserID",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "100",
-        "payloadType": "str",
-        "x": 540,
-        "y": 560,
-        "wires": [
-            [
-                "b0e2bc9f8fc76f94"
-            ]
-        ]
-    },
-    {
-        "id": "46b565f5b7d79c2a",
-        "type": "debug",
-        "z": "55b2ce4ea70984fe",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1410,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "0b39fa65ad79fce4",
-        "type": "queuedsqlite",
-        "z": "55b2ce4ea70984fe",
-        "mydb": "fe1131055cdbcae8",
-        "sqlquery": "msg.topic",
-        "dbName": "msg.database",
-        "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
-        "sql": "",
-        "name": "db_1",
-        "x": 1250,
-        "y": 420,
-        "wires": [
-            [
-                "46b565f5b7d79c2a"
-            ]
-        ]
-    },
-    {
-        "id": "b0e2bc9f8fc76f94",
-        "type": "function",
-        "z": "55b2ce4ea70984fe",
-        "name": "Select Data",
-        "func": "var msg = { \"topic\": \"SELECT maschinenName, beginn, ende, dauer, strom FROM user JOIN data USING (userID) WHERE userID =\" + msg.payload +\"  ORDER BY beginn \"}\n\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 710,
-        "y": 560,
-        "wires": [
-            [
-                "811c802b0d934a99"
-            ]
-        ]
-    },
-    {
-        "id": "3a10714787bee759",
-        "type": "inject",
-        "z": "55b2ce4ea70984fe",
-        "name": "All Users",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "SELECT *  FROM user;",
-        "payload": "",
-        "payloadType": "date",
-        "x": 520,
-        "y": 360,
-        "wires": [
-            [
-                "811c802b0d934a99"
-            ]
-        ]
-    },
-    {
-        "id": "2edb639bd257d991",
-        "type": "inject",
-        "z": "55b2ce4ea70984fe",
-        "name": "All Machines",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "SELECT *  FROM maschine;",
-        "payload": "",
-        "payloadType": "date",
-        "x": 530,
-        "y": 400,
-        "wires": [
-            [
-                "811c802b0d934a99"
-            ]
-        ]
-    },
-    {
-        "id": "1701a6d145bfcd8e",
-        "type": "inject",
-        "z": "55b2ce4ea70984fe",
-        "name": "Entering maschinenName",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "test maschine",
-        "payloadType": "str",
-        "x": 570,
-        "y": 640,
-        "wires": [
-            [
-                "bd4862c9be46482e"
-            ]
-        ]
-    },
-    {
-        "id": "bd4862c9be46482e",
-        "type": "function",
-        "z": "55b2ce4ea70984fe",
-        "name": "Select Data",
-        "func": "var msg = { \"topic\": \"SELECT userID, beginn, ende, dauer, strom FROM data JOIN maschine USING (maschinenName) WHERE maschinenName = '\"+ msg.payload +\"' ORDER BY beginn \"}\n\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 770,
-        "y": 640,
-        "wires": [
-            [
-                "811c802b0d934a99"
-            ]
-        ]
-    },
-    {
-        "id": "579a0337dae55ba4",
-        "type": "inject",
-        "z": "55b2ce4ea70984fe",
-        "name": "Entering UserID",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "100",
-        "payloadType": "str",
-        "x": 540,
-        "y": 600,
-        "wires": [
-            [
-                "aff8f192bd26e595"
-            ]
-        ]
-    },
-    {
-        "id": "aff8f192bd26e595",
-        "type": "function",
-        "z": "55b2ce4ea70984fe",
-        "name": "Select Data",
-        "func": "var msg = { \"topic\": \"SELECT *  FROM user where userID=\" + msg.payload +\"\" };\n\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 730,
-        "y": 600,
-        "wires": [
-            [
-                "811c802b0d934a99"
-            ]
-        ]
-    },
-    {
-        "id": "faebd21155e2f9c9",
-        "type": "comment",
-        "z": "55b2ce4ea70984fe",
-        "name": "Alle Einträge von einem User:",
-        "info": "",
-        "x": 300,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "3f6c813bed70996b",
-        "type": "comment",
-        "z": "55b2ce4ea70984fe",
-        "name": "Persönliche Daten eines Nutzers zurück geben:",
-        "info": "",
-        "x": 240,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "778da196e9fffb05",
-        "type": "comment",
-        "z": "55b2ce4ea70984fe",
-        "name": "Alle Einträge zu einer Maschine:",
-        "info": "",
-        "x": 290,
-        "y": 640,
-        "wires": []
-    },
-    {
-        "id": "bd1c0a181590c091",
-        "type": "inject",
-        "z": "55b2ce4ea70984fe",
-        "name": "Anzahl der Nutzer",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "SELECT COUNT(*) FROM user",
-        "payload": "",
-        "payloadType": "date",
-        "x": 550,
-        "y": 440,
-        "wires": [
-            [
-                "811c802b0d934a99"
-            ]
-        ]
-    },
-    {
-        "id": "65890cc37262a4d6",
-        "type": "inject",
-        "z": "55b2ce4ea70984fe",
-        "name": "Anzahl der Maschinen",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "SELECT COUNT(*) FROM maschine",
-        "payload": "",
-        "payloadType": "date",
-        "x": 560,
-        "y": 480,
-        "wires": [
-            [
-                "811c802b0d934a99"
-            ]
-        ]
-    },
-    {
-        "id": "7359b62f55b4481c",
-        "type": "inject",
-        "z": "55b2ce4ea70984fe",
-        "name": "Summe von Dauer",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "SELECT SUM(dauer) FROM data",
-        "payload": "",
-        "payloadType": "date",
-        "x": 550,
-        "y": 520,
-        "wires": [
-            [
-                "811c802b0d934a99"
-            ]
-        ]
-    },
-    {
-        "id": "1b550d472f923888",
-        "type": "comment",
-        "z": "55b2ce4ea70984fe",
-        "name": "DB Queries:",
-        "info": "## ",
-        "x": 150,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "811c802b0d934a99",
-        "type": "subflow:2a14cb53da10968a",
-        "z": "55b2ce4ea70984fe",
-        "name": "find db path in local directory",
-        "x": 1040,
-        "y": 420,
-        "wires": [
-            [
-                "0b39fa65ad79fce4"
             ]
         ]
     },
@@ -822,8 +568,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1290,
-        "y": 220,
+        "x": 1270,
+        "y": 160,
         "wires": []
     },
     {
@@ -932,15 +678,310 @@
         ]
     },
     {
-        "id": "0a791186ac97c2ed",
-        "type": "comment",
+        "id": "778861b2446f2ca8",
+        "type": "catch",
         "z": "55b2ce4ea70984fe",
-        "g": "b885f38124686d57",
-        "name": "TODO Neuanlegen einer Maschine abfragen und zu liste hinzufügen",
-        "info": "",
-        "x": 480,
-        "y": 80,
+        "g": "1301b45190885759",
+        "name": "",
+        "scope": [
+            "18714dd186fd682c",
+            "b9cf832bb689f99d",
+            "6e264cca030727b3",
+            "ecb227a94691b30b",
+            "07d15f70aa0e2695"
+        ],
+        "uncaught": false,
+        "x": 150,
+        "y": 800,
+        "wires": [
+            [
+                "39aa21e74b7c0ef3"
+            ]
+        ]
+    },
+    {
+        "id": "39aa21e74b7c0ef3",
+        "type": "function",
+        "z": "55b2ce4ea70984fe",
+        "g": "1301b45190885759",
+        "name": "Logeintrag",
+        "func": "\nvar message = \"'FEHLER in node: \" + msg.error.source.name + \"; Fehlermeldung: \" + msg.error.message + \"'\";\n\nnode.error(message);\n\nmsg.topic = \"INSERT INTO logs (time,message) VALUES (\" + new Date().getTime() + \",\" + message + \")\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 800,
+        "wires": [
+            [
+                "2a6352e3d78821b3"
+            ]
+        ]
+    },
+    {
+        "id": "2a6352e3d78821b3",
+        "type": "subflow:2a14cb53da10968a",
+        "z": "55b2ce4ea70984fe",
+        "g": "1301b45190885759",
+        "name": "find db path in local directory",
+        "x": 600,
+        "y": 800,
+        "wires": [
+            [
+                "b20bdfa96ff9fb3f"
+            ]
+        ]
+    },
+    {
+        "id": "b20bdfa96ff9fb3f",
+        "type": "queuedsqlite",
+        "z": "55b2ce4ea70984fe",
+        "g": "1301b45190885759",
+        "mydb": "fe1131055cdbcae8",
+        "sqlquery": "msg.topic",
+        "dbName": "msg.database",
+        "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
+        "sql": "",
+        "name": "db",
+        "x": 830,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "98c28375adb33251",
+        "type": "debug",
+        "z": "55b2ce4ea70984fe",
+        "g": "1301b45190885759",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 800,
         "wires": []
+    },
+    {
+        "id": "6dc02239eb24f240",
+        "type": "inject",
+        "z": "55b2ce4ea70984fe",
+        "g": "cfdb8f3f974908a9",
+        "name": "Montag morgens Neustarten",
+        "props": [],
+        "repeat": "",
+        "crontab": "00 03 * * 1",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 250,
+        "y": 340,
+        "wires": [
+            [
+                "b7e0c10a33999a5b"
+            ]
+        ]
+    },
+    {
+        "id": "ecb227a94691b30b",
+        "type": "restart",
+        "z": "55b2ce4ea70984fe",
+        "g": "cfdb8f3f974908a9",
+        "name": "",
+        "x": 770,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "b7e0c10a33999a5b",
+        "type": "function",
+        "z": "55b2ce4ea70984fe",
+        "g": "cfdb8f3f974908a9",
+        "name": "Alte Daten löschen",
+        "func": "\nvar oneYearAgo = new Date();\noneYearAgo.setFullYear(twoYearsAgo.getFullYear() - 1);\n\nmsg.topic = \"'DELETE FROM data WHERE start <= \" + oneYearAgo.getTime() + \"'\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 230,
+        "y": 420,
+        "wires": [
+            [
+                "81fc86234846cc1a"
+            ]
+        ]
+    },
+    {
+        "id": "81fc86234846cc1a",
+        "type": "subflow:2a14cb53da10968a",
+        "z": "55b2ce4ea70984fe",
+        "g": "cfdb8f3f974908a9",
+        "name": "find db path in local directory",
+        "x": 540,
+        "y": 420,
+        "wires": [
+            [
+                "07d15f70aa0e2695"
+            ]
+        ]
+    },
+    {
+        "id": "07d15f70aa0e2695",
+        "type": "queuedsqlite",
+        "z": "55b2ce4ea70984fe",
+        "g": "cfdb8f3f974908a9",
+        "mydb": "fe1131055cdbcae8",
+        "sqlquery": "msg.topic",
+        "dbName": "msg.database",
+        "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
+        "sql": "",
+        "name": "db_1",
+        "x": 190,
+        "y": 480,
+        "wires": [
+            [
+                "a9a5a52ae61b38c4"
+            ]
+        ]
+    },
+    {
+        "id": "a9a5a52ae61b38c4",
+        "type": "function",
+        "z": "55b2ce4ea70984fe",
+        "g": "cfdb8f3f974908a9",
+        "name": "Alte Logs löschen",
+        "func": "\nvar oneWeekAgo = new Date();\n\nmsg.topic = \"'DELETE FROM logs WHERE time <= \" + (oneWeekAgo.getTime()-1209600000) + \"'\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 480,
+        "wires": [
+            [
+                "041facaadf78178a"
+            ]
+        ]
+    },
+    {
+        "id": "05b8b9a798f27994",
+        "type": "delay",
+        "z": "55b2ce4ea70984fe",
+        "g": "cfdb8f3f974908a9",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 510,
+        "y": 660,
+        "wires": [
+            [
+                "ecb227a94691b30b"
+            ]
+        ]
+    },
+    {
+        "id": "25c70fb620a058cf",
+        "type": "function",
+        "z": "55b2ce4ea70984fe",
+        "g": "cfdb8f3f974908a9",
+        "name": "Logeintrag",
+        "func": "\nvar message = \"'Alle Daten älter als 1 Jahr gelöscht. Alle logs älter als eine Woche gelöscht. Server neugestartet.'\";\n\nnode.error(message);\n\nmsg.topic = \"INSERT INTO logs (time,message) VALUES (\" + new Date().getTime() + \",\" + message + \")\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 600,
+        "wires": [
+            [
+                "b933314577dabf34"
+            ]
+        ]
+    },
+    {
+        "id": "b933314577dabf34",
+        "type": "subflow:2a14cb53da10968a",
+        "z": "55b2ce4ea70984fe",
+        "g": "cfdb8f3f974908a9",
+        "name": "find db path in local directory",
+        "x": 540,
+        "y": 600,
+        "wires": [
+            [
+                "6058778f94f3f3ef"
+            ]
+        ]
+    },
+    {
+        "id": "6058778f94f3f3ef",
+        "type": "queuedsqlite",
+        "z": "55b2ce4ea70984fe",
+        "g": "cfdb8f3f974908a9",
+        "mydb": "fe1131055cdbcae8",
+        "sqlquery": "msg.topic",
+        "dbName": "msg.database",
+        "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
+        "sql": "",
+        "name": "db",
+        "x": 190,
+        "y": 660,
+        "wires": [
+            [
+                "05b8b9a798f27994"
+            ]
+        ]
+    },
+    {
+        "id": "72f78ffa9868f11f",
+        "type": "queuedsqlite",
+        "z": "55b2ce4ea70984fe",
+        "g": "cfdb8f3f974908a9",
+        "mydb": "fe1131055cdbcae8",
+        "sqlquery": "msg.topic",
+        "dbName": "msg.database",
+        "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
+        "sql": "",
+        "name": "db_1",
+        "x": 470,
+        "y": 540,
+        "wires": [
+            [
+                "25c70fb620a058cf"
+            ]
+        ]
+    },
+    {
+        "id": "041facaadf78178a",
+        "type": "subflow:2a14cb53da10968a",
+        "z": "55b2ce4ea70984fe",
+        "g": "cfdb8f3f974908a9",
+        "name": "find db path in local directory",
+        "x": 260,
+        "y": 540,
+        "wires": [
+            [
+                "72f78ffa9868f11f"
+            ]
+        ]
     },
     {
         "id": "6dc9de411da24725",
@@ -968,8 +1009,7 @@
         "y": 500,
         "wires": [
             [
-                "5f8fa0c6c734d247",
-                "b6d083d37c688ee7"
+                "5f8fa0c6c734d247"
             ]
         ]
     },
@@ -989,8 +1029,7 @@
         "y": 560,
         "wires": [
             [
-                "0b10820ae0bca9b6",
-                "1fb88466e932e364"
+                "0b10820ae0bca9b6"
             ]
         ]
     },
@@ -1031,7 +1070,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 730,
+        "x": 850,
         "y": 100,
         "wires": []
     },
@@ -1069,7 +1108,6 @@
         "y": 160,
         "wires": [
             [
-                "bed83e8525383d7f",
                 "eaacb4e3ebe5efde"
             ]
         ]
@@ -1118,7 +1156,6 @@
         "y": 160,
         "wires": [
             [
-                "ced57a5f39c0999b",
                 "f439c74ac4bd2f32",
                 "09e58f5fdfe7c1bf"
             ]
@@ -1188,7 +1225,6 @@
         "y": 560,
         "wires": [
             [
-                "de62a886d974dd24",
                 "6dc9de411da24725"
             ]
         ]
@@ -1307,8 +1343,7 @@
         "y": 740,
         "wires": [
             [
-                "61de7ef9aec533a4",
-                "06fe109c0f62f46f"
+                "61de7ef9aec533a4"
             ]
         ]
     },
@@ -1348,8 +1383,7 @@
         "y": 740,
         "wires": [
             [
-                "a21f5fcfcf1d74d8",
-                "8bbc34e52c812ca4"
+                "a21f5fcfcf1d74d8"
             ]
         ]
     },
@@ -1525,7 +1559,6 @@
         "y": 500,
         "wires": [
             [
-                "de62a886d974dd24",
                 "f8bca5de021b1401"
             ]
         ]
@@ -1551,9 +1584,7 @@
         "x": 1670,
         "y": 280,
         "wires": [
-            [
-                "70b6a07615db8980"
-            ]
+            []
         ]
     },
     {
@@ -1609,24 +1640,6 @@
         ]
     },
     {
-        "id": "1fb88466e932e364",
-        "type": "debug",
-        "z": "838e54b719ad8caa",
-        "g": "89199902fcdf75a8",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 510,
-        "y": 600,
-        "wires": []
-    },
-    {
         "id": "f8bca5de021b1401",
         "type": "change",
         "z": "838e54b719ad8caa",
@@ -1673,6 +1686,246 @@
                 "bb365524f4051b03"
             ]
         ]
+    },
+    {
+        "id": "471cbbd715d3a1f9",
+        "type": "http in",
+        "z": "838e54b719ad8caa",
+        "g": "32be6167ea16cce8",
+        "name": "",
+        "url": "/sayHiToServer",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 270,
+        "y": 960,
+        "wires": [
+            [
+                "83f246bc05ac7087",
+                "8fd53483dee4588b",
+                "6ef9b89535160967"
+            ]
+        ]
+    },
+    {
+        "id": "83f246bc05ac7087",
+        "type": "function",
+        "z": "838e54b719ad8caa",
+        "g": "32be6167ea16cce8",
+        "name": "Maschine begrüßen",
+        "func": "\nmsg.payload = \"Hallo \" + decodeURIComponent(escape(msg.payload.machineName)) + \"! Ich habe deine Nachricht Empfangen. Dein Server :D\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 960,
+        "wires": [
+            [
+                "9767a4fea2032874"
+            ]
+        ]
+    },
+    {
+        "id": "9767a4fea2032874",
+        "type": "http response",
+        "z": "838e54b719ad8caa",
+        "g": "32be6167ea16cce8",
+        "name": "HTTP Antwort an den Mikrocontroller",
+        "statusCode": "200",
+        "headers": {},
+        "x": 890,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "8fd53483dee4588b",
+        "type": "debug",
+        "z": "838e54b719ad8caa",
+        "g": "32be6167ea16cce8",
+        "name": "GetRegistrationMessageFromMachine",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "ab94a3cac0842b55",
+        "type": "subflow:2a14cb53da10968a",
+        "z": "838e54b719ad8caa",
+        "g": "32be6167ea16cce8",
+        "name": "find db path in local directory",
+        "x": 860,
+        "y": 1020,
+        "wires": [
+            [
+                "641811ea31011d8e"
+            ]
+        ]
+    },
+    {
+        "id": "641811ea31011d8e",
+        "type": "queuedsqlite",
+        "z": "838e54b719ad8caa",
+        "g": "32be6167ea16cce8",
+        "mydb": "fe1131055cdbcae8",
+        "sqlquery": "msg.topic",
+        "dbName": "msg.database",
+        "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
+        "sql": "",
+        "name": "db",
+        "x": 1090,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6ef9b89535160967",
+        "type": "function",
+        "z": "838e54b719ad8caa",
+        "g": "32be6167ea16cce8",
+        "name": "Logeintrag",
+        "func": "\nvar message = \"'Neues Login Modul erkannt. Maschinenname des Moduls: \" + decodeURIComponent(escape(msg.payload.machineName)) + \" ; IP-Adresse des Moduls: \" + decodeURIComponent(escape(msg.payload.ipAdress)) + \"'\";\n\nmsg.topic = \"INSERT INTO logs (time,message) VALUES (\" + new Date().getTime() + \",\" + message + \")\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 1020,
+        "wires": [
+            [
+                "ab94a3cac0842b55"
+            ]
+        ]
+    },
+    {
+        "id": "8503f01a041301a8",
+        "type": "debug",
+        "z": "838e54b719ad8caa",
+        "g": "32be6167ea16cce8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "339e328119fa41e2",
+        "type": "catch",
+        "z": "838e54b719ad8caa",
+        "g": "91acb7739a8d47f4",
+        "name": "",
+        "scope": [
+            "6dc9de411da24725",
+            "3e926d2fc9bc5dcf",
+            "bb365524f4051b03",
+            "b14f5f1a0678a762",
+            "7ea94c6be75dbe55",
+            "4c0c666ba22fbc90",
+            "633ac16905b63ef3",
+            "a21f5fcfcf1d74d8",
+            "471cbbd715d3a1f9",
+            "9767a4fea2032874",
+            "0b10820ae0bca9b6",
+            "1c47cae84a9535b8",
+            "b1ef769e563322d0",
+            "26eea8dbc2cf4d20",
+            "366568672f2f8d07"
+        ],
+        "uncaught": false,
+        "x": 240,
+        "y": 1160,
+        "wires": [
+            [
+                "26a9ab07c5920d41"
+            ]
+        ]
+    },
+    {
+        "id": "26a9ab07c5920d41",
+        "type": "function",
+        "z": "838e54b719ad8caa",
+        "g": "91acb7739a8d47f4",
+        "name": "Logeintrag",
+        "func": "\nvar message = \"'FEHLER in node: \" + msg.error.source.name + \"; Fehlermeldung: \" + msg.error.message + \"'\";\n\nnode.error(message);\n\nmsg.topic = \"INSERT INTO logs (time,message) VALUES (\" + new Date().getTime() + \",\" + message + \")\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 1160,
+        "wires": [
+            [
+                "941a792ebce6b697"
+            ]
+        ]
+    },
+    {
+        "id": "941a792ebce6b697",
+        "type": "subflow:2a14cb53da10968a",
+        "z": "838e54b719ad8caa",
+        "g": "91acb7739a8d47f4",
+        "name": "find db path in local directory",
+        "x": 680,
+        "y": 1160,
+        "wires": [
+            [
+                "93b611ca1c35bc25"
+            ]
+        ]
+    },
+    {
+        "id": "93b611ca1c35bc25",
+        "type": "queuedsqlite",
+        "z": "838e54b719ad8caa",
+        "g": "91acb7739a8d47f4",
+        "mydb": "fe1131055cdbcae8",
+        "sqlquery": "msg.topic",
+        "dbName": "msg.database",
+        "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
+        "sql": "",
+        "name": "db",
+        "x": 910,
+        "y": 1160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3920c8481be5ae72",
+        "type": "debug",
+        "z": "838e54b719ad8caa",
+        "g": "91acb7739a8d47f4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 1160,
+        "wires": []
     },
     {
         "id": "7dbfda298598df33",
@@ -4167,9 +4420,7 @@
         "x": 520,
         "y": 560,
         "wires": [
-            [
-                "5e56578f2c78f47d"
-            ],
+            [],
             [
                 "bfd408908909c8f6"
             ],
@@ -4238,7 +4489,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 210,
-        "y": 1380,
+        "y": 1580,
         "wires": [
             [
                 "2ef8075276287a84"
@@ -4437,7 +4688,6 @@
         "y": 520,
         "wires": [
             [
-                "1a1cf964fd8edaf0",
                 "10928063098554dd"
             ]
         ]
@@ -4491,7 +4741,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 730,
-        "y": 1380,
+        "y": 1580,
         "wires": []
     },
     {
@@ -4594,8 +4844,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2390,
-        "y": 440,
+        "x": 2690,
+        "y": 520,
         "wires": []
     },
     {
@@ -4632,7 +4882,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 730,
-        "y": 1320,
+        "y": 1520,
         "wires": []
     },
     {
@@ -4658,7 +4908,7 @@
         "payload": "",
         "payloadType": "str",
         "x": 210,
-        "y": 1320,
+        "y": 1520,
         "wires": [
             [
                 "e3a1c266dd789867"
@@ -4691,7 +4941,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1050,
-        "y": 1000,
+        "y": 1200,
         "wires": []
     },
     {
@@ -4702,7 +4952,7 @@
         "name": "Test Trigger für die Zwischenspeicherliste",
         "info": "",
         "x": 300,
-        "y": 1280,
+        "y": 1480,
         "wires": []
     },
     {
@@ -4727,7 +4977,7 @@
         "to": "",
         "reg": false,
         "x": 420,
-        "y": 1080,
+        "y": 1280,
         "wires": [
             [
                 "f53a46c755b4cebd"
@@ -4747,7 +4997,7 @@
         "finalize": "",
         "libs": [],
         "x": 1100,
-        "y": 1080,
+        "y": 1280,
         "wires": [
             [
                 "7d90581007d7da7f",
@@ -4774,7 +5024,7 @@
         "payload": "{\"machineName\":\"Tischkreissäge\",\"userID\":100,\"startMessuringTime\":null,\"messuringDuration\":null,\"lastMessuringTime\":1666651167650,\"setupStartTime\":null,\"setupDuration\":null,\"energy\":null,\"ip\":null}",
         "payloadType": "json",
         "x": 220,
-        "y": 1440,
+        "y": 1640,
         "wires": [
             [
                 "b78e456aca118fb3"
@@ -4795,7 +5045,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 730,
-        "y": 1440,
+        "y": 1640,
         "wires": []
     },
     {
@@ -4818,7 +5068,7 @@
         "repair": false,
         "outputs": 2,
         "x": 750,
-        "y": 1080,
+        "y": 1280,
         "wires": [
             [
                 "f53a46c755b4cebd"
@@ -4901,24 +5151,6 @@
         "wires": []
     },
     {
-        "id": "f131cc992d7af3be",
-        "type": "debug",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 3130,
-        "y": 500,
-        "wires": []
-    },
-    {
         "id": "d3d96a5c0c10b29f",
         "type": "function",
         "z": "56fe256bdc6888ea",
@@ -4993,7 +5225,7 @@
         "type": "debug",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "",
+        "name": "Eintrag auf angemeldeten Konto gespeichert",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -5002,7 +5234,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 3210,
+        "x": 3330,
         "y": 800,
         "wires": []
     },
@@ -5065,7 +5297,7 @@
         "type": "debug",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
-        "name": "",
+        "name": "Eintrag auf allgemeinem Konto gespeichert",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -5074,7 +5306,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 3410,
+        "x": 3510,
         "y": 700,
         "wires": []
     },
@@ -5085,7 +5317,7 @@
         "g": "27cfd54d06969523",
         "name": "find db path in local directory",
         "x": 1680,
-        "y": 1080,
+        "y": 1280,
         "wires": [
             [
                 "fc6d41b917715a63"
@@ -5105,7 +5337,7 @@
         "finalize": "",
         "libs": [],
         "x": 1410,
-        "y": 1080,
+        "y": 1280,
         "wires": [
             [
                 "09f7804909e0af20",
@@ -5125,7 +5357,7 @@
         "sql": "",
         "name": "db",
         "x": 1930,
-        "y": 1080,
+        "y": 1280,
         "wires": [
             [
                 "55099211e08bdcb5"
@@ -5145,7 +5377,7 @@
         "finalize": "",
         "libs": [],
         "x": 1710,
-        "y": 1020,
+        "y": 1220,
         "wires": [
             [
                 "81e58d3615229780"
@@ -5167,7 +5399,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 2310,
-        "y": 1080,
+        "y": 1280,
         "wires": []
     },
     {
@@ -5177,7 +5409,7 @@
         "name": "Serieller Input TEST für Schwellwerte",
         "serial": "189d98b6e10797a1",
         "x": 270,
-        "y": 1540,
+        "y": 1740,
         "wires": [
             []
         ]
@@ -5196,7 +5428,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 550,
-        "y": 1540,
+        "y": 1740,
         "wires": []
     },
     {
@@ -5227,7 +5459,7 @@
         "to": "",
         "reg": false,
         "x": 1650,
-        "y": 1140,
+        "y": 1340,
         "wires": [
             []
         ]
@@ -5248,7 +5480,7 @@
         "authType": "",
         "senderr": false,
         "x": 2030,
-        "y": 1140,
+        "y": 1340,
         "wires": [
             []
         ]
@@ -5261,7 +5493,7 @@
         "name": "Zurück gestellt",
         "info": "",
         "x": 220,
-        "y": 1000,
+        "y": 1200,
         "wires": []
     },
     {
@@ -5283,7 +5515,7 @@
         "valueInputType": "str",
         "outputs": 1,
         "x": 470,
-        "y": 1380,
+        "y": 1580,
         "wires": [
             [
                 "94d5443828424b63"
@@ -5333,7 +5565,7 @@
         "valueInputType": "msg",
         "outputs": 1,
         "x": 470,
-        "y": 1320,
+        "y": 1520,
         "wires": [
             [
                 "3af81448c05df57a"
@@ -5387,9 +5619,7 @@
         "x": 3180,
         "y": 660,
         "wires": [
-            [
-                "8ec24850c5ea712c"
-            ]
+            []
         ]
     },
     {
@@ -5411,7 +5641,7 @@
         "valueInputType": "str",
         "outputs": 1,
         "x": 420,
-        "y": 1000,
+        "y": 1200,
         "wires": [
             [
                 "bc0ec04e16a6089e"
@@ -5437,7 +5667,7 @@
         "valueInputType": "msg",
         "outputs": 1,
         "x": 470,
-        "y": 1440,
+        "y": 1640,
         "wires": [
             [
                 "e6b116c3c3a0bbe6"
@@ -5489,7 +5719,7 @@
         "valueInputType": "msg",
         "outputs": 1,
         "x": 2080,
-        "y": 1020,
+        "y": 1220,
         "wires": [
             [
                 "55099211e08bdcb5"
@@ -5509,7 +5739,7 @@
         "array": "array",
         "arrayType": "msg",
         "x": 740,
-        "y": 1000,
+        "y": 1200,
         "wires": [
             [],
             [
@@ -5812,29 +6042,13 @@
         "x": 1480,
         "y": 100,
         "wires": [
-            [],
+            [
+                "7e44060492b15b19"
+            ],
             [
                 "6bc8cd7a7aa88c70"
             ]
         ]
-    },
-    {
-        "id": "a591606526e6c6e1",
-        "type": "debug",
-        "z": "56fe256bdc6888ea",
-        "g": "bdd517b93ca42ddf",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1730,
-        "y": 160,
-        "wires": []
     },
     {
         "id": "455ad6e4f3c1a6c2",
@@ -5887,8 +6101,7 @@
         "y": 180,
         "wires": [
             [
-                "9a61e006b06aea53",
-                "a591606526e6c6e1"
+                "9a61e006b06aea53"
             ]
         ]
     },
@@ -5980,6 +6193,185 @@
         "statusType": "auto",
         "x": 3410,
         "y": 660,
+        "wires": []
+    },
+    {
+        "id": "7e44060492b15b19",
+        "type": "function",
+        "z": "56fe256bdc6888ea",
+        "g": "bdd517b93ca42ddf",
+        "name": "Logeintrag",
+        "func": "\nvar message = \"'Nach Neustart von node-red alle Maschinen im Array anlegen.'\"\n\nmsg.topic = \"INSERT INTO logs (time,message) VALUES (\" + new Date().getTime() + \",\" + message + \")\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1770,
+        "y": 100,
+        "wires": [
+            [
+                "7d39ce45f0755820"
+            ]
+        ]
+    },
+    {
+        "id": "7d39ce45f0755820",
+        "type": "subflow:2a14cb53da10968a",
+        "z": "56fe256bdc6888ea",
+        "g": "bdd517b93ca42ddf",
+        "name": "find db path in local directory",
+        "x": 1860,
+        "y": 160,
+        "wires": [
+            [
+                "89f504276df55fd1"
+            ]
+        ]
+    },
+    {
+        "id": "89f504276df55fd1",
+        "type": "queuedsqlite",
+        "z": "56fe256bdc6888ea",
+        "g": "bdd517b93ca42ddf",
+        "mydb": "fe1131055cdbcae8",
+        "sqlquery": "msg.topic",
+        "dbName": "msg.database",
+        "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
+        "sql": "",
+        "name": "db",
+        "x": 2010,
+        "y": 100,
+        "wires": [
+            [
+                "81b59ade269b4c68"
+            ]
+        ]
+    },
+    {
+        "id": "81b59ade269b4c68",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "g": "bdd517b93ca42ddf",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2130,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "075708a59f6ee846",
+        "type": "catch",
+        "z": "56fe256bdc6888ea",
+        "g": "fa4960f3ed0d6b0e",
+        "name": "",
+        "scope": [
+            "bd1d5435acad84d6",
+            "ea629855e546870b",
+            "bfd408908909c8f6",
+            "40e0e3149ced7e58",
+            "feddcaf095aaba6f",
+            "f8855c74fcdf9766",
+            "4ea50d0d4145cfa9",
+            "f87a3a14e4c84c77",
+            "82162ffd23778a1f",
+            "2ef8075276287a84",
+            "10928063098554dd",
+            "e3a1c266dd789867",
+            "6dd2888976cb3d05",
+            "6cd10282e0de543b",
+            "f6be19d698c8e981",
+            "b78e456aca118fb3",
+            "e8e5cb8219247199",
+            "81e58d3615229780",
+            "9a61e006b06aea53",
+            "6ea9e6d61f4c7143",
+            "6bc8cd7a7aa88c70",
+            "89f504276df55fd1"
+        ],
+        "uncaught": false,
+        "x": 200,
+        "y": 1000,
+        "wires": [
+            [
+                "05cf048c6bab2021"
+            ]
+        ]
+    },
+    {
+        "id": "05cf048c6bab2021",
+        "type": "function",
+        "z": "56fe256bdc6888ea",
+        "g": "fa4960f3ed0d6b0e",
+        "name": "Logeintrag",
+        "func": "\nvar message = \"'FEHLER in node: \" + msg.error.source.name + \"; Fehlermeldung: \" + msg.error.message + \"'\";\n\nnode.error(message);\n\nmsg.topic = \"INSERT INTO logs (time,message) VALUES (\" + new Date().getTime() + \",\" + message + \")\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 1000,
+        "wires": [
+            [
+                "296671d3ae1062a4"
+            ]
+        ]
+    },
+    {
+        "id": "296671d3ae1062a4",
+        "type": "subflow:2a14cb53da10968a",
+        "z": "56fe256bdc6888ea",
+        "g": "fa4960f3ed0d6b0e",
+        "name": "find db path in local directory",
+        "x": 640,
+        "y": 1000,
+        "wires": [
+            [
+                "2861c27dbb6e55b9"
+            ]
+        ]
+    },
+    {
+        "id": "2861c27dbb6e55b9",
+        "type": "queuedsqlite",
+        "z": "56fe256bdc6888ea",
+        "g": "fa4960f3ed0d6b0e",
+        "mydb": "fe1131055cdbcae8",
+        "sqlquery": "msg.topic",
+        "dbName": "msg.database",
+        "db": "C:\\Users\\User\\.node-red\\projects\\MonitoringApp_Stand22-06-22\\db",
+        "sql": "",
+        "name": "db",
+        "x": 870,
+        "y": 1000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a79890251ac01517",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "g": "fa4960f3ed0d6b0e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 1000,
         "wires": []
     }
 ]

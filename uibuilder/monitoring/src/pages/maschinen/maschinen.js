@@ -2,28 +2,6 @@
 /** Minimalist code for uibuilder and Node-RED */
 'use strict'
 
-// return formatted HTML version of JSON object
-window.syntaxHighlight = function (json) {
-    json = JSON.stringify(json, undefined, 4)
-    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    json = json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-        var cls = 'number'
-        if ((/^"/).test(match)) {
-            if ((/:$/).test(match)) {
-                cls = 'key'
-            } else {
-                cls = 'string'
-            }
-        } else if ((/true|false/).test(match)) {
-            cls = 'boolean'
-        } else if ((/null/).test(match)) {
-            cls = 'null'
-        }
-        return '<span class="' + cls + '">' + match + '</span>'
-    })
-    return json
-} // --- End of syntaxHighlight --- //
-
 // run this function when the document is loaded
 window.onload = function() {
     // Start up uibuilder - see the docs for the optional parameters
@@ -69,13 +47,22 @@ window.onload = function() {
                 clickToSelect: false,
                 formatter : function(value,row,index) {
                     var editButton = '<a href="maschinen_bearbeiten.html?machine='+row.machineName+'" type="button" class="mr-4 btn btn-primary" role="button" ><i class="fas fa-wrench" aria-hidden="true"></i></a>';
-                    var deleteButton = '<button onclick="deleteMachine('+index+','+ "'" + row.machineName + "'" +')" type="button" class="btn btn-primary"><i class="fas fa-trash" aria-hidden="true"></i></button>'
+                    var deleteButton = '<button onclick="warnBeforeDeletion('+index+','+ "'" + row.machineName + "'" +')" type="button" class="btn btn-primary"><i class="fas fa-trash" aria-hidden="true"></i></button>'
                     return editButton + deleteButton;
                 }
             }],
             data: msg.payload
           })
     })
+}
+
+function warnBeforeDeletion(index, machineName){
+
+    var info = document.getElementById('deletionWarnModal');
+    var message = "<b>Achtung!</b><br><br>Soll die Maschine mit dem Namen "+machineName+" endgültig gelöscht werden?";
+
+    info.innerHTML = renderDeletionWarnModal("Maschine Löschen", message, "deleteMachine("+index+","+machineName+")"); //be carfull with marks "``"
+    $('#deletionWarnModal').modal('show');
 }
 
 function deleteMachine(index, machineName){

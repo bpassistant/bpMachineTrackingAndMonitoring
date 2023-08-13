@@ -2,7 +2,7 @@
    Author: Jan Torge Schneider
 
    The script handles the machine modules.
-   It registers logins and informs the server about these.
+   It registers logins and informs the server.
 */
 
 //--- Includes (External Libraries) ---
@@ -20,19 +20,21 @@
 #define debugging
 
 //-- Network config ---
-#define wifinetwork "Bill Clinternet"
-#define wifipassword "MartinRouterKing"
+#define wifinetwork "network=bauer+planer"
+#define wifipassword "craftsandarts"
 
 const char *ssid = wifinetwork;
 const char *password = wifipassword;
 //Server Hostname: monitoringServer
 //IP b+p: 192.168.2.197
-String serverName = "http://192.168.10.82:1880/";
+String serverName = "http://192.168.2.179:1880/";
 
 
 //--- User and Machine config ---
 #define machineName "Tischkreissäge"
 int userId = 0;
+
+//TODO -> Kann raus oder?
 int defaultId = 100;
 bool isLoggedIn = false;
 
@@ -71,8 +73,8 @@ char keys[ROW_NUMBER][COLUM_NUMBER] = {
     {'7', '8', '9'},
     {'r', '0', 'g'}};
 
-byte pin_rows[ROW_NUMBER] = {25, 26, 0, 2}; // connect to the row pinouts of the keypad
-byte pin_column[COLUM_NUMBER] = {27, 14, 15}; // connect to the column pinouts of the keypad
+byte pin_rows[ROW_NUMBER] = {25, 26, 32, 33}; // connect to the row pinouts of the keypad
+byte pin_column[COLUM_NUMBER] = {27, 14, 12}; // connect to the column pinouts of the keypad
 
 Keypad keypad = Keypad(makeKeymap(keys), pin_rows, pin_column, ROW_NUMBER, COLUM_NUMBER);
 
@@ -82,36 +84,28 @@ Keypad keypad = Keypad(makeKeymap(keys), pin_rows, pin_column, ROW_NUMBER, COLUM
 int test_id = 100; // change your test id here
 String inputID;
 
+//--- RFID config ---
 /**
  * ----------------------------------------------------------------------------
- * Easy MFRC522 library - Unlabeled Data - Example #1
- * (Further information: https://github.com/pablo-sampaio/easy_mfrc522)
+ * Easy MFRC522 library (RFID)
+ * (Further information: https://github.com/pablo-sampaio/easy_mfrc522 or https://www.aranacorp.com/en/using-an-rfid-module-with-an-esp32/)
  * 
  * -----------------------------------------
- * Simple example of reading/writing data chunks using the unlabeled operations. 
- * You must provide the exact number of bytes both to write and to read. 
- * (Useful if your data size is fixed). 
- * 
- * In this example, we store and retrieve the content of a "struct" variable.
- * 
+ * Pin layout used
  * -----------------------------------------
- * Pin layout used (where * indicates configurable pin):
+ * MFRC522      NodeMCU
+ * Reader       Esp32
+ * Pin          Pin   
  * -----------------------------------------
- * MFRC522      Arduino       NodeMCU
- * Reader       Uno           Esp8266
- * Pin          Pin           Pin    
- * -----------------------------------------
- * SDA(SS)      4*            D4*
- * SCK          13            D5   
- * MOSI         11            D7
- * MISO         12            D6
- * RST          3*            D3*
- * NC(IRQ)      not used      not used
- * 3.3V         3.3V          3V
- * GND          GND           GND
+ * SDA(SS)      5*
+ * SCK          18
+ * MOSI         23
+ * MISO         19
+ * RST          17*
+ * NC(IRQ)      not used
+ * 3.3V         3.3V
+ * GND          GND
  * --------------------------------------------------------------------------
- * Obs.: This code may not work if you use different types of boards to alternately
- * read/write, because of the memory size and alignment of the struct.
  */
 #define SDA  5
 #define RST  17
@@ -176,8 +170,19 @@ void setup()
   ledState = red;
   updateLEDs(red);
 
+  registerToServer();
+}
+
+void registerToServer()
+{
+  // Send informations about the connection to the server
+  String serverPath = serverName + "sayHiToServer" + "?machineName=" + machineName + "&ipAdress=" + WiFi.localIP();
+
+  String payload = httpGETRequest(serverPath);
+
   #ifdef debugging
-  Serial.println("APPROACH a RFID tag. Waiting...");
+  Serial.print("Payload from sayHiToServer request: ");
+  Serial.println(payload);
   #endif
 }
 

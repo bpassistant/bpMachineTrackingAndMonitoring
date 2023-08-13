@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
 
@@ -9,7 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Monitoring - Übersicht</title>
+    <title>Monitoring - Konfiguration</title>
+
+    <script type="text/javascript" src="../../sidebar.js"></script>
+    <script type="text/javascript" src="../../modals.js"></script>
 
     <!-- Custom fonts for this template-->
     <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -20,6 +23,8 @@
 
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.20.2/dist/bootstrap-table.min.css">
 
+    <link rel="icon" href="../../favicon.ico">
+
 </head>
 
 <body id="page-top">
@@ -28,61 +33,11 @@
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"></ul>
 
-        <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="übersicht.html">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
-            </div>
-            <div class="sidebar-brand-text mx-3">B+P</div>
-        </a>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Nav Item - Übersicht -->
-        <li class="nav-item active">
-            <a class="nav-link" href="übersicht.html">
-                <i class="fas fa-home"></i>
-                <span>Übersicht</span>
-            </a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Nav Item - Nutzer -->
-        <li class="nav-item">
-            <a class="nav-link" href="../nutzer/nutzer.html">
-                <i class="fas fa-user"></i>
-                <span>Nutzer</span>
-            </a>
-        </li>
-
-        <!-- Nav Item - Maschinen -->
-        <li class="nav-item">
-            <a class="nav-link" href="../maschinen/maschinen.html">
-                <i class="fas fa-cog"></i>
-                <span>Maschinen</span>
-            </a>
-        </li>
-
-        <!-- Nav Item - Monitoring -->
-        <li class="nav-item">
-            <a class="nav-link" href="../monitoring/monitoring.html">
-                <i class="fas fa-tachometer-alt"></i>
-                <span>Monitoring</span>
-            </a>
-        </li>
-        
-        <!-- Sidebar Toggler (Sidebar) -->
-        <!--
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-        -->
-    </ul>
+    <script>
+        document.getElementById("accordionSidebar").innerHTML = renderSidebar("config");
+    </script>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -93,10 +48,12 @@
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                <h1 class="h3 mb-0 text-gray-800">Übersicht</h1>
+                <h1 class="h3 mb-0 text-gray-800">Konfiguration</h1>
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
+
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='../changePassword/changePassword.html';">Passwort ändern</button>
 
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
@@ -114,11 +71,6 @@
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <!-- Page Heading -->
-                        <p class="mb-4">Willkommen, <span id="fullName" class="mb-4"></span></p>
-
-                        <p class="mb-4">Anzahl der im System hinterlegten Nutzer: <span id="numberOfUsers" class="mb-4"></span></p>
-
-                        <p class="mb-4">Anzahl der im System hinterlegten Maschinen: <span id="numberOfMachines" class="mb-4"></span></p>
 
                         <p class="mb-4">Stromkosten pro kWh: <span id="powerCosts" class="mb-4"></span> €</p>
 
@@ -133,14 +85,6 @@
                             <button  onclick="changePowerCosts()" type="button" class="btn btn-primary">Übernehmen</button>
                         </form>
 
-                        <p class="mb-4">Liste der aktuell angemeldeten Nutzer und der aktiven Maschinen:</p>
-
-                        <table id="dataTable" class="mb-4"
-                            data-pagination="true"
-                            data-search="false"                   
-                            data-height="75%"
-                            data-show-footer="true">
-                        </table>
                     </div>
                 </div>
             </div>
@@ -171,24 +115,10 @@
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Bereit zu gehen?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Wählen Sie "Abmelden", wenn Sie bereit sind, Ihre aktuelle Sitzung zu beenden.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
-                <a class="btn btn-primary" href="../login/login.html">Abmelden</a>
-            </div>
-        </div>
-    </div>
-</div>
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
+<script>
+    document.getElementById("logoutModal").innerHTML = renderLogoutModal();
+</script>
 
 <!-- Bootstrap core JavaScript-->
 <script src="../../vendor/jquery/jquery.min.js"></script>
@@ -203,7 +133,7 @@
 <!-- #region Supporting Scripts. These MUST be in the right order. Note no leading / -->
 <script src="../../../uibuilder/vendor/socket.io/socket.io.js">/* REQUIRED: Socket.IO is loaded only once for all instances. Without this, you don't get a websocket connection */</script>
 <script src="../../uibuilderfe.min.js">/* REQUIRED: remove 'min.' to use dev version */</script>
-<script src="übersicht.js">/* OPTIONAL: Put your custom code here */</script>
+<script src="configPage.js">/* OPTIONAL: Put your custom code here */</script>
 <script src="../../generalFunctions.js"></script>
 
 <!-- #endregion -->

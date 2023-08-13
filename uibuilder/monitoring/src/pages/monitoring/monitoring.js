@@ -3,7 +3,7 @@
 'use strict'
 
 const MessageType = {
-    getUserNames: "getUserNames",
+    getUserIDs: "getUserIDs",
     getMachineNames: "getMachineNames",
     getDataForThisMonth: "getDataForThisMonth",
     getDataForSelected: "getDataForSelected"
@@ -12,10 +12,6 @@ const MessageType = {
 var startDatePicker;
 var endDatePicker;
 var bufferData;
-
-function stringFormat(str) {
-    return str.replace(/['"]+/g, '');
-}
  
 // run this function when the document is loaded
 window.onload = function() {
@@ -30,6 +26,21 @@ window.onload = function() {
     getUserAndMachines();
 }
 
+function setDatePicker() {
+    
+    startDatePicker = document.getElementById("start");
+    endDatePicker = document.getElementById("end");
+
+    var date = new Date();
+    //date.setHours(0, 0, 0);
+    //set endDatePicker to current date
+    endDatePicker.valueAsDate = date;
+
+    //set startDatePicker to first day in current month
+    date.setDate(1);
+    startDatePicker.valueAsDate = date;
+}
+
 // Listen for incoming messages from Node-RED
 uibuilder.onChange('msg', function(msg){
 
@@ -42,11 +53,11 @@ uibuilder.onChange('msg', function(msg){
         $('#overviewTable').bootstrapTable({
             columns: [{
                 field: 'machineHours',
-                title: 'Maschinenstunden',
+                title: 'Summe der Maschinenstunden',
             }, {
                 field: 'wattHours',
-                title: 'Wattstunden',
-                formatter: "kWHFormatter"
+                title: 'Summe der Wattstunden',
+                formatter: "kWHFormatterTwoDecimalDigits"
             }, {
                 field: 'powerCosts',
                 title: 'Stromkosten (' + localStorage.getItem("powerCost") + " €/kWh)",
@@ -58,20 +69,20 @@ uibuilder.onChange('msg', function(msg){
     //Important: no else if in this case, because we want to fill both tables
     if(msg.messageType == MessageType.getDataForThisMonth || msg.messageType == MessageType.getDataForSelected){
 
+        //TODO: Hardcoded security: Der Master-Admin hat die UserID 42. Dieser soll nicht von anderen Admins bearbeitet oder gelöscht werden.
+        //Daher die simple Maßnahme, den Master-Admin gar nicht im Frontend anzuzeigen
+        //
+        //bufferData = msg.payload.filter(item => item.userid != 42);
+        //
+        //Wieder zurück gesetzt, da bei großen Mengen an Einträgen das Filtern die Performance stark beeinträchtigen könnte
+        //Man kann einfach davon ausgehen, dass der MasterAdmin keine Einträge tätigt.
+
         bufferData = msg.payload;
 
         $('#dataTable').bootstrapTable({
             columns: [{
                 field: 'userid',
                 title: 'UserID',
-                sortable: "true"
-            },{
-                field: 'firstName',
-                title: 'Vorname',
-                sortable: "true"
-            },{
-                field: 'lastName',
-                title: 'Nachname',
                 sortable: "true"
             },{
                 field: 'machineName',
@@ -89,21 +100,24 @@ uibuilder.onChange('msg', function(msg){
                 formatter: "convertMillisToHoursMinutesSeconds"
             }, {
                 field: 'workDuration',
-                title: 'Dauer',
+                title: 'Messdauer',
                 sortable: "true",
                 formatter: "convertMillisToHoursMinutesSeconds"
             },{
                 field: 'power',
-                title: 'Wattstunden',
+                title: 'Verbrauchte Wattstunden',
                 sortable: "true",
-                formatter: "kWHFormatter"
+                formatter: "kWHFormatterFourDecimalDigits"
             }]
         });
         
-        $('#dataTable').bootstrapTable("load", msg.payload);
+        $('#dataTable').bootstrapTable("load", bufferData);
 
-    } else if(msg.messageType == MessageType.getUserNames){
-        fillUserDropdown(msg.payload);
+    } else if(msg.messageType == MessageType.getUserIDs){
+
+        //TODO: Hardcoded security: Der Master-Admin hat die UserID 42. Dieser soll nicht von anderen Admins bearbeitet oder gelöscht werden.
+        //Daher die simple Maßnahme, den Master-Admin gar nicht im Frontend anzuzeigen
+        fillUserDropdown(msg.payload.filter(item => item.userid != 42));
 
     } else if(msg.messageType == MessageType.getMachineNames){
         fillMachineDropdown(msg.payload);
@@ -112,11 +126,11 @@ uibuilder.onChange('msg', function(msg){
 
 function getUserAndMachines(){
 
-    var querry = "SELECT userid, firstName, lastName FROM user";
+    var querry = "SELECT userid FROM user";
 
     uibuilder.send({
         'topic': querry,
-        'messageType': MessageType.getUserNames
+        'messageType': MessageType.getUserIDs
     });
 
     querry = "SELECT machineName FROM machine";
@@ -131,7 +145,7 @@ function getAllDataForSelected() {
 
     var querry;
 
-    var selectedUserid = document.getElementById("userDropdown").value;
+    var selectedUserID= document.getElementById("userDropdown").value;
     var machineDropdown = document.getElementById("machineDropdown");
     var selectedMachine = machineDropdown.options[machineDropdown.selectedIndex].text;
 
@@ -140,16 +154,16 @@ function getAllDataForSelected() {
     var endData = new Date(endDatePicker.value).getTime() +86364000;
 
     //get all entrys
-    if(selectedMachine == "Alle" && selectedUserid == 0){
+    if(selectedMachine == "Alle" && selectedUserID == 0){
 
         querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
 
-    }else if(selectedUserid != 0 && selectedMachine == "Alle"){
+    }else if(selectedUserID != 0 && selectedMachine == "Alle"){
 
         //Select all entrys from specific user on all machines
-        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE user.userid = "+ selectedUserid +" AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
+        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE user.userid = "+ selectedUserID +" AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
 
-    }else if(selectedUserid == 0 && selectedMachine != "Alle"){
+    }else if(selectedUserID == 0 && selectedMachine != "Alle"){
 
         //Select all entrys from specific machine for all users
         querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE data.machineName = '"+ selectedMachine +"' AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
@@ -157,7 +171,7 @@ function getAllDataForSelected() {
     }else{
 
         //Select all entrys from specific user for specific machine
-        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE user.userid = "+ selectedUserid +" AND data.machineName = '"+ selectedMachine +"' AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
+        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE user.userid = "+ selectedUserID +" AND data.machineName = '"+ selectedMachine +"' AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
     }
 
     uibuilder.send({
@@ -175,22 +189,6 @@ function getAllDataForThisMonth() {
         'topic': querry,
         'messageType': MessageType.getDataForThisMonth
     });
-}
-
-
-function setDatePicker() {
-    
-    startDatePicker = document.getElementById("start");
-    endDatePicker = document.getElementById("end");
-
-    var date = new Date();
-    //date.setHours(0, 0, 0);
-    //set endDatePicker to current date
-    endDatePicker.valueAsDate = date;
-
-    //set startDatePicker to first day in current month
-    date.setDate(1);
-    startDatePicker.valueAsDate = date;
 }
 
 function getSelectedDateRangeAsString() {
@@ -226,24 +224,29 @@ function createOverviewDataObject(array){
 
 function exportXLSX(){
 
+    //Doc
+    //https://docs.sheetjs.com/docs/api/utilities/array
+
     var workBook = XLSX.utils.book_new();                               
     workBook.Props = {
-        Title: "Übersicht für ausgewählten Zeitraum",
-        Author: localStorage.getItem("name"),
+        Title: "Zusammenfassung für ausgewählten Zeitraum",
+        Author: localStorage.getItem("userID"),
         CreatedDate: new Date()
     };
 
-    workBook.SheetNames.push("Übersicht_"+getSelectedDateRangeAsString());
+    workBook.SheetNames.push("Auswahl_"+getSelectedDateRangeAsString());
 
     var workSheet;
     var workBookOut;
     
     workSheet = XLSX.utils.json_to_sheet(setExportObject());
-    workBook.Sheets["Übersicht_"+getSelectedDateRangeAsString()] = workSheet;
+    
+    //Wichtig: Der Sheetsname hier muss identisch sein mit dem oben vergebenen! Ansonsten bleibt der Export leer!
+    workBook.Sheets["Auswahl_"+getSelectedDateRangeAsString()] = workSheet;
 
     workBookOut = XLSX.write(workBook, {bookType:'xlsx',  type: 'binary'});
     
-    saveAs(new Blob([s2ab(workBookOut)],{type:"application/octet-stream"}), 'Uebersicht_'+getSelectedDateRangeAsString()+'.xlsx');
+    saveAs(new Blob([s2ab(workBookOut)],{type:"application/octet-stream"}), 'Zusammenfassung_'+getSelectedDateRangeAsString()+'.xlsx');
 }
 
 function setExportObject() {
@@ -254,15 +257,13 @@ function setExportObject() {
 
         exportArray.push({
             UserID: element.userid,
-            Vorname: element.firstName,
-            Nachname: element.lastName,
-            Firma: element.company,
             Maschinenname: element.machineName,
             Start: convertMillisToDate(element.start),
-            Rüstzeit: convertMillisToHoursMinutesSeconds(element.setUpTime),
-            Arbeitszeit: convertMillisToHoursMinutesSeconds(element.workDuration),
-            Wattstunden: kWHFormatter(element.power),
-            Stromkosten: calculatePrice(element.power, localStorage.getItem("powerCost"))
+            "Rüstzeit in Stunden": convertMillisToHoursMinutesSecondsForExport(element.setUpTime),
+            "Messdauer in Stunden": convertMillisToHoursMinutesSecondsForExport(element.workDuration),
+            "Verbrauch in kWh": parseFloat(kWHFormatterFourDecimalDigitsForExport(element.power)),
+            "Stromkosten in Euro": parseFloat(calculatePriceForExport(element.power, localStorage.getItem("powerCost"))),
+            Firma: element.company
         });
     });
     return exportArray;
@@ -290,7 +291,7 @@ function fillUserDropdown(userArray){
     userArray.forEach(user => {
         var opt = document.createElement("option");
         opt.value = user.userid;
-        opt.innerHTML = user.firstName + " " + user.lastName;
+        opt.innerHTML = user.userid;
 
         select.appendChild(opt);
     });
