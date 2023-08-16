@@ -88,7 +88,9 @@
             "09e58f5fdfe7c1bf"
         ],
         "x": 154,
-        "y": 39
+        "y": 39,
+        "w": 1812,
+        "h": 282
     },
     {
         "id": "89199902fcdf75a8",
@@ -115,10 +117,13 @@
             "de62a886d974dd24",
             "2f2a0091fb6bf425",
             "b6d083d37c688ee7",
-            "f8bca5de021b1401"
+            "f8bca5de021b1401",
+            "88e3f7d4badf264f"
         ],
         "x": 154,
-        "y": 399
+        "y": 399,
+        "w": 1872,
+        "h": 282
     },
     {
         "id": "69570ac14998a30b",
@@ -144,7 +149,9 @@
             "e6b116c3c3a0bbe6"
         ],
         "x": 114,
-        "y": 1439
+        "y": 1439,
+        "w": 732,
+        "h": 242
     },
     {
         "id": "fc2cb2ff3b2df9ef",
@@ -171,7 +178,6 @@
             "4ea50d0d4145cfa9",
             "f87a3a14e4c84c77",
             "5e56578f2c78f47d",
-            "b0a4c113bcfd75d1",
             "927615031fb184de",
             "c811bdda2c2e41dc",
             "272e6cb5dee9ba4c",
@@ -203,10 +209,13 @@
             "193cc0b8430efe0c",
             "8b28b8b5c10e6862",
             "5e0cf69435a38deb",
-            "8ec24850c5ea712c"
+            "8ec24850c5ea712c",
+            "b0a4c113bcfd75d1"
         ],
         "x": 114,
-        "y": 359
+        "y": 359,
+        "w": 3612,
+        "h": 542
     },
     {
         "id": "27cfd54d06969523",
@@ -239,7 +248,9 @@
             "ea6b689fcd6d6364"
         ],
         "x": 114,
-        "y": 1159
+        "y": 1159,
+        "w": 2312,
+        "h": 222
     },
     {
         "id": "633c6dec65d21494",
@@ -263,7 +274,9 @@
             "06fe109c0f62f46f"
         ],
         "x": 154,
-        "y": 659
+        "y": 779,
+        "w": 1312,
+        "h": 182
     },
     {
         "id": "bdd517b93ca42ddf",
@@ -292,7 +305,9 @@
             "81b59ade269b4c68"
         ],
         "x": 114,
-        "y": 59
+        "y": 59,
+        "w": 2132,
+        "h": 162
     },
     {
         "id": "b885f38124686d57",
@@ -316,9 +331,7 @@
             "17534dca9b039be1"
         ],
         "x": 74,
-        "y": 79,
-        "w": 1312,
-        "h": 182
+        "y": 79
     },
     {
         "id": "32be6167ea16cce8",
@@ -339,10 +352,18 @@
             "ab94a3cac0842b55",
             "641811ea31011d8e",
             "6ef9b89535160967",
-            "8503f01a041301a8"
+            "8503f01a041301a8",
+            "73473bbabbc0cee1",
+            "01c732426f147a46",
+            "5586bbc6bcff77c1",
+            "1f778b3c620cc2a1",
+            "e5dda3acb64cbbd8",
+            "2b47bdd4d025a4cd"
         ],
         "x": 154,
-        "y": 879
+        "y": 999,
+        "w": 1472,
+        "h": 302
     },
     {
         "id": "1301b45190885759",
@@ -363,9 +384,7 @@
             "98c28375adb33251"
         ],
         "x": 74,
-        "y": 759,
-        "w": 1052,
-        "h": 82
+        "y": 759
     },
     {
         "id": "91acb7739a8d47f4",
@@ -386,7 +405,9 @@
             "3920c8481be5ae72"
         ],
         "x": 154,
-        "y": 1119
+        "y": 1339,
+        "w": 1052,
+        "h": 82
     },
     {
         "id": "fa4960f3ed0d6b0e",
@@ -407,7 +428,9 @@
             "a79890251ac01517"
         ],
         "x": 114,
-        "y": 959
+        "y": 959,
+        "w": 1052,
+        "h": 82
     },
     {
         "id": "cfdb8f3f974908a9",
@@ -435,9 +458,7 @@
             "72f78ffa9868f11f"
         ],
         "x": 74,
-        "y": 299,
-        "w": 792,
-        "h": 402
+        "y": 299
     },
     {
         "id": "fe1131055cdbcae8",
@@ -1235,7 +1256,7 @@
         "z": "838e54b719ad8caa",
         "g": "89199902fcdf75a8",
         "name": "Properties im Eintrag zurück setzten",
-        "func": "\nvar returnObject = {\n    machineName: msg.payload.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    phaseNumber: msg.payload.phaseNumber\n}\n\nmsg.payload = returnObject;\nreturn msg;",
+        "func": "\nvar returnObject = {\n    machineName: msg.payload.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    phaseNumber: msg.payload.phaseNumber,\n    event: null\n}\n\nmsg.payload = returnObject;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1340,7 +1361,7 @@
         "upload": false,
         "swaggerDoc": "",
         "x": 280,
-        "y": 740,
+        "y": 860,
         "wires": [
             [
                 "61de7ef9aec533a4"
@@ -1360,7 +1381,7 @@
         "finalize": "",
         "libs": [],
         "x": 360,
-        "y": 800,
+        "y": 920,
         "wires": [
             [
                 "366568672f2f8d07"
@@ -1380,7 +1401,7 @@
         "finalize": "",
         "libs": [],
         "x": 910,
-        "y": 740,
+        "y": 860,
         "wires": [
             [
                 "a21f5fcfcf1d74d8"
@@ -1408,7 +1429,7 @@
         "to": "",
         "reg": false,
         "x": 680,
-        "y": 800,
+        "y": 920,
         "wires": [
             [
                 "7f72784462e7990f"
@@ -1424,7 +1445,7 @@
         "statusCode": "200",
         "headers": {},
         "x": 1290,
-        "y": 740,
+        "y": 860,
         "wires": []
     },
     {
@@ -1442,7 +1463,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1210,
-        "y": 800,
+        "y": 920,
         "wires": []
     },
     {
@@ -1451,19 +1472,26 @@
         "z": "838e54b719ad8caa",
         "g": "89199902fcdf75a8",
         "name": "Liegt überhaupt eine Messung vor?",
-        "property": "payload.energy",
+        "property": "payload.event",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "null"
             },
             {
-                "t": "nnull"
+                "t": "eq",
+                "v": "stopped",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "running",
+                "vt": "str"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 2,
+        "outputs": 3,
         "x": 680,
         "y": 560,
         "wires": [
@@ -1472,6 +1500,9 @@
             ],
             [
                 "967ead936df91cca"
+            ],
+            [
+                "88e3f7d4badf264f"
             ]
         ]
     },
@@ -1490,7 +1521,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 550,
-        "y": 700,
+        "y": 820,
         "wires": []
     },
     {
@@ -1632,7 +1663,7 @@
         "valueInputType": "msg",
         "outputs": 1,
         "x": 570,
-        "y": 740,
+        "y": 860,
         "wires": [
             [
                 "1f42e3fcd2640ba1"
@@ -1698,12 +1729,13 @@
         "upload": false,
         "swaggerDoc": "",
         "x": 270,
-        "y": 960,
+        "y": 1080,
         "wires": [
             [
                 "83f246bc05ac7087",
                 "8fd53483dee4588b",
-                "6ef9b89535160967"
+                "6ef9b89535160967",
+                "73473bbabbc0cee1"
             ]
         ]
     },
@@ -1720,7 +1752,7 @@
         "finalize": "",
         "libs": [],
         "x": 580,
-        "y": 960,
+        "y": 1080,
         "wires": [
             [
                 "9767a4fea2032874"
@@ -1736,7 +1768,7 @@
         "statusCode": "200",
         "headers": {},
         "x": 890,
-        "y": 960,
+        "y": 1080,
         "wires": []
     },
     {
@@ -1754,7 +1786,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 630,
-        "y": 920,
+        "y": 1040,
         "wires": []
     },
     {
@@ -1764,7 +1796,7 @@
         "g": "32be6167ea16cce8",
         "name": "find db path in local directory",
         "x": 860,
-        "y": 1020,
+        "y": 1140,
         "wires": [
             [
                 "641811ea31011d8e"
@@ -1783,7 +1815,7 @@
         "sql": "",
         "name": "db",
         "x": 1090,
-        "y": 1020,
+        "y": 1140,
         "wires": [
             []
         ]
@@ -1801,7 +1833,7 @@
         "finalize": "",
         "libs": [],
         "x": 550,
-        "y": 1020,
+        "y": 1140,
         "wires": [
             [
                 "ab94a3cac0842b55"
@@ -1823,7 +1855,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1270,
-        "y": 1020,
+        "y": 1140,
         "wires": []
     },
     {
@@ -1851,7 +1883,7 @@
         ],
         "uncaught": false,
         "x": 240,
-        "y": 1160,
+        "y": 1380,
         "wires": [
             [
                 "26a9ab07c5920d41"
@@ -1871,7 +1903,7 @@
         "finalize": "",
         "libs": [],
         "x": 430,
-        "y": 1160,
+        "y": 1380,
         "wires": [
             [
                 "941a792ebce6b697"
@@ -1885,7 +1917,7 @@
         "g": "91acb7739a8d47f4",
         "name": "find db path in local directory",
         "x": 680,
-        "y": 1160,
+        "y": 1380,
         "wires": [
             [
                 "93b611ca1c35bc25"
@@ -1904,7 +1936,7 @@
         "sql": "",
         "name": "db",
         "x": 910,
-        "y": 1160,
+        "y": 1380,
         "wires": [
             []
         ]
@@ -1924,8 +1956,161 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1090,
-        "y": 1160,
+        "y": 1380,
         "wires": []
+    },
+    {
+        "id": "88e3f7d4badf264f",
+        "type": "delay",
+        "z": "838e54b719ad8caa",
+        "g": "89199902fcdf75a8",
+        "name": "Verzögerung wenn die Maschine noch läuft",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 710,
+        "y": 640,
+        "wires": [
+            [
+                "0b10820ae0bca9b6"
+            ]
+        ]
+    },
+    {
+        "id": "73473bbabbc0cee1",
+        "type": "function",
+        "z": "838e54b719ad8caa",
+        "g": "32be6167ea16cce8",
+        "name": "Machinennamen dekodieren",
+        "func": "\nmsg.payload.machineName = decodeURIComponent(escape(msg.payload.machineName));\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1200,
+        "wires": [
+            [
+                "01c732426f147a46"
+            ]
+        ]
+    },
+    {
+        "id": "01c732426f147a46",
+        "type": "collection",
+        "z": "838e54b719ad8caa",
+        "g": "32be6167ea16cce8",
+        "name": "Eintrag auslesen",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": false,
+        "action": "get value",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "payload.machineName",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "msg",
+        "outputs": 1,
+        "x": 850,
+        "y": 1200,
+        "wires": [
+            [
+                "5586bbc6bcff77c1"
+            ]
+        ]
+    },
+    {
+        "id": "5586bbc6bcff77c1",
+        "type": "switch",
+        "z": "838e54b719ad8caa",
+        "g": "32be6167ea16cce8",
+        "name": "Noch ein Nutzer angemeldet?",
+        "property": "payload.userID",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "100",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1110,
+        "y": 1200,
+        "wires": [
+            [
+                "e5dda3acb64cbbd8"
+            ]
+        ]
+    },
+    {
+        "id": "1f778b3c620cc2a1",
+        "type": "comment",
+        "z": "838e54b719ad8caa",
+        "g": "32be6167ea16cce8",
+        "name": "Prüfen, ob das LoginModul den Strom verloren hat und noch fälschlicherweise ein Nutzer auf der Maschine registriert ist",
+        "info": "",
+        "x": 880,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "e5dda3acb64cbbd8",
+        "type": "function",
+        "z": "838e54b719ad8caa",
+        "g": "32be6167ea16cce8",
+        "name": "Properties im Eintrag zurück setzten",
+        "func": "\nvar returnObject = {\n    machineName: msg.payload.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    phaseNumber: msg.payload.phaseNumber,\n    event: null\n}\n\nmsg.payload = returnObject;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1450,
+        "y": 1200,
+        "wires": [
+            [
+                "2b47bdd4d025a4cd"
+            ]
+        ]
+    },
+    {
+        "id": "2b47bdd4d025a4cd",
+        "type": "collection",
+        "z": "838e54b719ad8caa",
+        "g": "32be6167ea16cce8",
+        "name": "Eintrag zurücksetzten",
+        "collection": "CurrentMessuringObject",
+        "collectionInputType": "global",
+        "collectionType": "Object",
+        "createCollection": false,
+        "action": "set",
+        "onConflict": "exception",
+        "warnOnConflict": true,
+        "keyOrIndex": "payload.machineName",
+        "keyInputType": "msg",
+        "value": "payload",
+        "valueInputType": "msg",
+        "outputs": 1,
+        "x": 1480,
+        "y": 1260,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "7dbfda298598df33",
@@ -4655,30 +4840,12 @@
         "wires": []
     },
     {
-        "id": "b0a4c113bcfd75d1",
-        "type": "debug",
-        "z": "56fe256bdc6888ea",
-        "g": "fc2cb2ff3b2df9ef",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1630,
-        "y": 640,
-        "wires": []
-    },
-    {
         "id": "927615031fb184de",
         "type": "function",
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Daten für Bestehenden Eintrag erweitern",
-        "func": "\n//when messuring starts, the setup time for the machine ends\nvar setupEndTime = new Date().getTime();\n\nif (msg.payload.setupStartTime != null) {\n    msg.payload.setupDuration = (setupEndTime - msg.payload.setupStartTime);\n}\nmsg.payload.startMessuringTime = setupEndTime;\n\nreturn msg;",
+        "func": "\n//when messuring starts, the setup time for the machine ends\nvar setupEndTime = new Date().getTime();\n\nif (msg.payload.setupStartTime != null) {\n    msg.payload.setupDuration = (setupEndTime - msg.payload.setupStartTime);\n}\nmsg.payload.startMessuringTime = setupEndTime;\nmsg.payload.event = \"running\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4854,7 +5021,7 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Bestehenden Eintrag um Messwert erweitern",
-        "func": "\nmsg.payload.messuringDuration = msg.messuring.time;\nmsg.payload.energy = msg.messuring.energy\n\nreturn msg;",
+        "func": "\nmsg.payload.messuringDuration = msg.messuring.time;\nmsg.payload.energy = msg.messuring.energy\nmsg.payload.event = \"stopped\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5118,7 +5285,7 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Bestehende Messung in Eintrag um Messwerte erweitern",
-        "func": "\nvar messuringEndTime = new Date().getTime();\n\n//sum existing messuring values with new values\nmsg.payload.messuringDuration = msg.payload.messuringDuration + msg.messuring.time;\nmsg.payload.lastMessuringTime = messuringEndTime;\nmsg.payload.energy = msg.payload.energy + msg.messuring.energy;\n\nreturn msg;",
+        "func": "\nvar messuringEndTime = new Date().getTime();\n\n//sum existing messuring values with new values\nmsg.payload.messuringDuration = msg.payload.messuringDuration + msg.messuring.time;\nmsg.payload.lastMessuringTime = messuringEndTime;\nmsg.payload.energy = msg.payload.energy + msg.messuring.energy;\nmsg.payload.event = \"stopped\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5156,7 +5323,7 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Properties im Eintrag zurück setzten",
-        "func": "\nvar returnObject = {\n    machineName: msg.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    phaseNumber: msg.payload.phaseNumber\n}\n\nmsg.payload = returnObject;\nreturn msg;",
+        "func": "\nvar returnObject = {\n    machineName: msg.machineName,\n    userID: 100, \n    startMessuringTime: null,\n    messuringDuration: null,\n    lastMessuringTime: null, \n    setupStartTime: null, \n    setupDuration: null, \n    energy: null,\n    phaseNumber: msg.payload.phaseNumber,\n    event: null\n}\n\nmsg.payload = returnObject;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5206,7 +5373,7 @@
         "z": "56fe256bdc6888ea",
         "g": "fc2cb2ff3b2df9ef",
         "name": "Eintrag um Messwerte erweitern",
-        "func": "\nvar messuringEndTime = new Date().getTime();\n\nmsg.payload.messuringDuration = msg.messuring.time;\nmsg.payload.lastMessuringTime = messuringEndTime;\nmsg.payload.energy = msg.messuring.energy;\n\nreturn msg;",
+        "func": "\nvar messuringEndTime = new Date().getTime();\n\nmsg.payload.messuringDuration = msg.messuring.time;\nmsg.payload.lastMessuringTime = messuringEndTime;\nmsg.payload.energy = msg.messuring.energy;\nmsg.payload.event = \"stopped\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -6013,7 +6180,7 @@
         "z": "56fe256bdc6888ea",
         "g": "bdd517b93ca42ddf",
         "name": "Array mit Einträgen erstellen",
-        "func": "\nvar entryArray = [];\n\nmsg.payload.forEach(machine => {\n    \n    entryArray.push({\n        machineName: machine.machineName, \n        userID: 100, \n        startMessuringTime: null,\n        messuringDuration: null,\n        lastMessuringTime: null, \n        setupStartTime: null, \n        setupDuration: null, \n        energy: null,\n        phaseNumber: machine.phaseNumber\n    })\n\n});\n\nmsg.payload = entryArray;\nreturn msg;\n",
+        "func": "\nvar entryArray = [];\n\nmsg.payload.forEach(machine => {\n    \n    entryArray.push({\n        machineName: machine.machineName, \n        userID: 100, \n        startMessuringTime: null,\n        messuringDuration: null,\n        lastMessuringTime: null, \n        setupStartTime: null, \n        setupDuration: null, \n        energy: null,\n        phaseNumber: machine.phaseNumber,\n        event: null\n    })\n\n});\n\nmsg.payload = entryArray;\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -6372,6 +6539,24 @@
         "statusType": "auto",
         "x": 1050,
         "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "b0a4c113bcfd75d1",
+        "type": "debug",
+        "z": "56fe256bdc6888ea",
+        "g": "fc2cb2ff3b2df9ef",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1630,
+        "y": 640,
         "wires": []
     }
 ]

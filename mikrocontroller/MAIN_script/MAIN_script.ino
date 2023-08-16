@@ -3,21 +3,28 @@
 
    The script handles the machine modules.
    It registers logins and informs the server.
+
+
+   --->  CONFIGURATION for new machine:  <---
+    -change machineName and load script to mikrocontroller (check if board is connected and port is selected, then flash "hochladen")
+
+
+   CONFIGURATION for debugging, local tests or after changes on the wifi:
+    -change machineName
+    -change Network config (wifinetwork and wifipassword
+    -change ServerName (to the IP of your own computer, but keep the 1880 Port)
+    -uncomment the debugging line (remove the // before #define debugging) to get debugging information from system via the serial monitor
+    -if you dont have a running server for testing, you could uncomment the line with TestWithoutServerCommunication
 */
 
-//--- Includes (External Libraries) ---
-#include <WiFi.h>
-#include <HTTPClient.h>
-#include <FastLED.h>
-#include <Keypad.h>
-#include <EasyMFRC522.h>
+//--- Configuration---
 
-//--- Config ---
-// If you want to see outputs and logs, the mikrocontroller must be connected to a pc.
-// There you can watch the live logs and outputs on a seriell monitor (for example in the Arduino IDE).
-// Remove the two Slashes before #define to uncomment the line. The debugging is activated!
-// If you dont haven an PC connected permanently to the mikrocontroller or dont need logs, just comment the following line code (with to Slahes //).
-#define debugging
+// --->  Machine config  <---
+//Enter the name of the machine between the "" -> Then upload the script to the mikrocontroller
+#define machineName "Bandschleifer" // <---------
+
+
+
 
 //-- Network config ---
 #define wifinetwork "network=bauer+planer"
@@ -30,13 +37,31 @@ const char *password = wifipassword;
 String serverName = "http://192.168.2.179:1880/";
 
 
-//--- User and Machine config ---
-#define machineName "Tischkreissäge"
-int userId = 0;
+//--- Includes (External Libraries) ---
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <FastLED.h>
+#include <Keypad.h>
+#include <EasyMFRC522.h>
 
-//TODO -> Kann raus oder?
-int defaultId = 100;
+// If you want to see outputs and logs, the mikrocontroller must be connected to a pc.
+// There you can watch the live logs and outputs on a seriell monitor (for example in the Arduino IDE).
+// Remove the two Slashes before #define to uncomment the line. The debugging is activated!
+// If you dont haven an PC connected permanently to the mikrocontroller or dont need logs, just comment the following line code (with to Slahes //).
+//#define debugging
+
+
+//--- User config ---
+int userID = 0;
 bool isLoggedIn = false;
+
+//Remove the two Slashes before #define to uncomment the line. Then you can test without a server communication.
+//Dont forget to recomment the line before active use!
+//#define TestWithoutServerCommunication
+int test_id = 100; // change your test id here
+int inputID_RFID;
+String inputID_PinPad;
+
 
 //--- LED config ---
 enum ledStates
@@ -78,12 +103,6 @@ byte pin_column[COLUM_NUMBER] = {27, 14, 12}; // connect to the column pinouts o
 
 Keypad keypad = Keypad(makeKeymap(keys), pin_rows, pin_column, ROW_NUMBER, COLUM_NUMBER);
 
-//Remove the two Slashes before #define to uncomment the line. Then you can test without a server communication.
-//Dont forget to recomment the line before active use!
-//#define TestWithoutServerCommunication
-int test_id = 100; // change your test id here
-String inputID;
-
 //--- RFID config ---
 /**
  * ----------------------------------------------------------------------------
@@ -111,8 +130,7 @@ String inputID;
 #define RST  17
 int sizeOfInputInByte = 4;
 
-EasyMFRC522 rfidReader(SDA, RST); //the MFRC522 reader, with the SDA and RST pins given
-                                //the default (factory) keys A and B are used (or used setKeys to change)
+EasyMFRC522 rfidReader(SDA, RST); //the MFRC522 reader, with the SDA and RST pins given. The default (factory) keys A and B are used (or used setKeys to change)
 
 #define BLOCK  1    //the initial block for all operations
 
@@ -165,7 +183,7 @@ void setup()
   // set master brightness control
   FastLED.setBrightness(BRIGHTNESS);
 
-  inputID.reserve(2); // maximum input characters is 3, change if needed
+  inputID_PinPad.reserve(2); // maximum input characters is 3, change if needed
 
   ledState = red;
   updateLEDs(red);
@@ -216,11 +234,11 @@ void checkPinPadInput()
       {
         logout();
       }
-      inputID = ""; // clear input id
+      inputID_PinPad = ""; // clear input id
     }
     else if (key == 'g' && !isLoggedIn)
     {
-      userId = inputID.toInt();
+      userID = inputID_PinPad.toInt();
       #ifdef TestWithoutServerCommunication
         testID();
       #else
@@ -231,7 +249,7 @@ void checkPinPadInput()
     {
       if (!isLoggedIn)
       {
-        inputID += key; // append new character to input password string
+        inputID_PinPad += key; // append new character to input password string
       }
     }
   }
@@ -241,7 +259,7 @@ void checkLogin()
 {
 
   // Send request to server and check if user exists and permission is high enough
-  String serverPath = serverName + "checkIfUserExists" + "?userid=" + userId + "&machineName=" + machineName;
+  String serverPath = serverName + "checkIfUserExists" + "?userid=" + userID + "&machineName=" + machineName;
 
   String payload = httpGETRequest(serverPath);
   #ifdef debugging
@@ -251,7 +269,7 @@ void checkLogin()
   
   evaluateCheckLoginPayload(payload);
 
-  inputID = ""; // clear input password
+  inputID_PinPad = ""; // clear input password
 }
 
 void evaluateCheckLoginPayload(String payload)
@@ -280,20 +298,20 @@ void evaluateCheckLoginPayload(String payload)
     ledState = red;
     blink = true;
     blinkStartMillis = currentMillis;
-    userId = 0;
+    userID = 0;
   }
   else{
     //Error occured
     ledState = systemError_Blue;
     blink = true;
     blinkStartMillis = currentMillis;
-    userId = 0;
+    userID = 0;
   }
 }
 
 void testID()
 {
-  if (test_id == userId)
+  if (test_id == userID)
   {
     ledState = green;
     updateLEDs(green);
@@ -311,7 +329,7 @@ void testID()
     Serial.println("ID is incorrect, try again");
     #endif
   }
-  inputID = ""; // clear input id
+  inputID_PinPad = ""; // clear input id
 }
 
 void logout()
@@ -329,7 +347,8 @@ void logout()
 void sendDataToServer()
 {
   //TODO vielleicht zwischen logoutFromMachine und autoLogoutFromMachine unterscheiden?
-  String serverPath = serverName + "logout" + "?userid=" + userId + "&machineName=" + machineName;
+  //Man könnte dann im Monitoring mit aufnehmen, wie oft ein Nutzer automatisch abgemeldet werden muss. Optionales Feature und vielleicht etwas zu viel "Überwachung"
+  String serverPath = serverName + "logout" + "?userid=" + userID + "&machineName=" + machineName;
 
   String payload = httpGETRequest(serverPath);
 
@@ -352,7 +371,7 @@ void sendDataToServer()
 void reset()
 {
   bufferTimeBetweenRequests = 0;
-  userId = 0;
+  userID = 0;
   isLoggedIn = false;
 }
 
@@ -527,18 +546,20 @@ void checkRFIDInput(){
     if(isLoggedIn){
       logout();
     }else {
+      
       int result;
-
-      // starting from the given block, reads the data from the tag (for the amount of bytes given), loading to the variable "inputID"
-      // attention: if you didn't write the inputID before, you will get "garbage" here
-      result = rfidReader.readRaw(BLOCK, (byte*)&userId, sizeOfInputInByte);
+      // starting from the given block, reads the data from the tag (for the amount of bytes given), loading to the variable "userID"
+      // attention: if you didn't write the credentials before, you will get "garbage" here
+      result = rfidReader.readRaw(BLOCK, (byte*)&inputID_RFID, sizeOfInputInByte);
   
       if (result >= 0) {
   
         #ifdef debugging
           Serial.print("RFID Input: ");
-          Serial.println(userId);
+          Serial.println(inputID_RFID);
         #endif
+
+        userID = inputID_RFID;
         
         #ifdef TestWithoutServerCommunication
           testID();
@@ -549,7 +570,7 @@ void checkRFIDInput(){
       } else { 
         #ifdef debugging
           Serial.print("Error reading the tag, got ");
-          Serial.println(userId);
+          Serial.println(result);
         #endif
       }
     }

@@ -106,7 +106,7 @@ function setDatePicker() {
 
 function getAllDataForSelected() {
 
-    var querry = "SELECT * FROM data WHERE userid=" + localStorage.getItem("userID") + " AND start >= " + new Date(startDatePicker.value).getTime() + " AND start <= " + (new Date(endDatePicker.value).getTime()+ 82800000) + " ORDER BY start";
+    var querry = "SELECT * FROM data WHERE userid=" + localStorage.getItem("userID") + " AND start >= " + new Date(startDatePicker.value).getTime() + " AND start <= " + (new Date(endDatePicker.value).getTime()+ 82800000) + " ORDER BY start DESC";
 
     uibuilder.send({
         'topic': querry,

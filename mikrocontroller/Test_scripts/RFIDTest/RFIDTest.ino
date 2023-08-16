@@ -27,7 +27,7 @@
 #define SDA  5
 #define RST  17
 int sizeOfInputInByte = 4;
-int userID = 101;
+int userID;
 
 EasyMFRC522 rfidReader(SDA, RST); //the MFRC522 reader, with the SDA and RST pins given
                                 //the default (factory) keys A and B are used (or used setKeys to change)
@@ -88,15 +88,15 @@ void loop() {
   
   } else if (option == 'r') {
     Serial.println("LOADING CREDENTIALS from the tag:");
-    int inpuUserID;
 
+    int bufferInteger;
     // starting from the given block, reads the data from the tag (for the amount of bytes given), loading to the variable "credentials"
     // attention: if you didn't write the credentials before, you will get "garbage" here
-    result = rfidReader.readRaw(BLOCK, (byte*)&inpuUserID, sizeOfInputInByte);
+    result = rfidReader.readRaw(BLOCK, (byte*)&bufferInteger, sizeOfInputInByte);
 
     if (result >= 0) {
       Serial.print("UserID: ");
-      Serial.println(inpuUserID);
+      Serial.println(bufferInteger);
     } else { 
       Serial.print("--> Error reading the tag, got");
       Serial.println(result);

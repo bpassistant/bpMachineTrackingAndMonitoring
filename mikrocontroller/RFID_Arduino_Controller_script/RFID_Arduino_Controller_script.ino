@@ -28,6 +28,7 @@
 #define RST  9
 //TODO: Kann man das reduzieren?
 int sizeOfInputInByte = 4;
+int userID = 100;
 
 EasyMFRC522 rfidReader(SDA, RST); //the MFRC522 reader, with the SDA and RST pins given
                                 //the default (factory) keys A and B are used (or used setKeys to change)
@@ -73,7 +74,7 @@ void loop() {
     while (Serial.available() == 0) // waits for incoming data
       ;
   
-    int userID = Serial.parseInt();
+    userID = Serial.parseInt();
 
     //UserIDs müssen dreistellig sein
     if(userID > 99){
@@ -134,14 +135,15 @@ void loop() {
     Serial.println();
 
     int result;
-    int inputUserID;
+
+    int bufferInteger;
     // starting from the given block, reads the data from the tag (for the amount of bytes given), loading to the variable "userID"
     // attention: if you didn't write the credentials before, you will get "garbage" here
-    result = rfidReader.readRaw(BLOCK, (byte*)&inputUserID, sizeOfInputInByte);
+    result = rfidReader.readRaw(BLOCK, (byte*)&bufferInteger, sizeOfInputInByte);
 
     if (result >= 0) {
       Serial.print("--> Auf dem RFID-Tag wurde folgende UserID erkannt: ");
-      Serial.println(inputUserID);
+      Serial.println(bufferInteger);
       Serial.println();
     } else { 
       Serial.print("--> Fehler beim Auslesen des RFID-Tags aufgetreten! Folgender Wert wurde gelesen: ");

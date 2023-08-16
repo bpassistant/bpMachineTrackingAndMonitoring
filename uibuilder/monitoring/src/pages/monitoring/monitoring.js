@@ -156,22 +156,22 @@ function getAllDataForSelected() {
     //get all entrys
     if(selectedMachine == "Alle" && selectedUserID == 0){
 
-        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
+        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE start >= " + startDate + " AND start <= " + endData + " ORDER BY start DESC";
 
     }else if(selectedUserID != 0 && selectedMachine == "Alle"){
 
         //Select all entrys from specific user on all machines
-        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE user.userid = "+ selectedUserID +" AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
+        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE user.userid = "+ selectedUserID +" AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start DESC";
 
     }else if(selectedUserID == 0 && selectedMachine != "Alle"){
 
         //Select all entrys from specific machine for all users
-        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE data.machineName = '"+ selectedMachine +"' AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
+        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE data.machineName = '"+ selectedMachine +"' AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start DESC";
 
     }else{
 
         //Select all entrys from specific user for specific machine
-        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE user.userid = "+ selectedUserID +" AND data.machineName = '"+ selectedMachine +"' AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start";
+        querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE user.userid = "+ selectedUserID +" AND data.machineName = '"+ selectedMachine +"' AND start >= " + startDate + " AND start <= " + endData + " ORDER BY start DESC";
     }
 
     uibuilder.send({

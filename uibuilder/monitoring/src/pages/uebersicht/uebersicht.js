@@ -11,7 +11,7 @@ window.onload = function() {
     uibuilder.start();
 
     uibuilder.send({
-        'topic': "SELECT * FROM logs WHERE time >" + (new Date().getTime() - 604800000) //604800000 = 1 week in millis
+        'topic': "SELECT * FROM logs WHERE time >" + (new Date().getTime() - 604800000) + " ORDER BY id DESC" //604800000 = 1 week in millis
     })
 
     uibuilder.send({
