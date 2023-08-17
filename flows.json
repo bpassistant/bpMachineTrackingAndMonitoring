@@ -1399,7 +1399,7 @@
         "z": "838e54b719ad8caa",
         "g": "633c6dec65d21494",
         "name": "Pürfe ob der Timer überschritten wurde",
-        "func": "\n//If last messuring was more than 15 minutes ago\nif(msg.payload[1].lastMessuringTime != null){\n    \n    if(new Date().getTime() - msg.payload[1].lastMessuringTime >= msg.timer){\n        msg.payload = \"autoLogout\";\n    }else{\n        msg.payload = \"still active\";\n    }\n}else{\n        msg.payload = \"nothing messured yet\";\n}\n\nreturn msg;",
+        "func": "\n//If last messuring was more than 15 minutes ago\nif(msg.payload.lastMessuringTime != null){\n    \n    if(new Date().getTime() - msg.payload[1].lastMessuringTime >= msg.timer){\n        msg.payload = \"autoLogout\";\n    }else{\n        msg.payload = \"still active\";\n    }\n}else{\n        msg.payload = \"nothing messured yet\";\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1661,7 +1661,8 @@
         "y": 740,
         "wires": [
             [
-                "1f42e3fcd2640ba1"
+                "1f42e3fcd2640ba1",
+                "06fe109c0f62f46f"
             ]
         ]
     },
