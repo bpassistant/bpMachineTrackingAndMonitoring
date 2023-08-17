@@ -183,7 +183,7 @@ function getAllDataForSelected() {
 function getAllDataForThisMonth() {
     
     //Date starts with 00:00 so entrys for the same day might not be found. Added 23 h and 59 min du end date.
-    var querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE start >= " + new Date(startDatePicker.value).getTime() + " AND start <= " + new Date(endDatePicker.value).getTime()+ 82800000 + " ORDER BY start";
+    var querry = "SELECT * FROM data INNER JOIN user ON data.userid = user.userid WHERE start >= " + new Date(startDatePicker.value).getTime() + " AND start <= " + new Date(endDatePicker.value).getTime()+ 82800000 + " ORDER BY start DESC";
 
     uibuilder.send({
         'topic': querry,
