@@ -147,6 +147,7 @@ void setup()
 
   #ifdef debugging
   // Starts a serial connection to display infos on the arduino monitor.
+  //TODO: Sollte zurück auf 9600 geändert werden! Dann muss nicht so viel umgestellt werden, wenn vorher ein anderer Arduino/MC angeschlossen war!
   Serial.begin(115200);
   if (Serial)
   {
